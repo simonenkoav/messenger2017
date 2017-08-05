@@ -5,6 +5,12 @@
 #include "boost/uuid/uuid.hpp"
 #include "boost/uuid/uuid_generators.hpp"
 
+#include "handlers/CommandHandler.h"
+#include "processors/Processor.h"
+
+#include "boost/uuid/uuid.hpp"
+#include "boost/uuid/uuid_generators.hpp"
+
 #include "processors/Processor.h"
 #include "handlers/CommandHandler.h"
 

@@ -1,10 +1,7 @@
 #include <handlers/FindDataHandler.h>
 #include <handlers/FindNodeHandler.h>
-//#include "handlers/FindNodeHandler.h"
-//#include "handlers/FindDataHandler.h"
-
-//#include "processors/FindDataProcessor.h"
-//#include "processors/FindNodeProcessor.h"
+#include "processors/FindDataProcessor.h"
+#include "processors/FindNodeProcessor.h"
 #include "core/Node.h"
 
 using namespace m2::routing;
@@ -32,7 +29,7 @@ Node::Node(string port)
                 std::make_pair(MessageType::StoreResponse,    StoreProcessor(this)),
                 std::make_pair(MessageType::FindNodeResponse, FindNodeProcessor(this)),
                 std::make_pair(MessageType::FindDataResponse, FindDataProcessor(this))};
-
+    // TODO: ERROR! pay attention that both handlers and processors have to contain the same copy of ProcessorClass
     processors = {std::make_pair(MessageType::PingResponse,     PingNodeProcessor(this)),
                   std::make_pair(MessageType::StoreResponse,    StoreProcessor(this)),
                   std::make_pair(MessageType::FindNodeResponse, FindNodeProcessor(this)),
@@ -42,7 +39,7 @@ Node::Node(string port)
     network_connector.startAccept();
 
     // send request to find k-neighbors
-    processors[MessageType::FindNodeResponse].process(self_info.uuid);
+    processors[MessageType::FindNodeResponse].process(self_info, NULL);
 
 };
 

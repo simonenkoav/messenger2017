@@ -4,13 +4,15 @@
 #pragma once
 
 #include "boost/asio.hpp"
+#include <vector>
 #include <string>
 #include <functional>
 
-using std::string;
 
 namespace m2 {
 namespace routing {
+using std::string;
+using std::vector;
 
 class NetworkConnector
 {
@@ -28,4 +30,3 @@ private:
 
 } // end routing
 } // end m2
-

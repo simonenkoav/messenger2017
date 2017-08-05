@@ -4,9 +4,8 @@
 namespace m2 {
 namespace routing {
 
-CommandHandler::CommandHandler(Node& node)
+CommandHandler::CommandHandler()
 {
-    //this->node = node;
 }
 
 CommandHandler::~CommandHandler()
