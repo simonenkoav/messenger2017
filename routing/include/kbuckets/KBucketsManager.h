@@ -3,6 +3,7 @@
 #include <map>
 #include <list>
 #include <algorithm>
+#include <boost/uuid/uuid.hpp>
 
 #include "data_structures/NodeInfo.h"
 #include "kbuckets/KBucket.h"
@@ -21,6 +22,7 @@ public:
     void insert(const NodeInfo &nodeInfo);
 
     void getNeighbours(const NodeInfo &nodeInfo) const;
+    std::list<NodeInfo> getNeighbours(const boost::uuids::uuid &guid) const; // @Wunder9l: need this api in FindProcessor
 
 private:
     std::map<int, KBucket> intervalToBucket;

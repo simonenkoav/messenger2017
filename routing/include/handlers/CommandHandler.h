@@ -1,5 +1,5 @@
 #pragma once
-#include "core/Node.h"
+//#include "core/Node.h"
 #include "data_structures/messages/Message.h"
 
 namespace m2 {

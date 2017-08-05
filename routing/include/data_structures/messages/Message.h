@@ -9,6 +9,7 @@ namespace routing {
 class Message
 {
 public:
+    Message();
     Message(NodeInfo node_info);
     ~Message();
 };

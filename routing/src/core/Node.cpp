@@ -1,5 +1,10 @@
 #include <handlers/FindDataHandler.h>
 #include <handlers/FindNodeHandler.h>
+//#include "handlers/FindNodeHandler.h"
+//#include "handlers/FindDataHandler.h"
+
+//#include "processors/FindDataProcessor.h"
+//#include "processors/FindNodeProcessor.h"
 #include "core/Node.h"
 
 using namespace m2::routing;

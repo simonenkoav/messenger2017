@@ -14,7 +14,7 @@ Message * FindProcessor::handleMessage(Message message)
 void FindProcessor::process(uuid guid)
 {
     searched_guid = guid;
-    //not_asked = node.kbucketsManager.getNeighbours(searched_guid);
+    not_asked = node.kbuckets_manager.getNeighbours(searched_guid);
     int alpha = Config::getAlpha();
     alpha = (not_asked.size() < alpha) ? not_asked.size() : alpha;
     for (size_t i = 0; i < alpha; i++)
@@ -25,9 +25,5 @@ void FindProcessor::process(uuid guid)
     }
 }
 
-void FindProcessor::sendRequest(NodeInfo recipient)
-{
-
-}
 }
 }

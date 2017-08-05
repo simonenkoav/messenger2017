@@ -52,6 +52,11 @@ namespace routing {
 
     }
 
+    std::list<NodeInfo> KBucketsManager::getNeighbours(const boost::uuids::uuid &guid) const
+    {
+
+    }
+
     KBucketsManager::KBucketsManager()
     { //TODO remove it later, it's just for build
 

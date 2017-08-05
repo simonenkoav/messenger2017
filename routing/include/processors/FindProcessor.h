@@ -7,6 +7,7 @@
 #include "data_structures/NodeInfo.h"
 #include "Processor.h"
 #include "utils/Config.h"
+#include "core/Node.h"
 
 namespace m2 {
 namespace routing {
@@ -37,7 +38,7 @@ protected:
     list<NodeInfo> k_best;
 
     // Methdods
-    virtual void sendRequest(NodeInfo recipient);
+    virtual void sendRequest(NodeInfo recipient) = 0;
 };
 }
 }

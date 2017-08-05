@@ -16,7 +16,7 @@ class NetworkConnector
 {
 public:
     NetworkConnector(int port, std::function<void()> onMessageReceiveCallback);
-    void sendMessage(string ip, string port, char* buffer, size_t size);
+    void sendMessage(string ip, int port, vector<char> buffer);
     void startAccept();
     string getMyIpAddress();
 

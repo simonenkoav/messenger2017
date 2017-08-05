@@ -5,14 +5,11 @@
 #include "boost/uuid/uuid.hpp"
 #include "boost/uuid/uuid_generators.hpp"
 
+#include "processors/Processor.h"
 #include "handlers/CommandHandler.h"
-#include "handlers/FindNodeHandler.h"
-#include "handlers/FindDataHandler.h"
 
-#include "processors/FindDataProcessor.h"
-#include "processors/FindNodeProcessor.h"
 
-#include "data_structures/Message.h"
+#include "data_structures/messages/Message.h"
 #include "kbuckets/KBucketsManager.h"
 #include "NetworkConnector/NetworkConnector.h"
 #include "DHT/DHT.h"
@@ -26,9 +23,8 @@ namespace routing {
 
 class Node
 {
-    friend class FindNodeProcessor;
 public:
-    Node(string port) {};
+    Node(string port);
     ~Node();
 
 
@@ -46,6 +42,7 @@ private:
 
     friend class PingProcessor;
     friend class StoreProcessor;
+    friend class FindProcessor;
     friend class FindNodeProcessor;
     friend class FindDataProcessor;
 
