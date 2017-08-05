@@ -38,11 +38,11 @@ private:
     void onMessageReceive(char* buffer, size_t size);
 
     DHT dht;
-    std::size_t void a();
-    NodeInfo selfInfo;
-    NetworkConnector networkConnector;
-    KBucketsManager kbucketsManager;
+    NodeInfo self_info;
+    NetworkConnector network_connector;
+    KBucketsManager kbuckets_manager;
     std::unordered_map<MessageType, CommandHandler, MessageTypeHash> handlers;
+    std::unordered_map<MessageType, Processor, MessageTypeHash> processors;
 
     friend class PingProcessor;
     friend class StoreProcessor;
