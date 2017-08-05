@@ -83,7 +83,7 @@ set(HEADERS
         include/kbuckets/KBucket.h
         include/kbuckets/KBucketsManager.h
         include/kbuckets/KBucketsTools.h
-        include/NetworkConnector/NetworkConnector.h)
+        include/NetworkConnector/NetworkConnector.h include/DHT/DHT.h)
 
 set(SOURCES
         src/stdafx.cpp
@@ -99,7 +99,7 @@ set(SOURCES
         src/kbuckets/KBucket.cpp
         src/kbuckets/KBucketsManager.cpp
         src/main.cpp
-        src/NetworkConnector/NetworkConnector.cpp)
+        src/NetworkConnector/NetworkConnector.cpp src/DHT/DHT.cpp)
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})
 

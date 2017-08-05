@@ -1,10 +1,11 @@
 #pragma once
+#include <string>
+#include "boost/uuid/uuid.hpp"
 //#include "CommandHandler.h"
 #include "data_structures/Message.h"
 #include "kbuckets/KBucketsManager.h"
-#include <string>
-#include "boost/uuid/uuid.hpp"
-
+#include "NetworkConnector/NetworkConnector.h"
+#include "DHT/DHT.h"
 
 using std::string;
 using boost::uuids::uuid;
@@ -26,8 +27,9 @@ public:
 private:
     void onMessageReceive(char* buffer, size_t size);
 
-    //DHT dht;
-    KBucketsManager kbucketManager;
+    DHT dht;
+    NetworkConnector networkConnector;
+    KBucketsManager kbucketsManager;
 
 };
 
