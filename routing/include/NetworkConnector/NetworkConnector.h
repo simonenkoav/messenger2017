@@ -3,6 +3,7 @@
 //
 #pragma once
 
+#include "boost/asio.hpp"
 #include <string>
 #include <functional>
 
@@ -14,9 +15,10 @@ namespace routing {
 class NetworkConnector
 {
 public:
-    NetworkConnector(string port, std::function<void()> onMessageReceiveCallback);
+    NetworkConnector(int port, std::function<void()> onMessageReceiveCallback);
     void sendMessage(string ip, string port, char* buffer, size_t size);
     void startAccept();
+    string getMyIpAddress();
 
 private:
     std::function<void()> callback;
