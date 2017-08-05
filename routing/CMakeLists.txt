@@ -73,12 +73,13 @@ set(HEADERS
         stdafx.h
         include/core/Node.h
         include/data_structures/Message.h
+        include/data_structures/NodeInfo.h
         include/handlers/CommandHandler.h
         include/handlers/FindDataHandler.h
         include/handlers/FindNodeHandler.h
-        include/handlers/processors/FindDataProcessor.h
-        include/handlers/processors/FindNodeProcessor.h
-        include/handlers/processors/FindProcessor.h
+        include/processors/FindDataProcessor.h
+        include/processors/FindNodeProcessor.h
+        include/processors/FindProcessor.h
         include/kbuckets/KBucket.h
         include/kbuckets/KBucketsManager.h
         include/kbuckets/KBucketsTools.h
@@ -91,9 +92,9 @@ set(SOURCES
         src/handlers/CommandHandler.cpp
         src/handlers/FindDataHandler.cpp
         src/handlers/FindNodeHandler.cpp
-        src/handlers/processors/FindDataProcessor.cpp
-        src/handlers/processors/FindNodeProcessor.cpp
-        src/handlers/processors/FindProcessor.cpp
+        src/processors/FindDataProcessor.cpp
+        src/processors/FindNodeProcessor.cpp
+        src/processors/FindProcessor.cpp
         src/kbuckets/KBucketsTools.cpp
         src/kbuckets/KBucket.cpp
         src/kbuckets/KBucketsManager.cpp

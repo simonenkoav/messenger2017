@@ -15,6 +15,11 @@ namespace routing {
     void KBucketsManager::getNeighbours(const NodeInfo &nodeInfo) const {
 
     }
+
+    KBucketsManager::KBucketsManager() {
+
+    }
+
 } // namespace routing
 } // namespace m2
 

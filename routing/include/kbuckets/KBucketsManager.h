@@ -9,7 +9,7 @@ namespace routing {
 class KBucketsManager
 {
 public:
-
+    KBucketsManager(); //TODO remove it, it's temporary for build
     KBucketsManager(const NodeInfo &nodeInfo);
 
     void insert(const NodeInfo &nodeInfo);
