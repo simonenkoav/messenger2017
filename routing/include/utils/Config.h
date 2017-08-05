@@ -5,7 +5,7 @@ namespace routing {
 
 /// Constants is a singleton for providing all global constants
 /// TODO: implement method updateConfig (string filename)
-static class Config
+class Config
 {
 public:
     Config() {
@@ -26,8 +26,7 @@ private:
     static int k;
 
   static void setDefaultConfig(){
-    alpha = 3;
-    k = 20;
+      // for now, do nothing 
   }
 
 };
