@@ -20,6 +20,6 @@ Message* FindNodeHandler::handleMessage(Message message)
     //return reply;
     return NULL;
 }
-        
+
 } // namespace routing
 } // namespace m2

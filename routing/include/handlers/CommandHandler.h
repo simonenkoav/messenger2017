@@ -18,6 +18,6 @@ public:
 private:
     //Node* node;
 };
-        
+
 } // namespace routing
 } // namespace m2

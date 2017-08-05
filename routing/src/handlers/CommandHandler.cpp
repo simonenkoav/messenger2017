@@ -13,5 +13,9 @@ CommandHandler::~CommandHandler()
 {
 }
 
+Message *CommandHandler::handleMessage(Message message) {
+    return nullptr;
+}
+
 } // namespace routing
 } // namespace m2

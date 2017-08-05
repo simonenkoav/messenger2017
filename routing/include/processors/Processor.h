@@ -10,10 +10,11 @@ public:
     Processor();
     ~Processor();
 
-    virtual void process(NodeInfo node_info, void* additional_data);
+    virtual void process(NodeInfo node_info, void* additional_data) = 0;
 
 protected:
     virtual void sendRequest(NodeInfo recipient);
 };
-}
-}
+
+} //namespace routing
+} //namespace m2

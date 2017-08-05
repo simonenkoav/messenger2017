@@ -22,9 +22,9 @@ public:
     FindProcessor(Node& node);
     ~FindProcessor();
 
-   
+
 public:
-    
+
     virtual Message* handleMessage(Message message);
     void process(uuid guid);
 
@@ -36,7 +36,7 @@ protected:
     list<NodeInfo> wait_for_answer;
     list<NodeInfo> k_best;
 
-    // Methdods 
+    // Methdods
     virtual void sendRequest(NodeInfo recipient);
 };
 }

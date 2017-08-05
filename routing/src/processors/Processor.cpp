@@ -1,6 +1,9 @@
 #include "processors/Processor.h"
 
-using namespace m2::routing;
+namespace m2
+{
+namespace routing
+{
 
 Processor::Processor()
 {
@@ -9,4 +12,7 @@ Processor::Processor()
 
 Processor::~Processor()
 {
+}
+
+}
 }
