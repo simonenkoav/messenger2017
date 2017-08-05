@@ -1,22 +1,36 @@
 #pragma once
-
+#include <string>
+#include "boost/uuid/uuid.hpp"
+//#include "CommandHandler.h"
 #include "data_structures/messages/Message.h"
 #include "kbuckets/KBucketsManager.h"
+#include "NetworkConnector/NetworkConnector.h"
+#include "DHT/DHT.h"
+
+using std::string;
+using boost::uuids::uuid;
 
 namespace m2 {
 namespace routing {
 
+
 class Node //friend class CommandHandler
 {
-  //Validator validator;
- public:
-  Node();
-  ~Node();
+    friend class FindNodeProcessor;
+public:
+    Node(string port) {};
+    ~Node();
 
- private:
-//  DHT dht; //TODO
-  KBucketsManager kBucketsManager;
 
+
+    void start(uuid bootstrap_guid, string ip_address, string port);
+        // void stop();
+private:
+    void onMessageReceive(char* buffer, size_t size);
+
+    DHT dht;
+    NetworkConnector networkConnector;
+    KBucketsManager kbucketsManager;
 
 };
 

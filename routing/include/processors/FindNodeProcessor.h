@@ -1,5 +1,5 @@
 #include "processors/FindProcessor.h"
-
+#include "data_structures/messages/FindNodeMessage.h"
 
 namespace m2 {
 namespace routing {
