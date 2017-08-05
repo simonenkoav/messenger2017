@@ -6,25 +6,38 @@
 #include "handlers/CommandHandler.h"
 #include "data_structures/NodeInfo.h"
 #include "Processor.h"
+#include "utils/Config.h"
+
+namespace m2 {
+namespace routing {
 
 using boost::uuids::uuid;
 using std::vector;
 using std::list;
 
-class FindProcessor : CommandHandler, Processor
+class FindProcessor : Processor
 {
-    
+
 public:
-    FindProcessor();
+    FindProcessor(Node& node);
     ~FindProcessor();
 
-
+   
 public:
+    
     virtual Message* handleMessage(Message message);
     void process(uuid guid);
 
 protected:
-    list<> not_asked;
-    list<NodeInfo>
-};
+    // Fields
+    Node& node;
+    uuid searched_guid;
+    list<NodeInfo> not_asked;
+    list<NodeInfo> wait_for_answer;
+    list<NodeInfo> k_best;
 
+    // Methdods 
+    virtual void sendRequest(NodeInfo recipient);
+};
+}
+}

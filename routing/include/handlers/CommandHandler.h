@@ -1,11 +1,6 @@
 #pragma once
-<<<<<<< HEAD
 #include "core/Node.h"
-#include "data_structures/Message.h"
-=======
-#include "Node.h"
-#include "Message.h"
->>>>>>> upstream/master
+#include "data_structures/messages/Message.h"
 
 namespace m2 {
 namespace routing {
@@ -14,19 +9,14 @@ namespace routing {
 class CommandHandler
 {
 public:
-    CommandHandler(Node* node);
+    CommandHandler(Node& node);
     ~CommandHandler();
 
 public:
     virtual Message* handleMessage(Message message);
 
-<<<<<<< HEAD
-
 private:
-    Node* node;
-
-=======
->>>>>>> upstream/master
+    //Node* node;
 };
         
 } // namespace routing

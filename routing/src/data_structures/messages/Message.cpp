@@ -1,12 +1,11 @@
-#include "data_structures/Message.h"
+#include "data_structures/messages/Message.h"
 
 namespace m2 {
 namespace routing {
 
-Message::Message()
+Message::Message(NodeInfo node_info)
 {
 }
-
 
 Message::~Message()
 {

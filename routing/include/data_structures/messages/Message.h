@@ -1,4 +1,5 @@
 #pragma once
+#include "data_structures/NodeInfo.h"
 
 namespace m2 {
 namespace routing {
@@ -6,7 +7,7 @@ namespace routing {
 class Message
 {
 public:
-    Message();
+    Message(NodeInfo node_info);
     ~Message();
 };
     

@@ -9,7 +9,7 @@ class FindDataHandler : public CommandHandler
 
 
 public:
-    FindDataHandler(Node* node);
+    FindDataHandler(Node& node);
     ~FindDataHandler();
 
 

@@ -1,6 +1,6 @@
 #pragma once
 //#include "CommandHandler.h"
-#include "data_structures/Message.h"
+#include "data_structures/messages/Message.h"
 
 namespace m2 {
 namespace routing {
@@ -13,8 +13,8 @@ class Node //friend class CommandHandler
   ~Node();
 
  private:
-  DHT dht;
-  KBucketManager kbucketManager;
+  //DHT dht;
+  //KBucketManager kbucketManager;
 
 
 };
