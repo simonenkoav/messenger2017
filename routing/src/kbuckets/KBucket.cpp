@@ -7,19 +7,19 @@ namespace m2 {
 namespace routing {
     
 KBucket::KBucket():
-    k(m2::routing::Config::getK())
+    k(Config::getK())
 {}
 
 KBucket::KBucket(const std::list<NodeInfo>& known_nodes):
-    k(m2::routing::Config::getK()),
+    k(Config::getK()),
     nodes(known_nodes)
 {}
 
-bool KBucket::insert(const m2::routing::NodeInfo& node)
+bool KBucket::insert(const NodeInfo& node)
 {
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
         if (it->uuid == node.uuid) {
-            throw std::runtimer_error("KBucket::insert: duplicate uuid");
+            throw std::runtime_error("KBucket::insert: duplicate uuid");
         }
     }
 
@@ -37,11 +37,11 @@ void KBucket::removeTail()
     if (!filled) {
         throw std::runtime_error("KBucket::removeTail: empty bucket");
     }
-
-    nodes.erase(nodes.rbegin());
+    
+    nodes.pop_back();
 }
 
-void KBucket::moveToHead(const m2::routing::NodeInfo& node)
+void KBucket::moveToHead(const NodeInfo& node)
 {
     auto found = std::find(nodes.begin(), nodes.end(), node);
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
@@ -55,7 +55,7 @@ void KBucket::moveToHead(const m2::routing::NodeInfo& node)
     throw std::runtime_error("KBucket::moveToHead: node not found");
 }
 
-bool KBucket::contains(const m2::routing::NodeInfo& node) const
+bool KBucket::contains(const NodeInfo& node) const
 {
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
         if (it->uuid == node.uuid) {
