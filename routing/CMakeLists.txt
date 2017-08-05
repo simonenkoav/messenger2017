@@ -68,13 +68,29 @@ endmacro()
 
 
 # -------------------------   sources   -------------------------
+include_directories(include/core/ include/data_structures include/handlers include/handlers/processors)
 set(HEADERS
         stdafx.h
+        include/core/Node.h
+        include/data_structures/Message.h
+        include/handlers/CommandHandler.h
+        include/handlers/FindDataHandler.h
+        include/handlers/FindNodeHandler.h
+        include/handlers/processors/FindDataProcessor.h
+        include/handlers/processors/FindNodeProcessor.h
+        include/handlers/processors/FindProcessor.h
         )
 
 set(SOURCES
         src/stdafx.cpp
-
+        src/core/Node.cpp
+        src/data_structures/Message.cpp
+        src/handlers/CommandHandler.cpp
+        src/handlers/FindDataHandler.cpp
+        src/handlers/FindNodeHandler.cpp
+        src/handlers/processors/FindDataProcessor.cpp
+        src/handlers/processors/FindNodeProcessor.cpp
+        src/handlers/processors/FindProcessor.cpp
         src/main.cpp
         )
 
