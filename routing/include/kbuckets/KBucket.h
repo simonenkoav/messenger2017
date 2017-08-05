@@ -9,14 +9,18 @@ class KBucket final
 {
 public:
     KBucket();
-    
-    bool insert(const m2::routing::NodeInfo& src);
-    void replaceOldest(const m2::routing::NodeInfo& src);
+    KBucket(const std::list<NodeInfo>& known_nodes); // WRN: doesn't check for uuid duplicates
+ 
+    bool insert(const m2::routing::NodeInfo& node); // new uuids only
+    void replaceTail(const m2::routing::NodeInfo& node);
+    void moveToHead(const m2::routing::NodeInfo& node); // erase NodeInfo with node.uuid & put new NodeInfo to head  
 
-    NodeInfo oldest() const;
-    
     std::list<m2::routing::NodeInfo> known() const { return nodes; }
+    
     size_t knownCnt() const { return filled; }
+
+    bool contains(const m2::routing::NodeInfo& node) const;
+    NodeInfo tail() const;    
 
 protected:
     std::list<m2::routing::NodeInfo> nodes;
