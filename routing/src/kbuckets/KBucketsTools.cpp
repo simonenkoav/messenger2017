@@ -25,7 +25,7 @@ static int bsearchHighestBit(T val)
     int low = 0;
     int high = 8 * sizeof(T);
     
-    while (high > low) {
+    while (high - low > 1) {
         int mid = low + (high - low) / 2;
         if (val < (1 << mid)) {
             high = mid;
@@ -34,7 +34,7 @@ static int bsearchHighestBit(T val)
         }
     }
 
-    return low;
+    return val? high: 0;
 }
     
 int KBucketsTools::distanceIndex(const uuid& src, const uuid& dst)
@@ -47,6 +47,11 @@ int KBucketsTools::distanceIndex(const uuid& src, const uuid& dst)
     }
 
     return 0;
+}
+
+int KBucketsTools::commonPrefixBitsLen(const uuid& src, const uuid& dst)
+{
+    return uuidBitwidth() - distanceIndex(src, dst);
 }
 
 bool KBucketsTools::getBit(const uuid& src, int bit)
