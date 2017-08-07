@@ -1,5 +1,5 @@
 #include "processors/FindProcessor.h"
-#include "data_structures/messages/FindNodeMessage.h"
+#include "data_structures/Message.h"
 #include "utils/MessageBuilder.h"
 
 namespace m2 {

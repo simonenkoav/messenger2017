@@ -8,14 +8,11 @@
 #include "handlers/CommandHandler.h"
 #include "processors/Processor.h"
 
-#include "boost/uuid/uuid.hpp"
-#include "boost/uuid/uuid_generators.hpp"
-
 #include "processors/Processor.h"
 #include "handlers/CommandHandler.h"
 
 
-#include "data_structures/messages/Message.h"
+#include "data_structures/Message.h"
 #include "kbuckets/KBucketsManager.h"
 #include "NetworkConnector/NetworkConnector.h"
 #include "DHT/DHT.h"
@@ -43,8 +40,8 @@ private:
     NodeInfo self_info;
     NetworkConnector network_connector;
     KBucketsManager kbuckets_manager;
-    std::unordered_map<MessageType, CommandHandler, MessageTypeHash> handlers;
-    std::unordered_map<MessageType, Processor, MessageTypeHash> processors;
+    std::unordered_map<MessageType, CommandHandler *, MessageTypeHash> handlers;
+    std::unordered_map<MessageType, Processor *, MessageTypeHash> processors;
 
     friend class PingProcessor;
     friend class StoreProcessor;

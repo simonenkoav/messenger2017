@@ -12,7 +12,7 @@ void FindNodeProcessor::process(uuid guid)
 
 void FindNodeProcessor::sendRequest(NodeInfo recipient)
 {
-    FindNodeMessage message(node.self_info, searched_guid);
+    FindNodeRequestMessage message(node.self_info, searched_guid);
     node.network_connector.sendMessage(recipient.ip, recipient.port, MessageBuilder::serialize(message));
 }
 }

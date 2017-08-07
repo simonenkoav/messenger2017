@@ -20,7 +20,8 @@ void FindProcessor::process(uuid guid)
     for (size_t i = 0; i < alpha; i++)
     {
         sendRequest(not_asked.front());
-        wait_for_answer.push_back(not_asked.front());
+        auto front = not_asked.front();
+        wait_for_answer.push_back(front);
         not_asked.pop_front();
     }
 }
