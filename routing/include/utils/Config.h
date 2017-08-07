@@ -1,12 +1,14 @@
 #pragma once
 
+namespace m2 {
+namespace routing {
 /// Constants is a singleton for providing all global constants
 /// TODO: implement method updateConfig (string filename)
-static class Config
+class Config
 {
 public:
     Config() {
-      setDefaultConfig();
+        setDefaultConfig();
     }
 
 public:
@@ -14,8 +16,8 @@ public:
         return alpha;
     }
 
-    static int getK(){
-      return k;
+    static int getK() {
+        return k;
     }
 
 private:
@@ -23,8 +25,10 @@ private:
     static int k;
 
   static void setDefaultConfig(){
-    alpha = 3;
-    k = 20;
+      // for now, do nothing
   }
 
 };
+
+} // namespace routing
+} // namespace m2

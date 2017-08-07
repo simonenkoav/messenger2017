@@ -16,12 +16,14 @@ class FindDataProcessor;
 using namespace m2::routing;
 
 Node::Node(string port)
-    : network_connector(std::stoi(port),
-                       [this] (char* buffer, size_t size) {
-                           this->onMessageReceive(buffer, size);
-                       })
-    , dht()
+    : dht()
 {
+    auto onMsgReceiveCallback = [this] (char* buffer, size_t size) {
+      this->onMessageReceive(buffer, size);
+    };
+    network_connector = NetworkConnector(std::stoi(port), onMsgReceiveCallback);
+
+
     // create own uuid
     uuid my_guid = boost::uuids::basic_random_generator<boost::mt19937>()();
 

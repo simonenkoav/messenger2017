@@ -1,12 +1,10 @@
 #include "handlers/CommandHandler.h"
-#include "core/Node.h"
 
 namespace m2 {
 namespace routing {
 
-CommandHandler::CommandHandler(Node* node)
+CommandHandler::CommandHandler()
 {
-    this->node = node;
 }
 
 CommandHandler::~CommandHandler()

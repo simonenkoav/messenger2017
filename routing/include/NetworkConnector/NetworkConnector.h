@@ -4,28 +4,32 @@
 #pragma once
 
 #include "boost/asio.hpp"
+#include <vector>
 #include <string>
 #include <functional>
 
-using std::string;
 
 namespace m2 {
 namespace routing {
+using std::string;
+using std::vector;
 
 class NetworkConnector
 {
-public:
-    NetworkConnector(int port, std::function<void()> onMessageReceiveCallback);
-    void sendMessage(string ip, string port, char* buffer, size_t size);
-    void startAccept();
-    string getMyIpAddress();
+ public:
+  NetworkConnector(int port, std::function<void(char* buffer, size_t size)> onMessageReceiveCallback);
 
-private:
-    std::function<void()> callback;
+  NetworkConnector();
+
+  void sendMessage(string ip, int port, vector<char> buffer);
+  void startAccept();
+  string getMyIpAddress();
+
+ private:
+  std::function<void(char* buffer, size_t size)> callback;
 //    asio::socket
 //    std::array<char, const_size> buffer;
 };
 
 } // end routing
 } // end m2
-
