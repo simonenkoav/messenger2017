@@ -44,13 +44,13 @@ struct StoreRequestMessage : public Message
 struct FindNodeRequestMessage : public Message
 {
     uuid guid;
-    FindNodeRequestMessage(const NodeInfo &node_info, uuid guid);
+    FindNodeRequestMessage(const NodeInfo &node_info, const uuid guid);
 };
 
 struct FindDataRequest : public Message
 {
     uuid guid;
-    FindNodeRequestMessage(const NodeInfo &node_info, uuid guid);
+    FindDataRequest(const NodeInfo &node_info, const uuid guid);
 };
 
 struct PingResponseMessage : public Message

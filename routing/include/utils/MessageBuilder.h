@@ -18,8 +18,15 @@ public:
     MessageBuilder();
     ~MessageBuilder();
 
-    static Message deserialize(vector<char> buffer);
-    static vector<char> serialize(const PingRequestMessage &message);
+    std::unique_ptr<Message> deserialize(vector<char> &buffer);
+    vector<char> serialize(const PingRequestMessage &message);
+    vector<char> serialize(const StoreRequestMessage &message);
+    vector<char> serialize(const FindNodeRequestMessage &message);
+    vector<char> serialize(const FindDataRequestMessage &message);
+    vector<char> serialize(const PingResponseMessage &message);
+    vector<char> serialize(const StoreResponsetMessage &message);
+    vector<char> serialize(const FindNodeResponseMessage &message);
+    vector<char> serialize(const FindDataResponseMessage &message);
 };
 }
 }
