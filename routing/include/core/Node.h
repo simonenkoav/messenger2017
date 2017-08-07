@@ -2,15 +2,12 @@
 #include <string>
 #include <unordered_map>
 
+#include "boost/asio.hpp"
 #include "boost/uuid/uuid.hpp"
 #include "boost/uuid/uuid_generators.hpp"
 
 #include "handlers/CommandHandler.h"
-#include "handlers/FindNodeHandler.h"
-#include "handlers/FindDataHandler.h"
-
-#include "processors/FindDataProcessor.h"
-#include "processors/FindNodeProcessor.h"
+#include "processors/Processor.h"
 
 #include "data_structures/Message.h"
 #include "kbuckets/KBucketsManager.h"
@@ -27,7 +24,7 @@ namespace routing {
 class Node
 {
 public:
-    Node(string port) {};
+    Node(string port);
     ~Node();
 
 
@@ -35,11 +32,13 @@ public:
         // void stop();
 private:
     void onMessageReceive(char* buffer, size_t size);
+    void startAsyncUpdateKBuckets();
 
     DHT dht;
     NodeInfo self_info;
     NetworkConnector network_connector;
     KBucketsManager kbuckets_manager;
+    boost::asio::io_service io_service;
     std::unordered_map<MessageType, CommandHandler, MessageTypeHash> handlers;
     std::unordered_map<MessageType, Processor, MessageTypeHash> processors;
 

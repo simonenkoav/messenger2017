@@ -1,6 +1,17 @@
 #include <handlers/FindDataHandler.h>
 #include <handlers/FindNodeHandler.h>
+//#include "handlers/StoreHandler.h"
+//#include "handlers/PingNodeHandler.h"
+
 #include "core/Node.h"
+
+class StoreHandler;
+class PingNodeHandler;
+
+class PingNodeProcessor;
+class StoreProcessor;
+class FindNodeProcessor;
+class FindDataProcessor;
 
 using namespace m2::routing;
 
@@ -12,26 +23,26 @@ Node::Node(string port)
     , dht()
 {
     // create own uuid
-    uuid my_guid = boost::uuids::basic_random_generator()();
+    uuid my_guid = boost::uuids::basic_random_generator<boost::mt19937>()();
 
     // put int kbucket self_info
     self_info = {my_guid, network_connector.getMyIpAddress(), std::stoi(port)};
     kbuckets_manager.setNodeInfo(self_info);
 
-    handlers = {std::make_pair(MessageType::PingRequest,     PingNodeHandler(this)),
-                std::make_pair(MessageType::StoreRequest,    StoreHandler(this)),
-                std::make_pair(MessageType::FindNodeRequest, FindNodeHandler(this)),
-                std::make_pair(MessageType::FindDataRequest, FindDataHandler(this)),
+    handlers = {{MessageType::PingRequest,     PingNodeHandler(this)},
+                {MessageType::StoreRequest,    StoreHandler(this)},
+                {MessageType::FindNodeRequest, FindNodeHandler(this)},
+                {MessageType::FindDataRequest, FindDataHandler(this)},
 
-                std::make_pair(MessageType::PingResponse,     PingNodeProcessor(this)),
-                std::make_pair(MessageType::StoreResponse,    StoreProcessor(this)),
-                std::make_pair(MessageType::FindNodeResponse, FindNodeProcessor(this)),
-                std::make_pair(MessageType::FindDataResponse, FindDataProcessor(this))};
+                {MessageType::PingResponse,     PingNodeProcessor(this)},
+                {MessageType::StoreResponse,    StoreProcessor(this)},
+                {MessageType::FindNodeResponse, FindNodeProcessor(this)},
+                {MessageType::FindDataResponse, FindDataProcessor(this)}};
 
-    processors = {std::make_pair(MessageType::PingResponse,     PingNodeProcessor(this)),
-                  std::make_pair(MessageType::StoreResponse,    StoreProcessor(this)),
-                  std::make_pair(MessageType::FindNodeResponse, FindNodeProcessor(this)),
-                  std::make_pair(MessageType::FindDataResponse, FindDataProcessor(this))};
+    processors = {{MessageType::PingResponse,     PingNodeProcessor(this)},
+                  {MessageType::StoreResponse,    StoreProcessor(this)},
+                  {MessageType::FindNodeResponse, FindNodeProcessor(this)},
+                  {MessageType::FindDataResponse, FindDataProcessor(this)}};
 
     // start accept incoming messages
     network_connector.startAccept();
@@ -39,11 +50,30 @@ Node::Node(string port)
     // send request to find k-neighbors
     processors[MessageType::FindNodeResponse].process(self_info.uuid);
 
+    startAsyncUpdateKBuckets();
 };
+
+/*!
+ * Find k-neighbors every T time;
+ */
+void Node::startAsyncUpdateKBuckets()
+{
+//    делаем async_wait и кладем что-то типо
+//    processors[MessageType::FindNodeResponse].process(self_info.uuid);
+}
+
+/*!
+ * handle incoming messages
+ * @param buffer
+ * @param size
+ */
+void Node::onMessageReceive(char *buffer, size_t size)
+{
+
+}
+
 
 Node::~Node()
 {
 }
 
-} // namespace routing
-} // namespace m2
