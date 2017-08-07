@@ -10,22 +10,19 @@ namespace routing {
     {
         KBucket initialKBucket;
         initialKBucket.insert(nodeInfo);
-        intervalToBucket.insert(std::pair<int, KBucket>(0, initialKBucket));
+        interval_to_bucket.insert(std::pair<int, KBucket>(0, initialKBucket));
     }
 
     void KBucketsManager::insert(const NodeInfo &newNodeInfo) {
-//        int xorResult = KBucketsTools::calculateXor(ourNodeInfo, newNodeInfo); //TODO
-        int xorResult = 1; //some power of 2
-        int bucketIndex = getIntervalInMap(xorResult);
+        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.uuid, newNodeInfo.uuid);
 
         if (bucketIndex != -1) //think about situation when bucketIndex == -1
         {
-            auto bucket = intervalToBucket[bucketIndex];
+            auto bucket = interval_to_bucket[bucketIndex];
 
-            auto bucketList = bucket.known(); //TODO replace by KBucket method
-            bool found = (std::find(bucketList.begin(), bucketList.end(), newNodeInfo) != bucketList.end());
-            if (found) {
-                //TODO call KBucket::moveToTop(newNodeInfo)
+            bool bucketHasNewNode = bucket.contains(newNodeInfo);
+            if (bucketHasNewNode) {
+                bucket.moveToHead(newNodeInfo);
                 return;
             }
 
@@ -33,23 +30,23 @@ namespace routing {
             if (bucket.knownCnt() < K) {
                 bucket.insert(newNodeInfo);
             } else { //bucket is full
-                //TODO replace by KBucket method
-                bool foundOurs = (std::find(bucketList.begin(), bucketList.end(), ourNodeInfo) != bucketList.end());
-                if (foundOurs) { //this bucket contains ourNodeInfo
-                    split(bucketIndex, newNodeInfo);
-                    return;
+                bool bucketHasUs = bucket.contains(ourNodeInfo);
+                if (bucketHasUs) { //this bucket contains ourNodeInfo
+                    //check and ask Anton what he returns as first and what as second in pair
+                    auto pairOfNewBuckets = KBucketsTools::split(bucket.known(), bucketIndex + 1);
+                    interval_to_bucket.erase(bucketIndex);
+                    interval_to_bucket.insert(std::pair<int, KBucket>(bucketIndex,
+                                                                      KBucket(pairOfNewBuckets.first)));
+                    interval_to_bucket.insert(std::pair<int, KBucket>(bucketIndex + 1,
+                                                                      KBucket(pairOfNewBuckets.second)));
+                    insert(newNodeInfo); //I hope I'm not mistaken
                 } else {
-                    auto lastConnectedNodeInfo = bucket.oldest();
+                    auto lastConnectedNodeInfo = bucket.tail();
                     //TODO ping lastConnectedNodeInfo, do appropriate actions when it would answer on ping or not
                 }
 
             }
         }
-    }
-
-    void KBucketsManager::getNeighbours(const NodeInfo &nodeInfo) const
-    {
-
     }
 
     std::list<NodeInfo> KBucketsManager::getNeighbours(const boost::uuids::uuid &guid) const
@@ -62,31 +59,8 @@ namespace routing {
 
     }
 
-    int KBucketsManager::getIntervalInMap(int xorResult)
-    {
-        std::list<int> smallerKeys;
-
-        std::for_each(intervalToBucket.begin(), intervalToBucket.end(),
-                      [xorResult, &smallerKeys](std::pair<int, KBucket> keyToValue) {
-                          int index = keyToValue.first;
-                          if (index < xorResult) {
-                              smallerKeys.push_back(index);
-                          }
-                      });
-
-        if (smallerKeys.size() == 0) //actually we shouldn't face this situation...
-            return -1;
-
-        auto result = std::max_element(smallerKeys.begin(), smallerKeys.end());
-        return *result;
-    }
-
     void KBucketsManager::setNodeInfo(const NodeInfo &nodeInfo) {
         ourNodeInfo = nodeInfo;
-    }
-
-    void KBucketsManager::split(int interval, const NodeInfo &newNodeInfo) {
-
     }
 
 } // namespace routing
