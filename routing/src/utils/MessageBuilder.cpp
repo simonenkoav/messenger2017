@@ -11,7 +11,7 @@ MessageBuilder::~MessageBuilder()
 {
 }
 
-std::unique_ptr<Message> MessageBuilder::deserialize(vector<char> buffer)
+std::unique_ptr<Message> MessageBuilder::deserialize(vector<char> &buffer)
 {
     MessageBuilder::Message message;
     std::string buffer_string(buffer.begin(), buffer.end());
