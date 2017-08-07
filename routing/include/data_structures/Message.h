@@ -1,18 +1,24 @@
 #pragma once
+#include "data_structures/NodeInfo.h"
 
 #include <string>
+#include <vector>
 
 namespace m2 {
 namespace routing {
 
-class Message
+enum MessageType;
+
+struct Message
 {
-public:
-    Message();
-    ~Message();
+    NodeInfo node_info;
+    MessageType message_type;
+
+    Message(const NodeInfo &node_info, const MessageType message_type);
+    virtual ~Message();
 };
 
-enum class MessageType {
+enum MessageType {
     PingRequest,
     StoreRequest,
     FindNodeRequest,
@@ -22,6 +28,51 @@ enum class MessageType {
     StoreResponse,
     FindNodeResponse,
     FindDataResponse
+};
+
+struct PingRequestMessage : public Message
+{
+    PingRequestMessage(const NodeInfo &node_info);
+};
+
+struct StoreRequestMessage : public Message
+{
+    NodeInfo store_node_info;
+    StoreRequestMessage(const NodeInfo &node_info, const NodeInfo &store_node_info);
+};
+
+struct FindNodeRequestMessage : public Message
+{
+    uuid guid;
+    FindNodeRequestMessage(const NodeInfo &node_info, uuid guid);
+};
+
+struct FindDataRequest : public Message
+{
+    uuid guid;
+    FindNodeRequestMessage(const NodeInfo &node_info, uuid guid);
+};
+
+struct PingResponseMessage : public Message
+{
+    PingResponseMessage(const NodeInfo &node_info);
+};
+
+struct StoreResponsetMessage : public Message
+{
+    StoreResponseMessage(const NodeInfo &node_info);
+};
+
+struct FindNodeResponseMessage : public Message
+{
+    vector<NodeInfo> found_nodes_info;
+    FindNodeRequestMessage(const NodeInfo &node_info, const vector<NodeInfo> &found_nodes_info);
+};
+
+struct FindDataResponseMessage : public Message
+{
+    string domain;
+    FindNodeResponseMessage(const NodeInfo &node_info, const string domain);
 };
 
 class MessageTypeHash
