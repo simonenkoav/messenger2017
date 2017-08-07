@@ -6,13 +6,16 @@
 #include "boost/uuid/uuid_generators.hpp"
 
 #include "handlers/CommandHandler.h"
-#include "handlers/FindNodeHandler.h"
-#include "handlers/FindDataHandler.h"
+#include "processors/Processor.h"
 
-#include "processors/FindDataProcessor.h"
-#include "processors/FindNodeProcessor.h"
+#include "boost/uuid/uuid.hpp"
+#include "boost/uuid/uuid_generators.hpp"
 
-#include "data_structures/Message.h"
+#include "processors/Processor.h"
+#include "handlers/CommandHandler.h"
+
+
+#include "data_structures/messages/Message.h"
 #include "kbuckets/KBucketsManager.h"
 #include "NetworkConnector/NetworkConnector.h"
 #include "DHT/DHT.h"
@@ -27,7 +30,7 @@ namespace routing {
 class Node
 {
 public:
-    Node(string port) {};
+    Node(string port);
     ~Node();
 
 
@@ -37,14 +40,15 @@ private:
     void onMessageReceive(char* buffer, size_t size);
 
     DHT dht;
-    std::size_t void a();
-    NodeInfo selfInfo;
-    NetworkConnector networkConnector;
-    KBucketsManager kbucketsManager;
+    NodeInfo self_info;
+    NetworkConnector network_connector;
+    KBucketsManager kbuckets_manager;
     std::unordered_map<MessageType, CommandHandler, MessageTypeHash> handlers;
+    std::unordered_map<MessageType, Processor, MessageTypeHash> processors;
 
     friend class PingProcessor;
     friend class StoreProcessor;
+    friend class FindProcessor;
     friend class FindNodeProcessor;
     friend class FindDataProcessor;
 

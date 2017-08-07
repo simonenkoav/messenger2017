@@ -4,19 +4,21 @@
 #pragma once
 
 #include "boost/asio.hpp"
+#include <vector>
 #include <string>
 #include <functional>
 
-using std::string;
 
 namespace m2 {
 namespace routing {
+using std::string;
+using std::vector;
 
 class NetworkConnector
 {
 public:
     NetworkConnector(int port, std::function<void()> onMessageReceiveCallback);
-    void sendMessage(string ip, string port, char* buffer, size_t size);
+    void sendMessage(string ip, int port, vector<char> buffer);
     void startAccept();
     string getMyIpAddress();
 
@@ -28,4 +30,3 @@ private:
 
 } // end routing
 } // end m2
-

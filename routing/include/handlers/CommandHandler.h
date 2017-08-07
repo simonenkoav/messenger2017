@@ -1,7 +1,5 @@
 #pragma once
-
-#include "core/Node.h"
-#include "data_structures/Message.h"
+#include "data_structures/messages/Message.h"
 
 namespace m2 {
 namespace routing {
@@ -10,16 +8,14 @@ namespace routing {
 class CommandHandler
 {
 public:
-    CommandHandler(Node* node);
+    CommandHandler();
     ~CommandHandler();
 
 public:
     virtual Message* handleMessage(Message message);
 
 private:
-    Node* node;
-
 };
-        
+
 } // namespace routing
 } // namespace m2

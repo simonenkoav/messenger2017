@@ -1,5 +1,6 @@
 #pragma once
 #include "handlers/CommandHandler.h"
+#include "core/Node.h"
 
 namespace m2 {
 namespace routing {
@@ -8,18 +9,13 @@ class FindNodeHandler : public CommandHandler
 {
 
 public:
-    FindNodeHandler(Node* node);
+    virtual Message* handleMessage(Message message);
+    FindNodeHandler(Node& node);
     ~FindNodeHandler();
 
 
 private:
-    Message* handleMessage(Message message);
-
-public:
-
-
-
-
+    Node& node;
 };
 
 } // namespace m2

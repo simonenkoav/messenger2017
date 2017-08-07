@@ -4,7 +4,7 @@
 
 namespace m2 {
 namespace routing {
-    
+
 KBucket::KBucket():
     k(m2::routing::Config::getK())
 {}
@@ -16,7 +16,7 @@ bool KBucket::insert(const m2::routing::NodeInfo& src)
        ++filled;
        return true;
     }
-    
+
     return false;
 }
 
