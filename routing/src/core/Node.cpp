@@ -1,54 +1,87 @@
 #include <handlers/FindDataHandler.h>
 #include <handlers/FindNodeHandler.h>
-#include "processors/FindDataProcessor.h"
-#include "processors/FindNodeProcessor.h"
+//#include "handlers/StoreHandler.h"
+//#include "handlers/PingNodeHandler.h"
+
 #include "core/Node.h"
+
+class StoreHandler;
+class PingNodeHandler;
+
+class PingNodeProcessor;
+class StoreProcessor;
+class FindNodeProcessor;
+class FindDataProcessor;
 
 using namespace m2::routing;
 
 Node::Node(string port)
+    : io_service()
+    , dht()
 {
-    auto onMsgReceiveCallback = [this] (char* buffer, size_t size) {
+//    auto onMsgReceiveCallback = std::bind(&Node::onMessageReceive, *this,
+//                                          std::placeholders::_1, std::placeholders::_2);
+    auto onMsgReceiveCallback = [this](char* buffer, size_t size) {
         this->onMessageReceive(buffer, size);
     };
     network_connector = NetworkConnector(std::stoi(port), onMsgReceiveCallback);
 
+
     // create own uuid
-    uuid my_guid = boost::uuids::basic_random_generator()();
+    uuid my_guid = boost::uuids::basic_random_generator<boost::mt19937>()();
 
     // put int kbucket self_info
     self_info = {my_guid, network_connector.getMyIpAddress(), std::stoi(port)};
     kbuckets_manager.setNodeInfo(self_info);
 
-    //TODO add new everywhere
-    handlers = {std::make_pair(MessageType::PingRequest,     PingNodeHandler(this)),
-                std::make_pair(MessageType::StoreRequest,    StoreHandler(this)),
-                std::make_pair(MessageType::FindNodeRequest, FindNodeHandler(this)),
-                std::make_pair(MessageType::FindDataRequest, FindDataHandler(this)),
 
-                std::make_pair(MessageType::PingResponse,     PingNodeProcessor(this)),
-                std::make_pair(MessageType::StoreResponse,    StoreProcessor(this)),
-                std::make_pair(MessageType::FindNodeResponse, FindNodeProcessor(this)),
-                std::make_pair(MessageType::FindDataResponse, FindDataProcessor(this))};
-    // TODO: ERROR! pay attention that both handlers and processors have to contain the same copy of ProcessorClass
+// расскоментить, когда будут реализованы, пока не компилится
+    handlers.insert({//{MessageType::PingRequest,     new PingNodeHandler(*this)},
+                     //{MessageType::StoreRequest,    new StoreHandler(*this)},
+                     {MessageType::FindNodeRequest, new FindNodeHandler(*this)},
+                     {MessageType::FindDataRequest, new FindDataHandler(*this)},
 
-    //TODO add new everywhere
-    processors = {std::make_pair(MessageType::PingResponse,     PingNodeProcessor(this)),
-                  std::make_pair(MessageType::StoreResponse,    StoreProcessor(this)),
-                  std::make_pair(MessageType::FindNodeResponse, FindNodeProcessor(this)),
-                  std::make_pair(MessageType::FindDataResponse, FindDataProcessor(this))};
+                     //{MessageType::PingResponse,     new PingNodeProcessor(*this)},
+                    // {MessageType::StoreResponse,    new StoreProcessor(*this)},
+                    // {MessageType::FindNodeResponse, new FindNodeProcessor(*this)},
+                    // {MessageType::FindDataResponse, new FindDataProcessor(*this)}});
+                     {}});
 
+  /*  processors.insert({{MessageType::PingResponse,     new PingNodeProcessor(*this)},
+                       {MessageType::StoreResponse,    new StoreProcessor(*this)},
+                       {MessageType::FindNodeResponse, new FindNodeProcessor(*this)},
+                       {MessageType::FindDataResponse, new FindDataProcessor(*this)}});
+*/
     // start accept incoming messages
     network_connector.startAccept();
 
     // send request to find k-neighbors
-    processors[MessageType::FindNodeResponse]->process(self_info, NULL);
+    processors[MessageType::FindNodeResponse]->process(self_info, nullptr);
 
+    startAsyncUpdateKBuckets();
 };
+
+/*!
+ * Find k-neighbors every T time;
+ */
+void Node::startAsyncUpdateKBuckets()
+{
+//    делаем async_wait и кладем что-то типо
+//    processors[MessageType::FindNodeResponse].process(self_info.uuid);
+}
+
+/*!
+ * handle incoming messages
+ * @param buffer
+ * @param size
+ */
+void Node::onMessageReceive(char *buffer, size_t size)
+{
+   // std::unique<Message> msg = ;
+}
+
 
 Node::~Node()
 {
 }
 
-} // namespace routing
-} // namespace m2

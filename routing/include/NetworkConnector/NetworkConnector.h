@@ -16,17 +16,17 @@ using std::vector;
 
 class NetworkConnector
 {
-public:
-    NetworkConnector(int port, std::function<void(char* buffer, size_t size)> onMessageReceiveCallback);
+ public:
+  NetworkConnector(int port, std::function<void(char* buffer, size_t size)> onMessageReceiveCallback);
 
-    NetworkConnector();
+  NetworkConnector();
 
-    void sendMessage(string ip, int port, vector<char> buffer);
-    void startAccept();
-    string getMyIpAddress();
+  void sendMessage(string ip, int port, vector<char> buffer);
+  void startAccept();
+  string getMyIpAddress();
 
-private:
-    std::function<void(char* buffer, size_t size)> callback;
+ private:
+  std::function<void(char* buffer, size_t size)> callback;
 //    asio::socket
 //    std::array<char, const_size> buffer;
 };
