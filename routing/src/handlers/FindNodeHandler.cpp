@@ -3,7 +3,7 @@
 namespace m2 {
 namespace routing {
 
-FindNodeHandler::FindNodeHandler(Node& node):node(node)
+FindNodeHandler::FindNodeHandler(Node& node):CommandHandler(node), NodeContainingObject(node)
 {
 }
 
@@ -11,8 +11,9 @@ FindNodeHandler::~FindNodeHandler()
 {
 }
 
-Message* FindNodeHandler::handleMessage(Message message)
+void FindNodeHandler::handleMessage(Message message)
 {
+    // TODO: 
     //Guid guid = message.getGuid();
     //std::list<NodeInfo> neighbours = node->kbucket_manager.getNeighbours(guid);
     //Message* reply = new Message(/*parameters*/);

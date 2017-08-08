@@ -1,4 +1,5 @@
 #pragma once
+#include <boost/date_time/posix_time/posix_time_duration.hpp>
 
 namespace m2 {
 namespace routing {
@@ -20,9 +21,14 @@ public:
         return k;
     }
 
+    static boost::posix_time::time_duration getResponseTimeout() {
+        return response_timeout;
+    }
+
 private:
     static int alpha;
     static int k;
+    static boost::posix_time::time_duration response_timeout;
 
   static void setDefaultConfig(){
       // for now, do nothing

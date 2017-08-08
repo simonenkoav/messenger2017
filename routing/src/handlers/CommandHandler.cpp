@@ -4,16 +4,12 @@
 namespace m2 {
 namespace routing {
 
-CommandHandler::CommandHandler()
+CommandHandler::CommandHandler(Node& node):NodeContainingObject(node)
 {
 }
 
 CommandHandler::~CommandHandler()
 {
-}
-
-Message *CommandHandler::handleMessage(Message message) {
-    return nullptr;
 }
 
 } // namespace routing

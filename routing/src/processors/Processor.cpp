@@ -5,7 +5,7 @@ namespace m2
 namespace routing
 {
 
-Processor::Processor()
+Processor::Processor(Node& node):NodeContainingObject(node)
 {
 }
 
