@@ -16,10 +16,13 @@ class FindDataProcessor;
 using namespace m2::routing;
 
 Node::Node(string port)
-    : dht()
+    : io_service()
+    , dht()
 {
-    auto onMsgReceiveCallback = [this] (char* buffer, size_t size) {
-      this->onMessageReceive(buffer, size);
+//    auto onMsgReceiveCallback = std::bind(&Node::onMessageReceive, *this,
+//                                          std::placeholders::_1, std::placeholders::_2);
+    auto onMsgReceiveCallback = [this](char* buffer, size_t size) {
+        this->onMessageReceive(buffer, size);
     };
     network_connector = NetworkConnector(std::stoi(port), onMsgReceiveCallback);
 
@@ -31,26 +34,29 @@ Node::Node(string port)
     self_info = {my_guid, network_connector.getMyIpAddress(), std::stoi(port)};
     kbuckets_manager.setNodeInfo(self_info);
 
-    handlers = {{MessageType::PingRequest,     PingNodeHandler(this)},
-                {MessageType::StoreRequest,    StoreHandler(this)},
-                {MessageType::FindNodeRequest, FindNodeHandler(this)},
-                {MessageType::FindDataRequest, FindDataHandler(this)},
 
-                {MessageType::PingResponse,     PingNodeProcessor(this)},
-                {MessageType::StoreResponse,    StoreProcessor(this)},
-                {MessageType::FindNodeResponse, FindNodeProcessor(this)},
-                {MessageType::FindDataResponse, FindDataProcessor(this)}};
+// расскоментить, когда будут реализованы, пока не компилится
+    handlers.insert({//{MessageType::PingRequest,     new PingNodeHandler(*this)},
+                     //{MessageType::StoreRequest,    new StoreHandler(*this)},
+                     {MessageType::FindNodeRequest, new FindNodeHandler(*this)},
+                     {MessageType::FindDataRequest, new FindDataHandler(*this)},
 
-    processors = {{MessageType::PingResponse,     PingNodeProcessor(this)},
-                  {MessageType::StoreResponse,    StoreProcessor(this)},
-                  {MessageType::FindNodeResponse, FindNodeProcessor(this)},
-                  {MessageType::FindDataResponse, FindDataProcessor(this)}};
+                     //{MessageType::PingResponse,     new PingNodeProcessor(*this)},
+                    // {MessageType::StoreResponse,    new StoreProcessor(*this)},
+                    // {MessageType::FindNodeResponse, new FindNodeProcessor(*this)},
+                    // {MessageType::FindDataResponse, new FindDataProcessor(*this)}});
+                     {}});
 
+  /*  processors.insert({{MessageType::PingResponse,     new PingNodeProcessor(*this)},
+                       {MessageType::StoreResponse,    new StoreProcessor(*this)},
+                       {MessageType::FindNodeResponse, new FindNodeProcessor(*this)},
+                       {MessageType::FindDataResponse, new FindDataProcessor(*this)}});
+*/
     // start accept incoming messages
     network_connector.startAccept();
 
     // send request to find k-neighbors
-    processors[MessageType::FindNodeResponse].process(self_info.uuid);
+    processors[MessageType::FindNodeResponse]->process(self_info, nullptr);
 
     startAsyncUpdateKBuckets();
 };
@@ -71,7 +77,7 @@ void Node::startAsyncUpdateKBuckets()
  */
 void Node::onMessageReceive(char *buffer, size_t size)
 {
-
+   // std::unique<Message> msg = ;
 }
 
 
