@@ -4,10 +4,8 @@ namespace m2 {
 namespace routing {
 using namespace processors;
 
-FindProcessor::FindProcessor(Node& node, uuid target) : Processor(node), k_best(Config::getK(), target)
+FindProcessor::FindProcessor(Node& node, uuid request_id, uuid target) : Processor(node, request_id), k_best(Config::getK(), target)
 {
-    // TODO: get reference to io from node
-    io.run();
 }
 
 void FindProcessor::process(uuid guid)
@@ -21,6 +19,7 @@ void FindProcessor::process(uuid guid)
     }
     // TODO: make sorting of referenced list (list&) 
     sort(sorted_nodes);
+    selectNewForKBest();
     askNext();
 }
 
@@ -31,7 +30,7 @@ void FindProcessor::sendRequest(NodeSearchStruct* addressee)
         addressee->node_info.ip,
         addressee->node_info.port,
         getMessage());
-    auto timer = new boost::asio::deadline_timer(io, Config::getResponseTimeout());
+    auto timer = new boost::asio::deadline_timer(node.io_service, Config::getResponseTimeout());
     timer->async_wait(boost::bind(&FindProcessor::timeoutExpires, this, addressee->node_info.uuid, timer));
 }
 
@@ -84,6 +83,7 @@ void FindProcessor::addNode(NodeInfo node_info)
     NodeSearchStruct new_node_search(node_info);
     sorted_nodes.push_back(new_node_search);
     search_map[new_node_search.node_info.uuid] = &new_node_search;
+    k_best.insert(&new_node_search); // here we try to insert (perhaps failed to insert)
 }
 
 void FindProcessor::askNext(int number)
@@ -108,7 +108,7 @@ void FindProcessor::receiveNodesVector(vector<NodeInfo>& nodes)
     }
     // TODO: make sorting of referenced list (list&) 
     sort(sorted_nodes, target);
-    askNext();
+    //askNext(); // here just adding, ask in other place
 }
 
 void FindProcessor::onNodeResponse(uuid node_guid)
@@ -120,6 +120,13 @@ void FindProcessor::onNodeResponse(uuid node_guid)
             k_best.insert(found->second);
         }
         found->second->state = NodeSearchStruct::responded;
+    }
+}
+
+bool FindProcessor::doesSearchFinished()
+{
+    if (true == k_best.doesSearchFinished()) {
+        onSearchFinished();
     }
 }
 

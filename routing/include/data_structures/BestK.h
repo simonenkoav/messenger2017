@@ -25,6 +25,7 @@ public:
     void clear();
     size_t size();
     bool contains(uuid item_uuid);
+    bool doesSearchFinished();
 
     // Insert item to k_best if it does not already exist there. If the list is full
     // it will check whether inserting item is better than other. If it is the item 

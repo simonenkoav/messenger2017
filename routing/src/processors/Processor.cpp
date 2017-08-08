@@ -5,7 +5,7 @@ namespace m2
 namespace routing
 {
 
-Processor::Processor(Node& node):NodeContainingObject(node)
+Processor::Processor(Node& node, uuid request_id):NodeContainingObject(node), request_id(request_id)
 {
 }
 

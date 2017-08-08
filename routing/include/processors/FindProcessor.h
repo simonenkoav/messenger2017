@@ -28,7 +28,7 @@ using std::map;
 class FindProcessor : protected Processor
 {
 public:
-    FindProcessor(Node& node, uuid target );
+    FindProcessor(Node& node, uuid request_id, uuid target );
     ~FindProcessor();
 
 
@@ -41,8 +41,6 @@ protected:
     map<uuid, processors::NodeSearchStruct*> search_map;
     processors::BestK k_best;
     list<processors::NodeSearchStruct> sorted_nodes;
-    // TODO: use io_service from node (node_io). Only one event queue should be
-    boost::asio::io_service io;
 
     // Methdods
     void sendRequest(processors::NodeSearchStruct* addressee);
@@ -53,9 +51,10 @@ protected:
     void askNext(int number = 0);
     void receiveNodesVector(vector<NodeInfo> &nodes);
     void onNodeResponse(uuid node_guid);
+    bool doesSearchFinished();
 
     virtual vector<char> getMessage() = 0;
-
+    virtual void onSearchFinsihed() = 0;
 };
 }
 }

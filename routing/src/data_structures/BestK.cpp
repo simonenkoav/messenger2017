@@ -59,6 +59,20 @@ bool BestK::contains(uuid item_uuid)
     return k_map.end() != k_map.find(item_uuid);
 }
 
+bool m2::routing::processors::BestK::doesSearchFinished()
+{
+    if (k_limit == sorted_list.size()) {
+        bool search_not_completed = false;
+        for (auto item : sorted_list) {
+            if (NodeSearchStruct::responded != item->state) {
+                search_not_completed = true;
+            }
+        }
+        return !search_not_completed;
+    }
+    return false;
+}
+
 bool BestK::insert(NodeSearchStruct * item)
 {
     bool was_item_inserted = false;

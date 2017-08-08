@@ -6,7 +6,7 @@ namespace routing {
 class FindNodeProcessor: protected FindProcessor, protected CommandHandler
 {
 public:
-    FindNodeProcessor(Node& node, uuid target);
+    FindNodeProcessor(Node& node, uuid request_id, uuid target);
     ~FindNodeProcessor();
 
     //Message* handleMessage(Message message);
@@ -16,8 +16,8 @@ protected:
     // Fields
 
     // Methdods
-    //virtual void sendRequest(NodeSearchStruct* addressee);
     virtual vector<char> getMessage();
+    virtual void onSearchFinsihed();
 };
 }
 }
