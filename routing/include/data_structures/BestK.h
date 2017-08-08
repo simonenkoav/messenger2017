@@ -4,6 +4,7 @@
 #include <boost/uuid/uuid.hpp>
 
 #include "data_structures/NodeSearchStruct.h"
+#include "kbuckets/KBucketsTools.h"
 
 namespace m2 {
 namespace routing {

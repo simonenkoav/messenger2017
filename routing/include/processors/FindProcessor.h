@@ -49,9 +49,12 @@ protected:
     void timeoutExpires(uuid guid, boost::asio::deadline_timer* expired_timer);
     void clearSearchState();
     void selectNewForKBest();
+    void addNode(NodeInfo node_info);
     void askNext(int number = 0);
+    void receiveNodesVector(vector<NodeInfo> &nodes);
+    void onNodeResponse(uuid node_guid);
 
-    virtual Message getMessage() = 0;
+    virtual vector<char> getMessage() = 0;
 
 };
 }

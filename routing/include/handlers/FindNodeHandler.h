@@ -9,7 +9,7 @@ class FindNodeHandler : CommandHandler
 {
 
 public:
-    virtual void handleMessage(Message message);
+    virtual void handleMessage(Message& message);
     FindNodeHandler(Node& node);
     ~FindNodeHandler();
 

@@ -21,13 +21,12 @@ public:
 
     void insert(const NodeInfo &nodeInfo);
 
-    void getNeighbours(const NodeInfo &nodeInfo) const;
     std::list<NodeInfo> getNeighbours(const boost::uuids::uuid &guid) const; // @Wunder9l: need this api in FindProcessor
 
     void setNodeInfo(const NodeInfo &nodeInfo);
 
 private:
-    std::map<int, KBucket> intervalToBucket;
+    std::map<int, KBucket> interval_to_bucket;
 
     NodeInfo ourNodeInfo;
 
@@ -36,6 +35,6 @@ private:
     void split(int interval, const NodeInfo &newNodeInfo);
 
 };
-        
+
 } // namespace routing
 } // namespace m2

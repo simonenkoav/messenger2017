@@ -1,5 +1,5 @@
 #include "processors/FindProcessor.h"
-#include "data_structures/messages/FindNodeMessage.h"
+#include "data_structures/Message.h"
 
 namespace m2 {
 namespace routing {
@@ -10,14 +10,14 @@ public:
     ~FindNodeProcessor();
 
     //Message* handleMessage(Message message);
-    virtual void handleMessage(Message message);
+    virtual void handleMessage(Message& message);
 
 protected:
     // Fields
 
-    // Methdods 
+    // Methdods
     //virtual void sendRequest(NodeSearchStruct* addressee);
-    virtual Message getMessage();
+    virtual vector<char> getMessage();
 };
 }
 }

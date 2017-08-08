@@ -6,6 +6,7 @@ using namespace processors;
 
 FindProcessor::FindProcessor(Node& node, uuid target) : Processor(node), k_best(Config::getK(), target)
 {
+    // TODO: get reference to io from node
     io.run();
 }
 
@@ -16,20 +17,20 @@ void FindProcessor::process(uuid guid)
     searched_guid = guid;
     list<NodeInfo> original_neighbours = node.kbuckets_manager.getNeighbours(searched_guid);
     for (auto item : original_neighbours) {
-        NodeSearchStruct new_node_search(item);
-        sorted_nodes.push_back(new_node_search);
-        search_map[new_node_search.node_info.uuid] = &new_node_search;
+        addNode(item);
     }
+    // TODO: make sorting of referenced list (list&) 
+    sort(sorted_nodes);
     askNext();
 }
 
 void FindProcessor::sendRequest(NodeSearchStruct* addressee)
 {
-    Message message = getMessage();
+    addressee->state = NodeSearchStruct::wait_for_response;
     node.network_connector.sendMessage(
         addressee->node_info.ip,
         addressee->node_info.port,
-        MessageBuilder::serialize(message));
+        getMessage());
     auto timer = new boost::asio::deadline_timer(io, Config::getResponseTimeout());
     timer->async_wait(boost::bind(&FindProcessor::timeoutExpires, this, addressee->node_info.uuid, timer));
 }
@@ -40,9 +41,8 @@ void FindProcessor::timeoutExpires(uuid guid, boost::asio::deadline_timer* expir
     auto it = search_map.find(guid);
     if (search_map.end() != it) {
         NodeSearchStruct* not_responding_node = it->second;
-        if (NodeSearchStruct::state_type::wait_for_responce == not_responding_node->state) {
-            not_responding_node->state = NodeSearchStruct::state_type::not_asked;
-            //removeFromKBest(not_responding_node);
+        if (NodeSearchStruct::state_type::wait_for_response == not_responding_node->state) {
+            not_responding_node->state = NodeSearchStruct::state_type::not_responding;
             k_best.deleteItem(not_responding_node->node_info.uuid);
             selectNewForKBest();
             askNext(1);
@@ -79,6 +79,13 @@ void FindProcessor::selectNewForKBest()
     }
 }
 
+void FindProcessor::addNode(NodeInfo node_info)
+{
+    NodeSearchStruct new_node_search(node_info);
+    sorted_nodes.push_back(new_node_search);
+    search_map[new_node_search.node_info.uuid] = &new_node_search;
+}
+
 void FindProcessor::askNext(int number)
 {
     number = (0 >= number) ? Config::getAlpha() : number;
@@ -87,6 +94,32 @@ void FindProcessor::askNext(int number)
 
     for (auto item : to_ask) {
         sendRequest(item);
+    }
+}
+
+void FindProcessor::receiveNodesVector(vector<NodeInfo>& nodes)
+{
+    for (auto item : nodes) {
+        auto found = search_map.find(item.uuid);
+        if (search_map.end() == found) {
+            /* we have not encountered this node before */
+            addNode(item);
+        }
+    }
+    // TODO: make sorting of referenced list (list&) 
+    sort(sorted_nodes, target);
+    askNext();
+}
+
+void FindProcessor::onNodeResponse(uuid node_guid)
+{
+    auto found = search_map.find(node_guid);
+    if (search_map.end() != found) {
+        if (NodeSearchStruct::not_responding == found->second->state) {
+            // if we previously have marked node as not_responding perhaps it was in k_best
+            k_best.insert(found->second);
+        }
+        found->second->state = NodeSearchStruct::responded;
     }
 }
 

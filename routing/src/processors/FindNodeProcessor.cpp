@@ -1,4 +1,5 @@
 #include "processors/FindNodeProcessor.h"
+#include <cassert>
 
 namespace m2 {
 namespace routing {
@@ -6,20 +7,17 @@ FindNodeProcessor::FindNodeProcessor(Node & node, uuid target) : FindProcessor(n
 {
 }
 
-void FindNodeProcessor::handleMessage(Message message)
+void FindNodeProcessor::handleMessage(Message& message)
 {
-    list<NodeInfo> original_neighbours = node.kbuckets_manager.getNeighbours(searched_guid);
-    for (auto item : original_neighbours) {
-        NodeSearchStruct new_node_search(item);
-        sorted_nodes.push_back(new_node_search);
-        search_map[new_node_search.node_info.uuid] = &new_node_search;
-    }
-    askNext();
+    assert(MessageType::FindNodeResponse == message.message_type);
+    FindNodeResponseMessage casted_message = dynamic_cast<FindNodeResponseMessage&>(message);
+    onNodeResponse(casted_message.node_info.uuid);
+    receiveNodesVector(casted_message.found_nodes_info);
 }
 
-Message FindNodeProcessor::getMessage()
+vector<char> FindNodeProcessor::getMessage()
 {
-    return FindNodeMessage (node.self_info, searched_guid);
+    return MessageBuilder::serialize(FindNodeRequestMessage(node.self_info, searched_guid));
 }
 
 

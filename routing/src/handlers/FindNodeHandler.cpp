@@ -11,15 +11,16 @@ FindNodeHandler::~FindNodeHandler()
 {
 }
 
-void FindNodeHandler::handleMessage(Message message)
+void FindNodeHandler::handleMessage(Message& message)
 {
-    // TODO: 
-    //Guid guid = message.getGuid();
-    //std::list<NodeInfo> neighbours = node->kbucket_manager.getNeighbours(guid);
-    //Message* reply = new Message(/*parameters*/);
-    ////initialize reply with data
-    //return reply;
-    return NULL;
+    assert(MessageType::FindNodeRequest == message.message_type);
+    FindNodeRequestMessage casted_message = dynamic_cast<FindNodeRequestMessage&>(message);
+    std::list<NodeInfo> neighbours = node.kbuckets_manager.getNeighbours(casted_message.guid);
+    FindNodeResponseMessage response_message(node.self_info, neighbours);
+    node.network_connector.sendMessage(
+        casted_message.node_info.ip,
+        casted_message.node_info.port,
+        MessageBuilder::serialize(response_message));
 }
 
 } // namespace routing

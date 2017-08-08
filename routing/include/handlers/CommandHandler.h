@@ -1,6 +1,7 @@
 #pragma once
-#include "data_structures/messages/Message.h"
+#include "data_structures/Message.h"
 #include "data_structures/NodeContainingObject.h"
+#include "utils/MessageBuilder.h"
 
 namespace m2 {
 namespace routing {
@@ -12,9 +13,9 @@ public:
     ~CommandHandler();
 
 public:
-    virtual void handleMessage(Message message) = 0;
+    virtual void handleMessage(Message& message) = 0;
 
-private:
+protected:
 };
 
 } // namespace routing

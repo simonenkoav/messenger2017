@@ -69,8 +69,8 @@ bool BestK::insert(NodeSearchStruct * item)
         }
         else {
             NodeSearchStruct* worst_item = sorted_list.back();
-            //TODO: call compare function
-            if () {
+            if (KBucketsTools::distance(worst_item->node_info.uuid, target) > 
+                KBucketsTools::distance(item->node_info.uuid, target)) {
                 deleteItem(worst_item->node_info.uuid);
                 addItem(item);
                 was_item_inserted = true;
@@ -84,5 +84,6 @@ void m2::routing::processors::BestK::addItem(NodeSearchStruct * item)
 {
     k_map[item->node_info.uuid] = item;
     sorted_list.push_back(item);
-    sorted_list.sort(TODO add sorting procedure);
+    // TODO: sort list of NodeSearchStruct
+    KBucketsTools::sortedByDist(sorted_list, target);
 }
