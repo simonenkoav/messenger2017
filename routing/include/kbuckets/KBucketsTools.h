@@ -1,5 +1,7 @@
 #pragma once
-#include "kbuckets/KBucketsTools.h"
+
+#include "data_structures/NodeInfo.h"
+
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <list>
@@ -24,9 +26,9 @@ public:
     static bool getBit(const boost::uuids::uuid& src, int bit);
 
     template<typename T>
-    static void sortByDist(std::list<T>& lst, const boost::uuids::uuid& origin, std::function<boost::uuids::uuid(const T&))> uuid_getter)
+    static void sortByDist(std::list<T>& lst, const boost::uuids::uuid& origin, std::function<boost::uuids::uuid(const T&)> uuid_getter)
     {
-        auto key = [uuid_getter, origin] () -> uint128_t { return distance(uuid_getter(*it)); };
+        auto key = [uuid_getter, origin] (const T& a) -> boost::multiprecision::uint128_t { return distance(uuid_getter(a, origin)); };
         auto compar = [key] (const T& a, const T& b) -> bool { return key(a) < key(b); };
         lst.sort(compar);
     }
