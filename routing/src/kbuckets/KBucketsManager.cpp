@@ -78,7 +78,11 @@ namespace routing {
             }
         }
 
-        resultList = KBucketsTools::sortedByDist(resultList, guid);
+        std::function<boost::uuids::uuid(const NodeInfo &node_info)> uuidGetter =
+                [](const NodeInfo &node_info) -> boost::uuids::uuid{
+                    return node_info.uuid;
+                };
+        KBucketsTools::sortByDist(resultList, guid, uuidGetter);
 
         return resultList;
     }
@@ -136,7 +140,13 @@ namespace routing {
 
     std::list<NodeInfo> KBucketsManager::sortByDistance(const std::list<NodeInfo> &originalList,
                                     const int count, const boost::uuids::uuid &guid) const {
-        auto resultList = KBucketsTools::sortedByDist(originalList, guid);
+        std::function<boost::uuids::uuid(const NodeInfo &node_info)> uuidGetter =
+                [](const NodeInfo &node_info) -> boost::uuids::uuid{
+                    return node_info.uuid;
+                };
+        std::list<NodeInfo> resultList;
+        std::copy(originalList.begin(), originalList.end(), resultList.begin());
+        KBucketsTools::sortByDist(resultList, guid, uuidGetter);
         auto end = std::next(resultList.begin(), std::min(resultList.size(), size_t(count)));
         auto cuttedList = std::list<NodeInfo>(resultList.begin(), end);
         resultList = std::move(cuttedList);
