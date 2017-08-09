@@ -28,7 +28,7 @@ public:
     template<typename T>
     static void sortByDist(std::list<T>& lst, const boost::uuids::uuid& origin, std::function<boost::uuids::uuid(const T&)> uuid_getter)
     {
-        auto key = [uuid_getter, origin] (const T& a) -> boost::multiprecision::uint128_t { return distance(uuid_getter(a, origin)); };
+        auto key = [uuid_getter, origin] (const T& a) -> boost::multiprecision::uint128_t { return distance(uuid_getter(a), origin); };
         auto compar = [key] (const T& a, const T& b) -> bool { return key(a) < key(b); };
         lst.sort(compar);
     }
