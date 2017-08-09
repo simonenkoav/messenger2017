@@ -13,7 +13,7 @@ public:
     FindDataHandler(Node& node);
     ~FindDataHandler();
 
-private:
+    virtual void handleMessage(Message& message);
 };
 
 } // namespace routing

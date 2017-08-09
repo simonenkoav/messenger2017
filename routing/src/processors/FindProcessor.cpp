@@ -4,6 +4,11 @@ namespace m2 {
 namespace routing {
 using namespace processors;
 
+std::function<boost::uuids::uuid(const NodeSearchStruct& node)> uuidGetter =
+[](const NodeSearchStruct& node) -> boost::uuids::uuid {
+    return node.node_info.uuid;
+};
+
 FindProcessor::FindProcessor(Node& node, uuid request_id ) : Processor(node, request_id), k_best(Config::getK())
 {
 }
@@ -18,7 +23,7 @@ void FindProcessor::process(Message& message)
         addNode(item);
     }
     // TODO: make sorting of referenced list (list&) 
-    sort(sorted_nodes);
+    KBucketsTools::sortByDist(sorted_nodes, searched_guid, uuidGetter);
     selectNewForKBest();
     askNext();
 }
@@ -106,8 +111,8 @@ void FindProcessor::receiveNodesVector(vector<NodeInfo>& nodes)
             addNode(item);
         }
     }
-    // TODO: make sorting of referenced list (list&) 
-    sort(sorted_nodes, target);
+    
+    KBucketsTools::sortByDist(sorted_nodes, searched_guid, uuidGetter);
     //askNext(); // here just adding, ask in other place
 }
 
@@ -127,7 +132,9 @@ bool FindProcessor::doesSearchFinished()
 {
     if (true == k_best.doesSearchFinished()) {
         onSearchFinsihed();
+        return true;
     }
+    return false;
 }
 
 }

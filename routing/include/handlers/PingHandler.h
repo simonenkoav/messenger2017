@@ -5,9 +5,10 @@ namespace routing {
 class PingHandler : protected CommandHandler
 {
 public:
-    virtual void handleMessage(Message& message);
     PingHandler(Node& node);
     virtual ~PingHandler();
+
+    virtual void handleMessage(Message& message);
 };
 }
 }

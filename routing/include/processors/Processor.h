@@ -9,7 +9,7 @@ class Processor : protected virtual CommandHandler
 {
 public:
     Processor(Node& node, uuid request_id);
-    virtual ~Processor() {}
+    virtual ~Processor();
 
     virtual bool isCompleted() = 0;
     Message* getResult();

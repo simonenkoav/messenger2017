@@ -7,6 +7,9 @@ class StoreHandler : protected CommandHandler
 public:
     StoreHandler(Node& node);
     virtual ~StoreHandler();
+
+    virtual void handleMessage(Message& message);
+
 };
 }
 }

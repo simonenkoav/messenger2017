@@ -10,7 +10,9 @@ struct NodeSearchStruct {
     //std::mutex state_change_mutex;
 
     NodeSearchStruct(NodeInfo node) :node_info(node), state(state_type::not_asked) {}
+
 };
+
 }
 }
 }

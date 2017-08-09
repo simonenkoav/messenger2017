@@ -2,6 +2,11 @@
 
 using namespace m2::routing::processors;
 
+std::function<boost::uuids::uuid(const NodeSearchStruct* node)> uuidGetter =
+[](const NodeSearchStruct* node) -> boost::uuids::uuid {
+    return node->node_info.uuid;
+};
+
 BestK::BestK(int k) :k_limit(k)
 {
 }
@@ -108,6 +113,5 @@ void m2::routing::processors::BestK::addItem(NodeSearchStruct * item)
 {
     k_map[item->node_info.uuid] = item;
     sorted_list.push_back(item);
-    // TODO: sort list of NodeSearchStruct
-    KBucketsTools::sortByDist(sorted_list, target, (T n)->uuid{return n->node_info; });
+    KBucketsTools::sortByDist(sorted_list, target, uuidGetter);
 }

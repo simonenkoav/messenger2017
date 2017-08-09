@@ -3,11 +3,11 @@
 
 namespace m2 {
 namespace routing {
-class FindDataProcessor : protected FindProcessor, protected CommandHandler
+class FindDataProcessor : protected FindProcessor
 {
 public:
-    FindDataProcessor(Node& node, uuid request_id, uuid target);
-    ~FindDataProcessor();
+    FindDataProcessor(Node& node, uuid request_id);
+    virtual ~FindDataProcessor();
 
     //Message* handleMessage(Message message);
     virtual void handleMessage(Message& message);

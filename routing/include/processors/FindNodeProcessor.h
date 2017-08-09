@@ -7,7 +7,7 @@ class FindNodeProcessor: protected FindProcessor
 {
 public:
     FindNodeProcessor(Node& node, uuid request_id);
-    ~FindNodeProcessor();
+    virtual ~FindNodeProcessor();
 
     //Message* handleMessage(Message message);
     virtual void handleMessage(Message& message);
