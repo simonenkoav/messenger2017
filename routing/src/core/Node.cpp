@@ -17,16 +17,11 @@ using namespace m2::routing;
 
 Node::Node(string port)
     : io_service()
+    , network_connector(std::stoi(port),
+                        io_service,
+                        [this](vector<char> data) {this->onMessageReceive(data);})
     , dht()
 {
-//    auto onMsgReceiveCallback = std::bind(&Node::onMessageReceive, *this,
-//                                          std::placeholders::_1, std::placeholders::_2);
-    auto onMsgReceiveCallback = [this](char* buffer, size_t size) {
-        this->onMessageReceive(buffer, size);
-    };
-    network_connector = NetworkConnector(std::stoi(port), onMsgReceiveCallback);
-
-
     // create own uuid
     uuid my_guid = boost::uuids::basic_random_generator<boost::mt19937>()();
 
@@ -75,7 +70,7 @@ void Node::startAsyncUpdateKBuckets()
  * @param buffer
  * @param size
  */
-void Node::onMessageReceive(char *buffer, size_t size)
+void Node::onMessageReceive(vector<char> buffer)
 {
    // std::unique<Message> msg = ;
 }

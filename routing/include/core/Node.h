@@ -16,6 +16,7 @@
 #include "DHT/DHT.h"
 
 using std::string;
+using namespace std::placeholders;
 using boost::uuids::uuid;
 
 namespace m2 {
@@ -26,13 +27,15 @@ class Node
 {
 public:
     Node(string port);
+    Node()      = delete;
+    Node(Node&) = delete;
     ~Node();
 
 
     void start(uuid bootstrap_guid, string ip_address, string port);
         // void stop();
 private:
-    void onMessageReceive(char* buffer, size_t size);
+    void onMessageReceive(vector<char>);
     void startAsyncUpdateKBuckets();
 
     DHT dht;

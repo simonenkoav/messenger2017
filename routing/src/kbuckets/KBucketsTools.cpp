@@ -13,7 +13,7 @@ uint128_t KBucketsTools::distance(const uuid& src, const uuid& dst)
 {
     assert(uuidBitwidth() <= 128);
 
-    uint128_t rv = 0; // ASSUMPTION: lowest bytes go first
+    uint128_t rv = 0; // ASSUMPTION: lowest bytes go first (little-endian)
     for (int i = 0; i < uuidWidth(); ++i) {
         rv = (rv << 8 * sizeof(uuid::value_type)) + src.data[i] ^ dst.data[i];
     }
@@ -64,38 +64,6 @@ bool KBucketsTools::getBit(const uuid& src, int bit)
    int offset = bit / value_bitwidth;
 
    return !!(src.data[offset] & mask);
-}
-
-std::list<NodeInfo> KBucketsTools::sortedByDist(const std::list<NodeInfo>& src, const uuid& dist_to)
-{
-    typedef std::pair<uint128_t, const NodeInfo*> DistData;
-    std::vector<DistData> dists;
-    for (auto it = src.begin(); it != src.end(); ++it) {
-        dists.push_back(DistData(distance(it->uuid, dist_to), &*it));
-    }
-    std::sort(dists.begin(), dists.end(), [](const DistData& a, const DistData& b)->bool { return a > b; });
-
-    std::list<NodeInfo> sorted;
-    for (auto it = dists.begin(); it != dists.end(); ++it) {
-        sorted.push_back(*it->second);
-    }
-    return sorted;
-}
-
-std::list<NodeSearchStruct>& KBucketsTools::sortedByDist(std::list<NodeSearchStruct>& src, const uuid& dist_to)
-{
-    typedef std::pair<uint128_t, const NodeInfo*> DistData;
-    std::vector<DistData> dists;
-    for (auto it = src.begin(); it != src.end(); ++it) {
-        dists.push_back(DistData(distance(it->uuid, dist_to), &*it));
-    }
-    std::sort(dists.begin(), dists.end(), [](const DistData& a, const DistData& b)->bool { return a > b; });
-
-    std::list<NodeSearchStruct> sorted;
-    for (auto it = dists.begin(); it != dists.end(); ++it) {
-        sorted.push_back(*it->second);
-    }
-    return sorted;
 }
 
 std::pair<std::list<NodeInfo>, std::list<NodeInfo>> KBucketsTools::split(const std::list<NodeInfo>& src, int by_bit)
