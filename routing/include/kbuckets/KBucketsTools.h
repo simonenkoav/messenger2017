@@ -7,7 +7,6 @@
 
 namespace m2 {
 namespace routing {
-using m2::routing::processors::NodeSearchStruct;
 
 class KBucketsTools
 {
