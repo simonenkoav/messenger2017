@@ -1,9 +1,9 @@
 #pragma once
 #include "kbuckets/KBucketsTools.h"
-#include "data_structures/NodeInfo.h"
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <list>
+#include <functional>
 
 namespace m2 {
 namespace routing {
@@ -23,7 +23,14 @@ public:
     static int commonPrefixBitsLen(const boost::uuids::uuid& src, const boost::uuids::uuid& dst); 
     static bool getBit(const boost::uuids::uuid& src, int bit);
 
-    static std::list<NodeInfo> sortedByDist(const std::list<NodeInfo>& src, const boost::uuids::uuid& dist_to);
+    template<typename T>
+    static void sortByDist(std::list<T>& lst, const boost::uuids::uuid& origin, std::function<boost::uuids::uuid(const T&))> uuid_getter)
+    {
+        auto key = [uuid_getter, origin] () -> uint128_t { return distance(uuid_getter(*it)); };
+        auto compar = [key] (const T& a, const T& b) -> bool { return key(a) < key(b); };
+        lst.sort(compar);
+    }
+
     static std::pair<std::list<NodeInfo>, std::list<NodeInfo>> split(const std::list<NodeInfo>& src, int by_bit);
     static NodeInfo closest(const NodeInfo& x, const NodeInfo& y, const boost::uuids::uuid& origin); // ret x unless y is closer
 };
