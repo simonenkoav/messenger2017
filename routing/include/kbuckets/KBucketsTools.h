@@ -27,7 +27,7 @@ public:
     static void sortByDist(std::list<T>& lst, const boost::uuids::uuid& origin, std::function<boost::uuids::uuid(const T&))> uuid_getter)
     {
         auto key = [uuid_getter, origin] () -> uint128_t { return distance(uuid_getter(*it)); };
-        auto compar = [] (const T& a, const T& b) -> bool { return key(a) < key(b); };
+        auto compar = [key] (const T& a, const T& b) -> bool { return key(a) < key(b); };
         lst.sort(compar);
     }
 
