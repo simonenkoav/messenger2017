@@ -8,7 +8,6 @@ namespace routing {
 
 using boost::multiprecision::uint128_t;
 using boost::uuids::uuid;
-using processors::NodeSearchStruct;
 
 uint128_t KBucketsTools::distance(const uuid& src, const uuid& dst)
 {
