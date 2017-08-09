@@ -16,9 +16,10 @@ using boost::uuids::uuid;
 class BestK
 {
 public:
-    BestK(int k, uuid target);
+    BestK(int k);
     ~BestK();
 
+    void setTarget(uuid target);
     void deleteItem(uuid item_uuid);
     NodeSearchStruct* getItem(uuid item_uuid);
     list<NodeSearchStruct*> getItemsToAsk(int number);
@@ -26,6 +27,7 @@ public:
     size_t size();
     bool contains(uuid item_uuid);
     bool doesSearchFinished();
+    list<NodeSearchStruct*> getBest();
 
     // Insert item to k_best if it does not already exist there. If the list is full
     // it will check whether inserting item is better than other. If it is the item 

@@ -28,12 +28,13 @@ using std::map;
 class FindProcessor : protected Processor
 {
 public:
-    FindProcessor(Node& node, uuid request_id, uuid target );
+    FindProcessor(Node& node, uuid request_id );
     ~FindProcessor();
 
 
 public:
-    void process(uuid guid);
+    void process(Message& message);
+    virtual bool isCompleted() = 0;
 
 protected:
     // Fields
@@ -55,6 +56,7 @@ protected:
 
     virtual vector<char> getMessage() = 0;
     virtual void onSearchFinsihed() = 0;
+    virtual uuid getGuid(Message& message) = 0;
 };
 }
 }

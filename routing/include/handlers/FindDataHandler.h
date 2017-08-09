@@ -5,7 +5,7 @@
 namespace m2 {
 namespace routing {
 
-class FindDataHandler : public CommandHandler
+class FindDataHandler : protected CommandHandler
 {
 
 
@@ -14,7 +14,6 @@ public:
     ~FindDataHandler();
 
 private:
-    Node& node;
 };
 
 } // namespace routing

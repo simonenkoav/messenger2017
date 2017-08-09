@@ -3,8 +3,7 @@
 
 namespace m2 {
 namespace routing {
-FindNodeProcessor::FindNodeProcessor(Node & node, uuid request_id, uuid target) :
-    FindProcessor(node, request_id, target), CommandHandler(node)
+FindNodeProcessor::FindNodeProcessor(Node & node, uuid request_id) : FindProcessor(node, request_id)
 {
 }
 
@@ -24,9 +23,20 @@ vector<char> FindNodeProcessor::getMessage()
 
 void FindNodeProcessor::onSearchFinsihed()
 {
-    // TODO: implement callback call to send result
+    completed = true;
+    list<NodeInfo> answer;
+    auto best = k_best.getBest();
+    for (auto item : best) {
+        answer.push_back(item->node_info);
+    }
+    result = new FindNodeResponseMessage(node.self_info, answer);
 }
 
+uuid getGuid(Message& message) {
+    assert(MessageType::FindNodeRequest == message.message_type);
+    FindNodeRequestMessage casted_message = dynamic_cast<FindNodeRequestMessage&>(message);
+    return casted_message.guid;
+}
 
 }
 }

@@ -4,15 +4,15 @@ namespace m2 {
 namespace routing {
 using namespace processors;
 
-FindProcessor::FindProcessor(Node& node, uuid request_id, uuid target) : Processor(node, request_id), k_best(Config::getK(), target)
+FindProcessor::FindProcessor(Node& node, uuid request_id ) : Processor(node, request_id), k_best(Config::getK())
 {
 }
 
-void FindProcessor::process(uuid guid)
+void FindProcessor::process(Message& message)
 {
     clearSearchState();
-
-    searched_guid = guid;
+    searched_guid = getGuid(message);
+    k_best.setTarget(searched_guid);
     list<NodeInfo> original_neighbours = node.kbuckets_manager.getNeighbours(searched_guid);
     for (auto item : original_neighbours) {
         addNode(item);
@@ -126,7 +126,7 @@ void FindProcessor::onNodeResponse(uuid node_guid)
 bool FindProcessor::doesSearchFinished()
 {
     if (true == k_best.doesSearchFinished()) {
-        onSearchFinished();
+        onSearchFinsihed();
     }
 }
 

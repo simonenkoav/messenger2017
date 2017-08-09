@@ -3,7 +3,7 @@
 namespace m2 {
 namespace routing {
 
-FindNodeHandler::FindNodeHandler(Node& node):CommandHandler(node), NodeContainingObject(node)
+FindNodeHandler::FindNodeHandler(Node& node):CommandHandler(node)
 {
 }
 

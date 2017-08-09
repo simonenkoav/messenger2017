@@ -3,10 +3,10 @@
 
 namespace m2 {
 namespace routing {
-class FindNodeProcessor: protected FindProcessor, protected CommandHandler
+class FindNodeProcessor: protected FindProcessor
 {
 public:
-    FindNodeProcessor(Node& node, uuid request_id, uuid target);
+    FindNodeProcessor(Node& node, uuid request_id);
     ~FindNodeProcessor();
 
     //Message* handleMessage(Message message);
@@ -18,6 +18,7 @@ protected:
     // Methdods
     virtual vector<char> getMessage();
     virtual void onSearchFinsihed();
+    virtual uuid getGuid(Message& message);
 };
 }
 }

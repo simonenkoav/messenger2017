@@ -2,7 +2,7 @@
 
 using namespace m2::routing::processors;
 
-BestK::BestK(int k, uuid target) :k_limit(k), target(target)
+BestK::BestK(int k) :k_limit(k)
 {
 }
 
@@ -10,6 +10,11 @@ BestK::BestK(int k, uuid target) :k_limit(k), target(target)
 BestK::~BestK()
 {
     clear();
+}
+
+void m2::routing::processors::BestK::setTarget(uuid target)
+{
+    this->target = target;
 }
 
 void BestK::deleteItem(uuid item_uuid)
@@ -71,6 +76,11 @@ bool m2::routing::processors::BestK::doesSearchFinished()
         return !search_not_completed;
     }
     return false;
+}
+
+list<NodeSearchStruct*> m2::routing::processors::BestK::getBest()
+{
+    return sorted_list;
 }
 
 bool BestK::insert(NodeSearchStruct * item)

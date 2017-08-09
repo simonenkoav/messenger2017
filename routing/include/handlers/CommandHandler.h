@@ -10,7 +10,7 @@ class CommandHandler : protected virtual NodeContainingObject
 {
 public:
     CommandHandler(Node& node);
-    ~CommandHandler();
+    virtual ~CommandHandler();
 
 public:
     virtual void handleMessage(Message& message) = 0;
