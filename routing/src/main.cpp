@@ -1,5 +1,6 @@
 ﻿#include "../stdafx.h"
 #include "core/Node.h"
+#include "kbuckets/KBucketsTools.h"
 
 int main(int argc, char* argv[])
 {
