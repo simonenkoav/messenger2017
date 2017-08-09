@@ -21,7 +21,7 @@ public:
 
     static boost::multiprecision::uint128_t distance(const boost::uuids::uuid& src, const boost::uuids::uuid& dst);
     static int distanceIndex(const boost::uuids::uuid& src, const boost::uuids::uuid& dst); // uuidBitwidth - commonPrefixBitsLen
-    static int commonPrefixBitsLen(const boost::uuids::uuid& src, const boost::uuids::uuid& dst);
+    static int commonPrefixBitsLen(const boost::uuids::uuid& src, const boost::uuids::uuid& dst); //
     static bool getBit(const boost::uuids::uuid& src, int bit);
 
     template<typename T>
