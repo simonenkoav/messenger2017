@@ -21,7 +21,7 @@ public:
 
     void insert(const NodeInfo &nodeInfo);
 
-    std::list<NodeInfo> getNeighbours(const boost::uuids::uuid &guid) const; // @Wunder9l: need this api in FindProcessor
+    std::list<NodeInfo> getNeighbours(const boost::uuids::uuid &guid) const;
 
     void setNodeInfo(const NodeInfo &nodeInfo);
 
@@ -33,6 +33,14 @@ private:
     int getIntervalInMap(int xorResult);
 
     void split(int interval, const NodeInfo &newNodeInfo);
+
+    std::list<NodeInfo> collectNodesFromNeighbouringBuckets(int count, int bucketIndex,
+                                                            const boost::uuids::uuid &guid) const;
+
+    std::list<NodeInfo> sortByDistance(const std::list<NodeInfo> &originalList, const int count,
+                                       const boost::uuids::uuid &guid) const;
+
+
 
 };
         
