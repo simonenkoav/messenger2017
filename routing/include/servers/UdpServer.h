@@ -14,16 +14,16 @@ using std::string;
 using namespace boost::asio::ip;
 
 
-namespace m2::routing {
+namespace m2 {
+namespace routing {
 
-class UdpServer
-{
+class UdpServer {
  public:
     UdpServer(int port,
-              io_service& service,
+              io_service &service,
               std::function<void(vector<char>)> on_message_callback);
-    UdpServer()           = delete;
-    UdpServer(UdpServer&) = delete;
+    UdpServer() = delete;
+    UdpServer(UdpServer &) = delete;
 
     void sendMessage(string ip, int port, vector<char> buffer);
     void startAccept();
@@ -36,4 +36,5 @@ class UdpServer
 
 };
 
+}
 }
