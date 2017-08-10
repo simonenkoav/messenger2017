@@ -4,16 +4,16 @@
 
 #pragma once
 
-#include "../../../../../../../../usr/include/c++/5/set"
-
+#include <set>
 #include "Connection/Connection.h"
 
-namespace m2::routing {
+namespace m2 {
+namespace routing {
 
 class ConnectionManager
 {
  public:
-    ConnectionManager();
+    ConnectionManager() = default;
 
     ConnectionManager(const ConnectionManager&)            = delete;
     ConnectionManager& operator=(const ConnectionManager&) = delete;
@@ -26,4 +26,5 @@ class ConnectionManager
     std::set<ConnectionPtr> connections;
 };
 
+}
 }

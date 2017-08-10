@@ -6,8 +6,9 @@
 
 using namespace m2::routing;
 
-Connection::Connection(tcp::socket&& socket)
+Connection::Connection(tcp::socket&& socket, TcpCallback callback)
     : socket(std::move(socket))
+    , on_request_receive(callback)
 {}
 
 void Connection::start()

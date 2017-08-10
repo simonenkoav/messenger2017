@@ -6,30 +6,34 @@
 
 #include "boost/asio.hpp"
 #include "boost/asio/ip/tcp.hpp"
-#include "../../../../../../../../usr/include/c++/5/memory"
+#include <memory>
 
-using namespace boost::ip;
+using namespace boost::asio::ip;
 
-namespace m2::routing {
+namespace m2 {
+namespace routing {
 
-class Connection : public std::enable_shared_from_this<Connection>
-{
+typedef std::function<void()> TcpCallback;
+
+class Connection : public std::enable_shared_from_this<Connection> {
  public:
-    Connection(tcp::socket&& socket);
-    Connection(Connection&) = delete;
-    Connection& operator= (const Connection&) = delete;
+    Connection(tcp::socket&& socket, TcpCallback callback);
+    Connection(Connection &) = delete;
+    Connection &operator=(const Connection &) = delete;
 
     void start();
     void close();
 
  private:
-    doRead();
-    doWrite();
+    void doRead();
+    void doWrite();
 
+    TcpCallback on_request_receive;
     tcp::socket socket;
     std::array<char, 2000> buffer;
 };
 
-typedef std::shared_ptr<Connection> ConnectionPtr
+typedef std::shared_ptr<Connection> ConnectionPtr;
 
+}
 }
