@@ -21,12 +21,13 @@ namespace routing {
 class TcpServer
 {
  public:
-    TcpServer(int port, io_service& service);
+    TcpServer(int port, io_service& service, TcpCallback callback);
 
     void startAccept();
     void stop();
 
  private:
+    TcpCallback callback;
     ConnectionManager connection_manager;
     tcp::socket socket;
     tcp::acceptor acceptor;

@@ -6,9 +6,10 @@
 
 using namespace m2::routing;
 
-TcpServer::TcpServer(int port, io_service &service)
+TcpServer::TcpServer(int port, io_service &service, std::function<void()> callback)
     : acceptor(service)
     , socket(service)
+    , callback(callback)
 {
     acceptor.open(tcp::v4());
     acceptor.bind(tcp::endpoint(tcp::v4(), port));
@@ -25,7 +26,7 @@ void TcpServer::startAccept()
 
         if(!ec) {
             connection_manager.startNewConnection(
-                std::make_shared<Connection>(std::move(socket)));
+                std::make_shared<Connection>(std::move(socket), callback));
         }
         startAccept();
     });
