@@ -8,7 +8,7 @@ namespace routing {
 
 using boost::multiprecision::uint128_t;
 using boost::uuids::uuid;
-    
+
 uint128_t KBucketsTools::distance(const uuid& src, const uuid& dst)
 {
     assert(uuidBitwidth() <= 128);
@@ -25,7 +25,7 @@ static int bsearchHighestBit(T val)
 {
     int low = 0;
     int high = 8 * sizeof(T);
-    
+
     while (high - low > 1) {
         int mid = low + (high - low) / 2;
         if (val < (1 << mid)) {
@@ -37,7 +37,7 @@ static int bsearchHighestBit(T val)
 
     return val? high: 0;
 }
-    
+
 int KBucketsTools::distanceIndex(const uuid& src, const uuid& dst)
 {
     for (int i = uuidWidth() - 1; i >= 0; --i) {
@@ -62,17 +62,17 @@ bool KBucketsTools::getBit(const uuid& src, int bit)
    int value_bitwidth = 8 * sizeof(uuid::value_type);
    uuid::value_type mask = 1 << (bit % value_bitwidth);
    int offset = bit / value_bitwidth;
- 
+
    return !!(src.data[offset] & mask);
 }
 
 std::pair<std::list<NodeInfo>, std::list<NodeInfo>> KBucketsTools::split(const std::list<NodeInfo>& src, int by_bit)
 {
     assert(by_bit >= 0 && by_bit < uuidBitwidth());
- 
+
     std::list<NodeInfo> results[2];
     for (auto it = src.begin(); it != src.end(); ++it) {
-        results[getBit(it->uuid, by_bit)].push_back(*it); 
+        results[getBit(it->uuid, by_bit)].push_back(*it);
     }
 
     return std::pair<std::list<NodeInfo>,std::list<NodeInfo>>(results[0], results[1]);

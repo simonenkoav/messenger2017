@@ -5,7 +5,7 @@
 namespace m2 {
 namespace routing {
 
-class FindDataHandler : public CommandHandler
+class FindDataHandler : protected CommandHandler
 {
 
 
@@ -13,8 +13,7 @@ public:
     FindDataHandler(Node& node);
     ~FindDataHandler();
 
-private:
-    Node& node;
+    virtual void handleMessage(Message& message);
 };
 
 } // namespace routing

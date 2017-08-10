@@ -1,17 +1,4 @@
-#include <handlers/FindDataHandler.h>
-#include <handlers/FindNodeHandler.h>
-//#include "handlers/StoreHandler.h"
-//#include "handlers/PingNodeHandler.h"
-
 #include "core/Node.h"
-
-class StoreHandler;
-class PingNodeHandler;
-
-class PingNodeProcessor;
-class StoreProcessor;
-class FindNodeProcessor;
-class FindDataProcessor;
 
 using namespace m2::routing;
 
@@ -30,28 +17,8 @@ Node::Node(string port)
     kbuckets_manager.setNodeInfo(self_info);
 
 
-// расскоментить, когда будут реализованы, пока не компилится
-    handlers.insert({//{MessageType::PingRequest,     new PingNodeHandler(*this)},
-                     //{MessageType::StoreRequest,    new StoreHandler(*this)},
-                     {MessageType::FindNodeRequest, new FindNodeHandler(*this)},
-                     {MessageType::FindDataRequest, new FindDataHandler(*this)},
-
-                     //{MessageType::PingResponse,     new PingNodeProcessor(*this)},
-                    // {MessageType::StoreResponse,    new StoreProcessor(*this)},
-                    // {MessageType::FindNodeResponse, new FindNodeProcessor(*this)},
-                    // {MessageType::FindDataResponse, new FindDataProcessor(*this)}});
-                     {}});
-
-  /*  processors.insert({{MessageType::PingResponse,     new PingNodeProcessor(*this)},
-                       {MessageType::StoreResponse,    new StoreProcessor(*this)},
-                       {MessageType::FindNodeResponse, new FindNodeProcessor(*this)},
-                       {MessageType::FindDataResponse, new FindDataProcessor(*this)}});
-*/
     // start accept incoming messages
     network_connector.startAccept();
-
-    // send request to find k-neighbors
-    processors[MessageType::FindNodeResponse]->process(self_info, nullptr);
 
     startAsyncUpdateKBuckets();
 };
