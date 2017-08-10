@@ -5,17 +5,15 @@
 namespace m2 {
 namespace routing {
 
-class FindNodeHandler : public CommandHandler
+class FindNodeHandler : protected CommandHandler
 {
 
 public:
-    virtual Message* handleMessage(Message message);
     FindNodeHandler(Node& node);
-    ~FindNodeHandler();
+    virtual ~FindNodeHandler();
 
+    virtual void handleMessage(Message& message);
 
-private:
-    Node& node;
 };
 
 } // namespace m2

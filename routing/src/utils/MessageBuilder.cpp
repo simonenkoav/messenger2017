@@ -11,19 +11,6 @@ MessageBuilder::MessageBuilder()
 MessageBuilder::~MessageBuilder()
 {
 }
-Message MessageBuilder::deserialize(vector<char> buffer)
-{
-    // TODO: implement
-    return Message();
-}
-
-vector<char> MessageBuilder::serialize(Message message)
-{
-    // TODO: implement
-    return vector<char>();
-}
-}
-}
 
 std::unique_ptr<Message> MessageBuilder::deserialize(vector<char> &buffer)
 {
@@ -153,7 +140,7 @@ vector<char> MessageBuilder::serialize(const PingResponseMessage &message)
     return {str.begin(), str.end()};
 }
 
-vector<char> MessageBuilder::serialize(const StoreResponsetMessage &message)
+vector<char> MessageBuilder::serialize(const StoreResponseMessage &message)
 {
     MessageBuilder::Message proto_message;
     proto_message.set_message_type(MessageBuilder::StoreResponse);
