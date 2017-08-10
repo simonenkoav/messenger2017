@@ -12,5 +12,26 @@ StoreProcessor::StoreProcessor(Node & node, uuid request_id) : Processor(node, r
 StoreProcessor::~StoreProcessor()
 {
 }
+void StoreProcessor::process(Message & message)
+{
+    assert(MessageType::StoreRequest == message.message_type);
+    StoreRequestMessage casted_message = dynamic_cast<StoreRequestMessage&>(message);
+    // We can not use casted_message because its node_info contains addressee's info
+    StoreRequestMessage request_message(node.self_info, casted_message.store_node_info);
+    node.network_connector.sendMessage(
+        message.node_info.ip,
+        message.node_info.port,
+        MessageBuilder::serialize(request_message));
+    // TODO: we can use here timer to set a timeout for response and return null message in case of no response
+}
+
+void StoreProcessor::handleMessage(Message& message)
+{
+    assert(MessageType::StoreResponse == message.message_type);
+    StoreResponseMessage casted_message = dynamic_cast<StoreResponseMessage&>(message);
+
+    completed = true;
+    result = new StoreResponseMessage(casted_message);
+}
 }
 }
