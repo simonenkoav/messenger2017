@@ -7,9 +7,6 @@
 #include "boost/uuid/uuid.hpp"
 #include "boost/uuid/uuid_generators.hpp"
 
-#include "processors/Processor.h"
-#include "handlers/CommandHandler.h"
-
 #include "data_structures/Message.h"
 #include "kbuckets/KBucketsManager.h"
 #include "NetworkConnector/NetworkConnector.h"
@@ -43,8 +40,6 @@ private:
     NetworkConnector network_connector;
     KBucketsManager kbuckets_manager;
     boost::asio::io_service io_service;
-    std::unordered_map<int, CommandHandler*> handlers;
-    std::unordered_map<int, Processor*> processors;
 
     friend class PingProcessor;
     friend class StoreProcessor;

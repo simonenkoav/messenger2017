@@ -3,10 +3,15 @@
 //
 #pragma once
 
+<<<<<<< HEAD
 
 #include "boost/asio/ip/tcp.hpp"
 #include "servers/UdpServer.h"
 #include "servers/TcpServer.h"
+=======
+#include "boost/asio.hpp"
+#include "boost/asio/ip/udp.hpp"
+>>>>>>> bf7731b151cc2f47aef9feab4b6df15ce9105b7f
 
 #include <vector>
 #include <string>
@@ -32,6 +37,7 @@ class NetworkConnector final
                      io_service& service,
                      std::function<void(vector<char>)> on_message_callback,
                      TcpCallback on_tcp_callback);
+                     std::function<void(vector<char>)> on_message_callback);
 
     NetworkConnector() = default;
     NetworkConnector(NetworkConnector&) = delete;
