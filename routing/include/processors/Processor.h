@@ -2,6 +2,7 @@
 #include "data_structures/NodeInfo.h"
 #include "data_structures/Message.h"
 #include "handlers/CommandHandler.h"
+#include "dispatchers/RequestDispatcher.h"
 
 namespace m2 {
 namespace routing {
@@ -13,7 +14,7 @@ public:
 
     virtual bool isCompleted() = 0;
     Message* getResult();
-    virtual void process(NodeInfo node_info, void* additional_data) = 0;
+    virtual void process(const Message& msg, OnRequestProcessed on_processed) = 0;
     virtual void  handleMessage(Message& message) = 0;
 
 protected:
@@ -21,6 +22,7 @@ protected:
     uuid request_id;
     bool completed;
     virtual void sendRequest(NodeInfo recipient) = 0;
+    OnRequestProcessed callback;
 };
 
 } //namespace routing

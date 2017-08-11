@@ -13,9 +13,10 @@ FindProcessor::FindProcessor(Node& node, uuid request_id) : Processor(node, requ
 {
 }
 
-void FindProcessor::process(Message& message)
+void FindProcessor::process(Message& message, OnRequestProcessed on_processed)
 {
     clearSearchState();
+    callback = on_processed;
     searched_guid = getGuid(message);
     k_best.setTarget(searched_guid);
     list<NodeInfo> original_neighbours = node.kbuckets_manager.getNeighbours(searched_guid);

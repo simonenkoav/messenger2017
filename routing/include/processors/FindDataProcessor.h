@@ -17,6 +17,7 @@ protected:
 
     // Methdods
     virtual vector<char> getMessage();
+    virtual void onSearchFinsihed();
     virtual uuid getGuid(Message& message);
 
 };

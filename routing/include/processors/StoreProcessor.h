@@ -11,7 +11,7 @@ public:
 
     // You have to put StoreRequestMessage with node_info of the addressee.
     // It is a way to transmit node you want to store data at.
-    virtual void process(Message& message);
+    virtual void process(Message& message, OnRequestProcessed on_processed);
 
     virtual void handleMessage(Message& message);
 

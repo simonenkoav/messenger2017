@@ -19,14 +19,20 @@ void FindDataProcessor::handleMessage(Message & message)
     }
     else
     {
-        //result = new FindDataResponseMessage(node, casted_message.user_info);
-        //completed = true;
+        completed = true;
+        callback(FindDataResponseMessage(casted_message));
     }
 }
 
 vector<char> FindDataProcessor::getMessage()
 {
     return MessageBuilder::serialize(FindDataRequestMessage(node.self_info, request_id, searched_guid));
+}
+
+void FindDataProcessor::onSearchFinsihed()
+{
+    completed = true;
+    callback(NotFoundMessage(NodeInfo(), request_id, searched_guid));
 }
 
 uuid FindDataProcessor::getGuid(Message & message)

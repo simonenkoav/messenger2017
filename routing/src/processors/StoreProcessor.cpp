@@ -12,9 +12,10 @@ StoreProcessor::StoreProcessor(Node & node, uuid request_id) : Processor(node, r
 StoreProcessor::~StoreProcessor()
 {
 }
-void StoreProcessor::process(Message & message)
+void StoreProcessor::process(Message & message, OnRequestProcessed on_processed)
 {
     assert(MessageType::StoreRequest == message.message_type);
+    callback = on_processed;
     StoreRequestMessage casted_message = dynamic_cast<StoreRequestMessage&>(message);
     // We can not use casted_message because its node_info contains addressee's info
     StoreRequestMessage request_message(node.self_info, request_id, casted_message.user_info);
@@ -27,11 +28,13 @@ void StoreProcessor::process(Message & message)
 
 void StoreProcessor::handleMessage(Message& message)
 {
-    assert(MessageType::StoreResponse == message.message_type);
-    StoreResponseMessage casted_message = dynamic_cast<StoreResponseMessage&>(message);
+    if (false == completed) {
+        assert(MessageType::StoreResponse == message.message_type);
+        StoreResponseMessage casted_message = dynamic_cast<StoreResponseMessage&>(message);
 
-    completed = true;
-    result = new StoreResponseMessage(casted_message);
+        completed = true;
+        callback(StoreResponseMessage(casted_message));
+    }
 }
 }
 }

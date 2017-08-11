@@ -12,7 +12,7 @@ public:
 
     // You have to put PingRequestMessage with node_info of the addressee.
     // It is a way to transmit node you want to ping.
-    virtual void process(Message& message);
+    virtual void process(Message& message, OnRequestProcessed on_processed);
 
     virtual void handleMessage(Message& message);
 
