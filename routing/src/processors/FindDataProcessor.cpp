@@ -12,10 +12,16 @@ void FindDataProcessor::handleMessage(Message & message)
     assert(MessageType::FindDataResponse == message.message_type);
     FindDataResponseMessage casted_message = dynamic_cast<FindDataResponseMessage&>(message);
     // TODO: choose what to do based on info in message userinfo or list of nodes
-    /*if (casted_message.)
-        onNodeResponse(casted_message.node_info.uuid);
-    receiveNodesVector(casted_message.found_nodes_info);
-    askNext();*/
+    //if (nullptr != casted_message.user_info) {
+    //    result = new FindDataResponseMessage(node, casted_message.user_info);
+    //    completed = true;
+    //}
+    //else
+    //{
+    //    onNodeResponse(casted_message.node_info.uuid);
+    //    receiveNodesVector(casted_message.found_nodes_info);
+    //    askNext();
+    //}
 }
 
 vector<char> FindDataProcessor::getMessage()
@@ -23,7 +29,9 @@ vector<char> FindDataProcessor::getMessage()
     return MessageBuilder::serialize(FindDataRequestMessage(node.self_info, searched_guid));
 }
 
-void FindDataProcessor::onSearchFinsihed()
+uuid FindDataProcessor::getGuid(Message & message)
 {
-    // TODO: implement callback call to send result
+    assert(MessageType::FindDataRequest == message.message_type);
+    FindDataRequestMessage casted_message = dynamic_cast<FindDataRequestMessage&>(message);
+    return casted_message.guid;
 }
