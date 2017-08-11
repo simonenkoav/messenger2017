@@ -35,7 +35,7 @@ void UdpServer::startAccept()
         sender_endpoint,
         [this](const boost::system::error_code& e, size_t size){
             if (!e) {
-                vector<char> received_buff(buffer.cbegin(), buffer.cend());
+                vector<char> received_buff(buffer.begin(), buffer.begin() + size);
                 //TODO сделать io_service.post(), чтобы не лочить прием udp пакетов
                 this->on_message_callback(received_buff);
                 // buffer.clear()
