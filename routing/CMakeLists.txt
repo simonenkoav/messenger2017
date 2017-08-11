@@ -90,12 +90,14 @@ set(HEADERS
         include/servers/UdpServer.h
         include/ConnectionManager/ConnectionManager.h
         include/Connection/Connection.h
+        include/data_structures/Message.h
+        include/data_structures/UserInfo.h
         )
 
 set(SOURCES
         src/stdafx.cpp
         src/core/Node.cpp
-        src/data_structures/Message.cpp
+        src/data_structures/NodeInfo.cpp
         src/handlers/CommandHandler.cpp
         src/handlers/FindDataHandler.cpp
         src/handlers/FindNodeHandler.cpp
@@ -114,6 +116,7 @@ set(SOURCES
         src/servers/TcpServer.cpp
         src/Connection/Connection.cpp
         src/ConnectionManager/ConnectionManager.cpp
+        src/data_structures/UserInfo.cpp
         )
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})
