@@ -27,6 +27,8 @@ public:
     size_t size();
     bool contains(uuid item_uuid);
     bool doesSearchFinished();
+    bool allPresentAreProcessed();
+    int emptyPositions();
     list<NodeSearchStruct*> getBest();
 
     // Insert item to k_best if it does not already exist there. If the list is full

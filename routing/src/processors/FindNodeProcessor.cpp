@@ -9,11 +9,18 @@ FindNodeProcessor::FindNodeProcessor(Node & node, uuid request_id) : FindProcess
 
 void FindNodeProcessor::handleMessage(Message& message)
 {
-    assert(MessageType::FindNodeResponse == message.message_type);
-    FindNodeResponseMessage casted_message = dynamic_cast<FindNodeResponseMessage&>(message);
-    onNodeResponse(casted_message.node_info.uuid);
-    receiveNodesVector(casted_message.found_nodes_info);
-    askNext();
+    if (false == completed) {
+        assert(MessageType::FindNodeResponse == message.message_type);
+        FindNodeResponseMessage casted_message = dynamic_cast<FindNodeResponseMessage&>(message);
+        onNodeResponse(casted_message.node_info.uuid);
+        receiveNodesVector(casted_message.found_nodes_info);
+        size_t asked = askNext();
+        if (0 == asked) {
+            if (doesSearchFinished()) {
+                onSearchFinsihed();
+            }
+        }
+    }
 }
 
 vector<char> FindNodeProcessor::getMessage()
