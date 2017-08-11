@@ -8,10 +8,10 @@ StoreProcessor::StoreProcessor(Node & node, uuid request_id) : Processor(node, r
 {
 }
 
-
 StoreProcessor::~StoreProcessor()
 {
 }
+
 void StoreProcessor::process(Message & message, OnRequestProcessed on_processed)
 {
     assert(MessageType::StoreRequest == message.message_type);
@@ -24,7 +24,7 @@ void StoreProcessor::process(Message & message, OnRequestProcessed on_processed)
         message.node_info.port,
         MessageBuilder::serialize(request_message));
 
-    setTimeout(node.io_service, &StoreProcessor::onTimeoutExpired, this);
+    setTimeout(node.io_service);
 }
 
 void StoreProcessor::handleMessage(Message& message)
@@ -37,11 +37,12 @@ void StoreProcessor::handleMessage(Message& message)
         callback(StoreResponseMessage(casted_message));
     }
 }
-}
 
 void StoreProcessor::onTimeoutExpired()
 {
     completed = true;
-    //result = new NotRespondingMessage();
+    callback(NotRespondingMessage(NodeInfo(), request_id));
+}
+
 }
 }

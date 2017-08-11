@@ -25,10 +25,12 @@ protected:
     Message* result;
     uuid request_id;
     bool completed;
+    OnRequestProcessed callback;
     virtual void sendRequest(NodeInfo recipient) = 0;
 
-    void setTimeout(boost::asio::io_service &io_service, std::function<void(Processor* proc_ptr)> function);
-    //virtual void onTimoutExpired() = 0;
+    void setTimeout(boost::asio::io_service &io_service);
+    //void setTimeout(boost::asio::io_service &io_service, std::function<void(Processor* proc_ptr)> function);
+    virtual void onTimoutExpired() = 0;
 };
 
 } //namespace routing

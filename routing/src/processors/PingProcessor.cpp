@@ -23,8 +23,8 @@ void PingProcessor::process(Message & message, OnRequestProcessed on_processed)
         message.node_info.ip,
         message.node_info.port,
         MessageBuilder::serialize(request_message));
-    
-    setTimeout(node.io_service, &PingProcessor::onTimeoutExpired, this);
+
+    setTimeout(node.io_service);
 }
 
 void PingProcessor::handleMessage(Message& message)
@@ -37,12 +37,12 @@ void PingProcessor::handleMessage(Message& message)
         callback(PingResponseMessage(casted_message));
     }
 }
-}
 
 void PingProcessor::onTimeoutExpired()
 {
     completed = true;
-    //result = new NotRespondingMessage();
+    callback(NotRespondingMessage(NodeInfo(), request_id));
 }
 
+}
 }

@@ -14,10 +14,10 @@ Message * Processor::getResult()
     return result;
 }
 
-void Processor::setTimeout(boost::asio::io_service &io_service, std::function<void(Processor* proc_ptr)> function)
+void Processor::setTimeout(boost::asio::io_service &io_service )
 {
     auto timer = new boost::asio::deadline_timer(io_service, Config::getResponseTimeout());
-    timer->async_wait(boost::bind(function, this));
+    timer->async_wait(boost::bind(&Processor::onTimoutExpired, this));
 }
 
 

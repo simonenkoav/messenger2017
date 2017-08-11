@@ -17,7 +17,7 @@ public:
 
 protected:
 
-    void onTimeoutExpired();
+    virtual void onTimeoutExpired();
 
 };
 
