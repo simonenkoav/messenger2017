@@ -6,7 +6,8 @@ Node::Node(string port)
     : io_service()
     , network_connector(std::stoi(port),
                         io_service,
-                        [this](vector<char> data) {this->onMessageReceive(data);})
+                        [this](vector<char> data) {this->onMessageReceive(data);},
+                        [](){})
     , dht()
 {
     // create own uuid
@@ -20,8 +21,25 @@ Node::Node(string port)
     // start accept incoming messages
     network_connector.startAccept();
 
-    startAsyncUpdateKBuckets();
+    // send request to find k-neighbors
+    // ...
 };
+
+
+void Node::start(uuid bootstrap_guid, string ip_address, string port)
+{
+    NodeInfo bootstrap_node = {bootstrap_guid, ip_address, std::stoi(port)};
+    kbuckets_manager.insert(bootstrap_node);
+
+    // find k-neighbors
+    // ...
+
+    // start accept incoming connections
+    network_connector.startAccept();
+
+    // start async work
+    startAsyncUpdateKBuckets();
+}
 
 /*!
  * Find k-neighbors every T time;
@@ -42,6 +60,10 @@ void Node::onMessageReceive(vector<char> buffer)
    // std::unique<Message> msg = ;
 }
 
+void Node::stop()
+{
+    network_connector.stop();
+}
 
 Node::~Node()
 {
