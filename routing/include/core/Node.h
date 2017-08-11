@@ -30,7 +30,7 @@ public:
 
 
     void start(uuid bootstrap_guid, string ip_address, string port);
-        // void stop();
+    void stop();
 private:
     void onMessageReceive(vector<char>);
     void startAsyncUpdateKBuckets();
