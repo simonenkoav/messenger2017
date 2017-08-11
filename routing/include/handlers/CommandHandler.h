@@ -1,20 +1,21 @@
 #pragma once
 #include "data_structures/Message.h"
+#include "data_structures/NodeContainingObject.h"
+#include "utils/MessageBuilder.h"
 
 namespace m2 {
 namespace routing {
-
 /// Command handler is an abstract class for all handlers of incoming messages
-class CommandHandler
+class CommandHandler : protected virtual NodeContainingObject
 {
 public:
-    CommandHandler();
-    ~CommandHandler();
+    CommandHandler(Node& node);
+    virtual ~CommandHandler();
 
 public:
-    virtual Message* handleMessage(Message message);
+    virtual void handleMessage(Message& message) = 0;
 
-private:
+protected:
 };
 
 } // namespace routing

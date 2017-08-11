@@ -93,7 +93,6 @@ set(HEADERS
 set(SOURCES
         src/stdafx.cpp
         src/core/Node.cpp
-        src/data_structures/Message.cpp
         src/data_structures/NodeInfo.cpp
         src/handlers/CommandHandler.cpp
         src/handlers/FindDataHandler.cpp
@@ -109,7 +108,6 @@ set(SOURCES
         src/NetworkConnector/NetworkConnector.cpp
         src/DHT/DHT.cpp
         src/utils/MessageBuilder.cpp
-        src/data_structures/Message.cpp
         src/data_structures/UserInfo.cpp
         )
 

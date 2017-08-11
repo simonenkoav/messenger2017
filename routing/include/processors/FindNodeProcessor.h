@@ -1,24 +1,24 @@
 #include "processors/FindProcessor.h"
 #include "data_structures/Message.h"
-#include "utils/MessageBuilder.h"
 
 namespace m2 {
 namespace routing {
-class FindNodeProcessor: public FindProcessor
+class FindNodeProcessor: protected FindProcessor
 {
 public:
-    FindNodeProcessor(Node& node);
-    ~FindNodeProcessor();
+    FindNodeProcessor(Node& node, uuid request_id);
+    virtual ~FindNodeProcessor();
 
     //Message* handleMessage(Message message);
-    virtual void process(uuid guid);
+    virtual void handleMessage(Message& message);
 
 protected:
     // Fields
 
-    // Methdods 
-    virtual void sendRequest(NodeInfo recipient);
-
+    // Methdods
+    virtual vector<char> getMessage();
+    virtual void onSearchFinsihed();
+    virtual uuid getGuid(Message& message);
 };
 }
 }

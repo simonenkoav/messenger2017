@@ -158,6 +158,7 @@ static std::vector<char> MessageBuilder::serialize(const PingResponseMessage &me
   return {result.begin(), result.end()};
 }
 
+
 static std::vector<char> MessageBuilder::serialize(const StoreResponseMessage &message)
 {
   MessageBuilderProto::Message proto_message;
