@@ -3,7 +3,7 @@
 
 namespace m2{
 namespace routing {
-class StoreProcessor : protected Processor
+class StoreProcessor : public Processor
 {
 public:
     StoreProcessor(Node& node, uuid request_id);
@@ -11,7 +11,7 @@ public:
 
     // You have to put StoreRequestMessage with node_info of the addressee.
     // It is a way to transmit node you want to store data at.
-    virtual void process(Message& message);
+    virtual void process(Message& message, OnRequestProcessed on_processed);
 
     virtual void handleMessage(Message& message);
 

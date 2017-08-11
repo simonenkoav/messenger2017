@@ -3,8 +3,9 @@
 //
 #pragma once
 
-#include "boost/asio.hpp"
-#include "boost/asio/ip/udp.hpp"
+#include "boost/asio/ip/tcp.hpp"
+#include "servers/UdpServer.h"
+#include "servers/TcpServer.h"
 
 #include <vector>
 #include <string>
@@ -21,25 +22,27 @@ using std::vector;
 using namespace boost::asio::ip;
 using boost::asio::io_service;
 
+typedef std::function<void()> TcpCallback;
+
 class NetworkConnector final
 {
  public:
     NetworkConnector(int port,
                      io_service& service,
-                     std::function<void(vector<char>)> on_message_callback);
-
+                     std::function<void(vector<char>)> on_message_callback,
+                     TcpCallback on_tcp_callback);
 
     NetworkConnector() = default;
     NetworkConnector(NetworkConnector&) = delete;
 
     void sendMessage(string ip, int port, vector<char> buffer);
     void startAccept();
+    void stop();
     string getMyIpAddress();
 
  private:
-    std::function<void(vector<char> buffer)> on_message_callback;
-    udp::socket socket;
-    std::array<char, 2000> buffer;
+    UdpServer udp_server;
+    TcpServer tcp_server;
 };
 
 } // end routing
