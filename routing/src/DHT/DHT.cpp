@@ -7,23 +7,25 @@
 
 using namespace m2::routing;
 
+
 void DHT::put(UserInfo new_info)
 {
     map.insert(std::make_pair(new_info.uuid, new_info));
 }
+
 
 void DHT::erase(uuid key)
 {
     map.erase(key);
 }
 
-bool DHT::get(uuid key, UserInfo& result)
+
+UserInfo DHT::get(uuid key)
 {
     auto founded = map.find(key);
     if (founded != map.end()) {
-        result = founded->second;
-        return true;
+        return founded->second;
     } else {
-        return false;
+        return UserInfo();
     }
 }
