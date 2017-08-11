@@ -10,7 +10,7 @@ namespace m2 {
 namespace routing {
 
 typedef std::function<Processor*(Node&, boost::uuids::uuid)> ProcessorBuilder;
-typedef std::function<void(std::unique_ptr<Message>)> OnRequestProcessed;
+typedef std::function<void(const Message&)> OnRequestProcessed;
 
 class RequestDispatcher: public CommandHandler
 {
@@ -21,7 +21,7 @@ public:
     void handleMessage(const Message& message);
 
 private:
-    void onProcessed(boost::uuids::uuid request_id, Message* result);
+    void onProcessed(boost::uuids::uuid request_id, const Message& result);
 
     struct Request
     {
