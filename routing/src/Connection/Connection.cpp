@@ -23,8 +23,10 @@ void Connection::close()
 
 void Connection::doRead()
 {
+//TODO асинхр.чтение с сокета до конца http заголовков
 }
 
 void Connection::doWrite()
 {
+//TODO асинхр.запись
 }

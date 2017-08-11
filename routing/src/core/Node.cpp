@@ -22,7 +22,7 @@ Node::Node(string port)
     network_connector.startAccept();
 
     // send request to find k-neighbors
-    processors[MessageType::FindNodeResponse]->process(self_info, nullptr);
+    // ...
 };
 
 
