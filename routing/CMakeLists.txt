@@ -88,6 +88,8 @@ set(HEADERS
         include/utils/MessageBuilder.h
         include/data_structures/Message.h
         include/data_structures/UserInfo.h
+        include/dispatchers/RequestDispatcher.h
+        include/dispatchers/MessageDispatcher.h
         )
 
 set(SOURCES
@@ -109,6 +111,8 @@ set(SOURCES
         src/DHT/DHT.cpp
         src/utils/MessageBuilder.cpp
         src/data_structures/UserInfo.cpp
+        src/dispatchers/RequestDispatcher.cpp
+        src/dispatchers/MessageDispatcher.cpp
         )
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})
