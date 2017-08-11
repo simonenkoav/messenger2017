@@ -22,7 +22,8 @@ void StoreProcessor::process(Message & message)
         message.node_info.ip,
         message.node_info.port,
         MessageBuilder::serialize(request_message));
-    // TODO: we can use here timer to set a timeout for response and return null message in case of no response
+
+    setTimeout(node.io_service, &StoreProcessor::onTimeoutExpired, this);
 }
 
 void StoreProcessor::handleMessage(Message& message)
@@ -32,6 +33,12 @@ void StoreProcessor::handleMessage(Message& message)
 
     completed = true;
     result = new StoreResponseMessage(casted_message);
+}
+
+void StoreProcessor::onTimeoutExpired()
+{
+    completed = true;
+    //result = new NotRespondingMessage();
 }
 }
 }

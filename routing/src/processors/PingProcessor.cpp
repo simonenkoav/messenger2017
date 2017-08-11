@@ -38,7 +38,7 @@ void PingProcessor::handleMessage(Message& message)
 void PingProcessor::onTimeoutExpired()
 {
     completed = true;
-    //result = new PingResponseMessage(casted_message);
+    //result = new NotRespondingMessage();
 }
 
 }

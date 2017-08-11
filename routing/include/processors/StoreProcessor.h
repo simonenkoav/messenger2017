@@ -15,6 +15,10 @@ public:
 
     virtual void handleMessage(Message& message);
 
+protected:
+
+    void onTimeoutExpired();
+
 };
 
 }
