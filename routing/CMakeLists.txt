@@ -86,6 +86,10 @@ set(HEADERS
         include/NetworkConnector/NetworkConnector.h
         include/DHT/DHT.h
         include/utils/MessageBuilder.h
+        include/servers/TcpServer.h
+        include/servers/UdpServer.h
+        include/ConnectionManager/ConnectionManager.h
+        include/Connection/Connection.h
         include/data_structures/Message.h
         include/data_structures/UserInfo.h
         include/dispatchers/RequestDispatcher.h
@@ -110,6 +114,10 @@ set(SOURCES
         src/NetworkConnector/NetworkConnector.cpp
         src/DHT/DHT.cpp
         src/utils/MessageBuilder.cpp
+        src/servers/UdpServer.cpp
+        src/servers/TcpServer.cpp
+        src/Connection/Connection.cpp
+        src/ConnectionManager/ConnectionManager.cpp
         src/data_structures/UserInfo.cpp
         src/dispatchers/RequestDispatcher.cpp
         src/dispatchers/MessageDispatcher.cpp

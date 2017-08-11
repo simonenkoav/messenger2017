@@ -8,7 +8,7 @@
 
 #include "boost/functional/hash.hpp"
 #include "boost/uuid/uuid.hpp"
-#include <data_structures/NodeInfo.h>
+#include <data_structures/UserInfo.h>
 
 namespace m2 {
 namespace routing {
@@ -21,12 +21,12 @@ class DHT
     DHT() = default;
     DHT(DHT&) = delete;
 
-    void put(NodeInfo new_info);
+    void put(UserInfo new_info);
     void erase(uuid key);
-    bool get(uuid key, NodeInfo& result);
+    bool get(uuid key, UserInfo& result);
 
  private:
-    std::unordered_map<uuid, NodeInfo, boost::hash<boost::uuids::uuid>> map;
+    std::unordered_map<uuid, UserInfo, boost::hash<boost::uuids::uuid>> map;
 };
 
 } // end routing
