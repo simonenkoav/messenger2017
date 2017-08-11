@@ -86,12 +86,14 @@ set(HEADERS
         include/NetworkConnector/NetworkConnector.h
         include/DHT/DHT.h
         include/utils/MessageBuilder.h
+        include/data_structures/Message.h
+        include/data_structures/UserInfo.h
         )
 
 set(SOURCES
         src/stdafx.cpp
         src/core/Node.cpp
-        src/data_structures/Message.cpp
+        src/data_structures/NodeInfo.cpp
         src/handlers/CommandHandler.cpp
         src/handlers/FindDataHandler.cpp
         src/handlers/FindNodeHandler.cpp
@@ -106,6 +108,7 @@ set(SOURCES
         src/NetworkConnector/NetworkConnector.cpp
         src/DHT/DHT.cpp
         src/utils/MessageBuilder.cpp
+        src/data_structures/UserInfo.cpp
         )
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})
