@@ -22,7 +22,8 @@ void PingProcessor::process(Message & message)
         message.node_info.ip,
         message.node_info.port,
         MessageBuilder::serialize(request_message));
-    // TODO: we can use here timer to set a timeout for response and return null message in case of no response
+    
+    setTimeout(node.io_service, &PingProcessor::onTimeoutExpired, this);
 }
 
 void PingProcessor::handleMessage(Message& message)
@@ -33,5 +34,12 @@ void PingProcessor::handleMessage(Message& message)
     completed = true;
     result = new PingResponseMessage(casted_message);
 }
+
+void PingProcessor::onTimeoutExpired()
+{
+    completed = true;
+    //result = new PingResponseMessage(casted_message);
+}
+
 }
 }

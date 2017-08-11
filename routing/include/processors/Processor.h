@@ -3,6 +3,10 @@
 #include "data_structures/Message.h"
 #include "handlers/CommandHandler.h"
 
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 namespace m2 {
 namespace routing {
 class Processor : protected virtual CommandHandler
@@ -21,6 +25,9 @@ protected:
     uuid request_id;
     bool completed;
     virtual void sendRequest(NodeInfo recipient) = 0;
+
+    void setTimeout(boost::asio::io_service &io_service, std::function<void(Processor* proc_ptr)> function);
+    //virtual void onTimoutExpired() = 0;
 };
 
 } //namespace routing

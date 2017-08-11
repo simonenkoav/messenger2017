@@ -16,6 +16,7 @@ public:
 
     virtual void handleMessage(Message& message);
 
+    void onTimeoutExpired();
 };
 }
 }
