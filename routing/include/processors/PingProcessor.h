@@ -4,7 +4,7 @@
 namespace m2 {
 namespace routing {
 
-class PingProcessor : protected Processor
+class PingProcessor : public Processor
 {
 public:
     PingProcessor(Node& node, uuid request_id);

@@ -3,7 +3,7 @@
 
 namespace m2{
 namespace routing {
-class StoreProcessor : protected Processor
+class StoreProcessor : public Processor
 {
 public:
     StoreProcessor(Node& node, uuid request_id);

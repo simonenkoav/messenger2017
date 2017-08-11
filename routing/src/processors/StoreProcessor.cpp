@@ -17,7 +17,7 @@ void StoreProcessor::process(Message & message)
     assert(MessageType::StoreRequest == message.message_type);
     StoreRequestMessage casted_message = dynamic_cast<StoreRequestMessage&>(message);
     // We can not use casted_message because its node_info contains addressee's info
-    StoreRequestMessage request_message(node.self_info, casted_message.store_node_info);
+    StoreRequestMessage request_message(node.self_info, request_id, casted_message.user_info);
     node.network_connector.sendMessage(
         message.node_info.ip,
         message.node_info.port,

@@ -116,7 +116,7 @@ bool BestK::insert(NodeSearchStruct * item)
         }
         else {
             NodeSearchStruct* worst_item = sorted_list.back();
-            if (KBucketsTools::distance(worst_item->node_info.uuid, target) > 
+            if (KBucketsTools::distance(worst_item->node_info.uuid, target) >
                 KBucketsTools::distance(item->node_info.uuid, target)) {
                 deleteItem(worst_item->node_info.uuid);
                 addItem(item);

@@ -25,7 +25,7 @@ using std::vector;
 using std::list;
 using std::map;
 
-class FindProcessor : protected Processor
+class FindProcessor : public Processor
 {
 public:
     FindProcessor(Node& node, uuid request_id );
@@ -50,7 +50,7 @@ protected:
     size_t selectNewForKBest();
     void addNode(NodeInfo node_info);
     size_t askNext(int number = 0);
-    void receiveNodesVector(vector<NodeInfo> &nodes);
+    void receiveNodesList(list<NodeInfo>& nodes);
     void onNodeResponse(uuid node_guid);
     bool doesSearchFinished();
 

@@ -1,0 +1,74 @@
+syntax='proto3';
+
+// protoc MessageBuilderProto.proto --cpp_out=.
+
+package MessageBuilderProto;
+
+message UserInfo {
+    bytes guid = 1;
+    string domain = 2;
+}
+
+message NodeInfo {
+    bytes guid = 1;
+    string ip = 2;
+    sint32 port = 3;
+}
+
+enum MessageType {
+    PingRequest = 0;
+    StoreRequest = 1;
+    FindNodeRequest = 2;
+    FindDataRequest = 3;
+    PingResponse = 4;
+    StoreResponse = 5;
+    FindNodeResponse = 6;
+    FindDataResponse = 7;
+}
+
+message Message {
+    MessageType message_type = 1;
+    NodeInfo node_info = 2;
+    bytes request_id = 3;
+
+    message PingRequestMessage {
+    }
+
+    message StoreRequestMessage {
+        UserInfo user_info = 1;
+    }
+
+    message FindNodeRequestMessage {
+        bytes guid = 1;
+    }
+
+    message FindDataRequestMessage {
+        bytes giud = 1;
+    }
+
+    message PingResponseMessage {
+    }
+
+    message StoreResponsetMessage {
+    }
+
+    message FindNodeResponseMessage {
+        repeated NodeInfo nodes_info = 1;
+    }
+
+    message FindDataResponseMessage {
+        repeated NodeInfo nodes_info = 1;
+        UserInfo user_info = 2;
+    }
+
+    oneof message_uniq {
+        PingRequestMessage ping_request_message = 4;
+        StoreRequestMessage store_request_message = 5;
+        FindNodeRequestMessage find_node_request_message = 6;
+        FindDataRequestMessage find_data_request_message = 7;
+        PingResponseMessage ping_response_message = 8;
+        StoreResponsetMessage store_response_message = 9;
+        FindNodeResponseMessage find_node_response_message = 10;
+        FindDataResponseMessage find_data_response_message = 11;
+    }
+}

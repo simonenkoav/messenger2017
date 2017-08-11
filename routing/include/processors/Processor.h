@@ -5,7 +5,7 @@
 
 namespace m2 {
 namespace routing {
-class Processor : protected virtual CommandHandler
+class Processor : public virtual CommandHandler
 {
 public:
     Processor(Node& node, uuid request_id);

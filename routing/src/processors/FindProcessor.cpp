@@ -109,7 +109,7 @@ size_t FindProcessor::askNext(int number)
     return to_ask.size();
 }
 
-void FindProcessor::receiveNodesVector(vector<NodeInfo>& nodes)
+void FindProcessor::receiveNodesList(list<NodeInfo>& nodes)
 {
     for (auto item : nodes) {
         auto found = search_map.find(item.uuid);

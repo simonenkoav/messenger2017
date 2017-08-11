@@ -13,7 +13,7 @@ void FindNodeProcessor::handleMessage(Message& message)
         assert(MessageType::FindNodeResponse == message.message_type);
         FindNodeResponseMessage casted_message = dynamic_cast<FindNodeResponseMessage&>(message);
         onNodeResponse(casted_message.node_info.uuid);
-        receiveNodesVector(casted_message.found_nodes_info);
+        receiveNodesList(casted_message.nodes_info);
         size_t asked = askNext();
         if (0 == asked) {
             if (doesSearchFinished()) {
@@ -25,7 +25,7 @@ void FindNodeProcessor::handleMessage(Message& message)
 
 vector<char> FindNodeProcessor::getMessage()
 {
-    return MessageBuilder::serialize(FindNodeRequestMessage(node.self_info, searched_guid));
+    return MessageBuilder::serialize(FindNodeRequestMessage(node.self_info, request_id, searched_guid));
 }
 
 void FindNodeProcessor::onSearchFinsihed()
@@ -36,7 +36,7 @@ void FindNodeProcessor::onSearchFinsihed()
     for (auto item : best) {
         answer.push_back(item->node_info);
     }
-    result = new FindNodeResponseMessage(node.self_info, answer);
+    result = new FindNodeResponseMessage(node.self_info, request_id, answer);
 }
 
 uuid getGuid(Message& message) {

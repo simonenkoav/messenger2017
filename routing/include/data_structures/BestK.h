@@ -32,18 +32,18 @@ public:
     list<NodeSearchStruct*> getBest();
 
     // Insert item to k_best if it does not already exist there. If the list is full
-    // it will check whether inserting item is better than other. If it is the item 
+    // it will check whether inserting item is better than other. If it is the item
     // would be inserted
     // Return true if item was inserted, false otherwise
     bool insert(NodeSearchStruct* item);
 
 private:
-    // Do simply adding. No checks of k_limit. This method should be called if there less 
+    // Do simply adding. No checks of k_limit. This method should be called if there less
     // than k_limit elements
     void addItem(NodeSearchStruct* item);
-    
-    
-    
+
+
+
     int k_limit;
 
     // The resource that we try to find the most closest to
