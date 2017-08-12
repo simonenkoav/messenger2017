@@ -83,9 +83,6 @@ set(HEADERS
         include/handlers/CommandHandler.h
         include/handlers/FindDataHandler.h
         include/handlers/FindNodeHandler.h
-        include/processors/FindDataProcessor.h
-        include/processors/FindNodeProcessor.h
-        include/processors/FindProcessor.h
         include/kbuckets/KBucket.h
         include/kbuckets/KBucketsManager.h
         include/kbuckets/KBucketsTools.h
@@ -100,6 +97,7 @@ set(HEADERS
         include/data_structures/UserInfo.h
         include/dispatchers/RequestDispatcher.h
         include/dispatchers/MessageDispatcher.h
+        include/data_structures/Message.h
         )
 
 set(SOURCES
@@ -109,9 +107,6 @@ set(SOURCES
         src/handlers/CommandHandler.cpp
         src/handlers/FindDataHandler.cpp
         src/handlers/FindNodeHandler.cpp
-        src/processors/FindDataProcessor.cpp
-        src/processors/FindNodeProcessor.cpp
-        src/processors/FindProcessor.cpp
         src/kbuckets/KBucketsTools.cpp
         src/kbuckets/KBucket.cpp
         src/kbuckets/KBucketsManager.cpp
@@ -127,6 +122,7 @@ set(SOURCES
         src/data_structures/UserInfo.cpp
         src/dispatchers/RequestDispatcher.cpp
         src/dispatchers/MessageDispatcher.cpp
+        src/data_structures/Message.cpp
         )
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})
