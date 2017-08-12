@@ -25,7 +25,7 @@ using std::vector;
 using std::list;
 using std::map;
 
-class FindProcessor : protected Processor
+class FindProcessor : public Processor
 {
 public:
     FindProcessor(Node& node, uuid request_id );
@@ -33,7 +33,7 @@ public:
 
 
 public:
-    void process(Message& message);
+    virtual void process(Message& message, OnRequestProcessed on_processed);
     virtual bool isCompleted() = 0;
 
 protected:
@@ -45,12 +45,12 @@ protected:
 
     // Methdods
     void sendRequest(processors::NodeSearchStruct* addressee);
-    void timeoutExpires(uuid guid, boost::asio::deadline_timer* expired_timer);
+    void onTimeoutExpired(uuid guid, boost::asio::deadline_timer* expired_timer);
     void clearSearchState();
-    void selectNewForKBest();
+    size_t selectNewForKBest();
     void addNode(NodeInfo node_info);
-    void askNext(int number = 0);
-    void receiveNodesVector(vector<NodeInfo> &nodes);
+    size_t askNext(int number = 0);
+    void receiveNodesList(list<NodeInfo>& nodes);
     void onNodeResponse(uuid node_guid);
     bool doesSearchFinished();
 

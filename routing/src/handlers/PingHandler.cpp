@@ -14,6 +14,13 @@ PingHandler::~PingHandler()
 
 void PingHandler::handleMessage(Message & message)
 {
+    assert(MessageType::PingRequest == message.message_type);
+    PingRequestMessage casted_message = dynamic_cast<PingRequestMessage&>(message);
+    PingResponseMessage response_message(node.self_info, casted_message.request_id);
+    node.network_connector.sendMessage(
+        casted_message.node_info.ip,
+        casted_message.node_info.port,
+        MessageBuilder::serialize(response_message));
 }
 
 }
