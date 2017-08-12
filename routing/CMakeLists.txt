@@ -77,6 +77,9 @@ set(LIBS ${LIBS} logging_lib)
 include_directories(include/ )
 set(HEADERS
         stdafx.h
+        include/kbuckets/KBucket.h
+        include/kbuckets/KBucketsManager.h
+        include/kbuckets/KBucketsTools.h
         include/core/Node.h
         include/data_structures/Message.h
         include/data_structures/NodeInfo.h
@@ -86,9 +89,6 @@ set(HEADERS
         include/processors/FindDataProcessor.h
         include/processors/FindNodeProcessor.h
         include/processors/FindProcessor.h
-        include/kbuckets/KBucket.h
-        include/kbuckets/KBucketsManager.h
-        include/kbuckets/KBucketsTools.h
         include/NetworkConnector/NetworkConnector.h
         include/DHT/DHT.h
         include/utils/MessageBuilder.h
@@ -100,10 +100,14 @@ set(HEADERS
         include/data_structures/UserInfo.h
         include/dispatchers/RequestDispatcher.h
         include/dispatchers/MessageDispatcher.h
+        include/data_structures/Message.h
         )
 
 set(SOURCES
         src/stdafx.cpp
+        src/kbuckets/KBucketsTools.cpp
+        src/kbuckets/KBucket.cpp
+        src/kbuckets/KBucketsManager.cpp
         src/core/Node.cpp
         src/data_structures/NodeInfo.cpp
         src/handlers/CommandHandler.cpp
@@ -112,9 +116,6 @@ set(SOURCES
         src/processors/FindDataProcessor.cpp
         src/processors/FindNodeProcessor.cpp
         src/processors/FindProcessor.cpp
-        src/kbuckets/KBucketsTools.cpp
-        src/kbuckets/KBucket.cpp
-        src/kbuckets/KBucketsManager.cpp
         src/utils/Config.cpp
         src/main.cpp
         src/NetworkConnector/NetworkConnector.cpp
@@ -127,6 +128,7 @@ set(SOURCES
         src/data_structures/UserInfo.cpp
         src/dispatchers/RequestDispatcher.cpp
         src/dispatchers/MessageDispatcher.cpp
+        src/data_structures/Message.cpp
         )
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})
