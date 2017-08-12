@@ -2,15 +2,17 @@
 
 #include "data_structures/Message.h"
 #include "processors/Processor.h"
+#include "handlers/CommandHandler.h"
 
 #include <map>
 #include <functional>
+#include <memory>
 
 namespace m2 {
 namespace routing {
 
-typedef std::function<Processor*(Node&, boost::uuids::uuid)> ProcessorBuilder;
-typedef std::function<void(const Message&)> OnRequestProcessed;
+typedef Processor* PProcessor;
+typedef std::function<PProcessor(Node&, boost::uuids::uuid)> ProcessorBuilder;
 
 class RequestDispatcher: public CommandHandler
 {

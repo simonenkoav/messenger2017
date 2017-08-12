@@ -5,8 +5,8 @@ namespace m2 {
 namespace routing {
 
 
-    KBucketsManager::KBucketsManager(const NodeInfo &nodeInfo)
-    : ourNodeInfo(nodeInfo)
+    KBucketsManager::KBucketsManager(Node& node, const NodeInfo &nodeInfo)
+    : NodeContainingObject(node), ourNodeInfo(nodeInfo)
     {
         KBucket initialKBucket;
         initialKBucket.insert(nodeInfo);
@@ -14,7 +14,7 @@ namespace routing {
     }
 
     void KBucketsManager::insert(const NodeInfo &newNodeInfo) {
-        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.uuid, newNodeInfo.uuid) - 1;
+        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.guid, newNodeInfo.guid) - 1;
 
         if (bucketIndex != -1) //think about situation when bucketIndex == -1
         {
@@ -44,7 +44,7 @@ namespace routing {
                         insert(newNodeInfo); //I hope I'm not mistaken
                     } else {
                         auto lastConnectedNodeInfo = bucket.tail();
-                        //TODO ping lastConnectedNodeInfo, do appropriate actions when it would answer on ping or not
+                        pingNode(lastConnectedNodeInfo, bucketIndex, newNodeInfo);
                     }
 
                 }
@@ -62,7 +62,7 @@ namespace routing {
             return interval_to_bucket.at(0).known();
         }
 
-        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.uuid, guid);
+        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.guid, guid);
 
         std::list<NodeInfo> resultList;
 
@@ -80,17 +80,13 @@ namespace routing {
 
         std::function<boost::uuids::uuid(const NodeInfo &node_info)> uuidGetter =
                 [](const NodeInfo &node_info) -> boost::uuids::uuid{
-                    return node_info.uuid;
+                    return node_info.guid;
                 };
         KBucketsTools::sortByDist(resultList, guid, uuidGetter);
 
         return resultList;
     }
 
-    KBucketsManager::KBucketsManager()
-    { //TODO remove it later, it's just for build
-
-    }
 
     void KBucketsManager::setNodeInfo(const NodeInfo &nodeInfo) {
         ourNodeInfo = nodeInfo;
@@ -142,7 +138,7 @@ namespace routing {
                                     const int count, const boost::uuids::uuid &guid) const {
         std::function<boost::uuids::uuid(const NodeInfo &node_info)> uuidGetter =
                 [](const NodeInfo &node_info) -> boost::uuids::uuid{
-                    return node_info.uuid;
+                    return node_info.guid;
                 };
         std::list<NodeInfo> resultList;
         std::copy(originalList.begin(), originalList.end(), resultList.begin());
@@ -153,6 +149,32 @@ namespace routing {
         return resultList;
     }
 
+    void KBucketsManager::pingNode(const NodeInfo &targetNode, int bucketIndex, const NodeInfo &newNodeInfo) {
+        PingRequestMessage ping_message(targetNode);
+        //TODO node.ping(ping_message, myCallback);
+        request_id_to_bucket_index_and_new_node.insert(
+          std::pair<boost::uuids::uuid, std::pair<int, NodeInfo>>(
+            ping_message.request_id, std::pair<int, NodeInfo>(bucketIndex, newNodeInfo)));
+    }
+
+    void KBucketsManager::onPingResponse(std::unique_ptr<Message> response) {
+        auto responded_node_info = response->node_info;
+        auto request_id = response->request_id;
+        int bucket_index = request_id_to_bucket_index_and_new_node.at(request_id).first;
+        auto bucket = interval_to_bucket[bucket_index];
+        if (response->message_type == PingResponse) {
+            bucket.moveToHead(responded_node_info);
+            request_id_to_bucket_index_and_new_node.erase(request_id);
+        } else if (response->message_type == NotResponding) {
+            auto last_node_info_in_bucket = bucket.tail();
+            if (responded_node_info.guid == last_node_info_in_bucket.guid) {
+                bucket.removeTail();
+                auto new_node_info =
+                    request_id_to_bucket_index_and_new_node.at(request_id).second;
+                insert(new_node_info);
+            }
+        }
+    }
+
 } // namespace routing
 } // namespace m2
-
