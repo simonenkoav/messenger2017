@@ -9,8 +9,8 @@
 #include "kbuckets/KBucket.h"
 #include "kbuckets/KBucketsTools.h"
 #include "utils/Config.h"
-##include "data_structures/NodeContainingObject.h"
-##include "data_structures/Message.h"
+#include "data_structures/NodeContainingObject.h"
+#include "data_structures/Message.h"
 
 namespace m2 {
 namespace routing {
@@ -18,7 +18,6 @@ namespace routing {
 class KBucketsManager : public NodeContainingObject
 {
 public:
-    KBucketsManager(); //TODO remove it, it's temporary for build
     KBucketsManager(Node& node, const NodeInfo &nodeInfo);
 
     void insert(const NodeInfo &nodeInfo);
@@ -30,7 +29,7 @@ public:
 private:
     std::map<int, KBucket> interval_to_bucket;
 
-    std::map<int, std::pair<int, NodeInfo>> request_id_to_bucket_index_and_new_node;
+    std::map<boost::uuids::uuid, std::pair<int, NodeInfo>> request_id_to_bucket_index_and_new_node;
 
     NodeInfo ourNodeInfo;
 
