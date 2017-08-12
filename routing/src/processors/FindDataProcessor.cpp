@@ -13,7 +13,7 @@ void FindDataProcessor::handleMessage(Message & message)
     FindDataResponseMessage casted_message = dynamic_cast<FindDataResponseMessage&>(message);
     //TODO: choose what to do based on info in message userinfo or list of nodes
     if (casted_message.user_info.isNil()) {
-        onNodeResponse(casted_message.node_info.uuid);
+        onNodeResponse(casted_message.node_info.guid);
         receiveNodesList(casted_message.nodes_info);
         askNext();
     }

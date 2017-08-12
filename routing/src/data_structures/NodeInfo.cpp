@@ -4,8 +4,8 @@
 namespace m2 {
 namespace routing {
 
-NodeInfo::NodeInfo(boost::uuids::uuid uuid, std::string ip, int port)
-        : uuid(uuid), ip(ip), port(port) {}
+NodeInfo::NodeInfo(boost::uuids::uuid guid, std::string ip, int port)
+        : guid(guid), ip(ip), port(port) {}
 
 
 NodeInfo::~NodeInfo() {

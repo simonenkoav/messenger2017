@@ -70,7 +70,7 @@ static std::vector<char> MessageBuilder::serialize(const PingRequestMessage &mes
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -87,12 +87,12 @@ static std::vector<char> MessageBuilder::serialize(const StoreRequestMessage &me
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
   auto store_request_message = proto_message.mutable_store_request_message();
-  store_request_message->mutable_user_info()->set_guid(to_string(message.user_info.uuid));
+  store_request_message->mutable_user_info()->set_guid(to_string(message.user_info.guid));
   store_request_message->mutable_user_info()->set_domain(message.user_info.domain);
 
   std::string result;
@@ -108,7 +108,7 @@ static std::vector<char> MessageBuilder::serialize(const FindNodeRequestMessage 
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -128,7 +128,7 @@ static std::vector<char> MessageBuilder::serialize(const FindDataRequestMessage 
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -148,7 +148,7 @@ static std::vector<char> MessageBuilder::serialize(const PingResponseMessage &me
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -166,7 +166,7 @@ static std::vector<char> MessageBuilder::serialize(const StoreResponseMessage &m
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -183,14 +183,14 @@ static std::vector<char> MessageBuilder::serialize(const FindNodeResponseMessage
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
   auto find_node_response_message = proto_message.mutable_find_node_response_message();
   for (auto const& n : message.nodes_info) {
     auto node_info = find_node_response_message->add_nodes_info();
-    node_info->set_guid(to_string(n.uuid));
+    node_info->set_guid(to_string(n.guid));
     node_info->set_ip(n.ip);
     node_info->set_port(n.port);
   }
@@ -208,7 +208,7 @@ static std::vector<char> MessageBuilder::serialize(const FindDataResponseMessage
   proto_message.set_request_id(to_string(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.uuid));
+  node_info->set_guid(to_string(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -216,12 +216,12 @@ static std::vector<char> MessageBuilder::serialize(const FindDataResponseMessage
 
   for (auto const& n : message.nodes_info) {
     auto new_node_info = find_data_response_message->add_nodes_info();
-    new_node_info->set_guid(to_string(n.uuid));
+    new_node_info->set_guid(to_string(n.guid));
     new_node_info->set_ip(n.ip);
     new_node_info->set_port(n.port);
   }
 
-  find_data_response_message->mutable_user_info()->set_guid(to_string(message.user_info.uuid));
+  find_data_response_message->mutable_user_info()->set_guid(to_string(message.user_info.guid));
   find_data_response_message->mutable_user_info()->set_domain(message.user_info.domain);
 
   std::string result;
