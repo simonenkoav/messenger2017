@@ -16,7 +16,7 @@ void FindNodeHandler::handleMessage(Message& message)
     assert(MessageType::FindNodeRequest == message.message_type);
     FindNodeRequestMessage casted_message = dynamic_cast<FindNodeRequestMessage&>(message);
     std::list<NodeInfo> neighbours = node.kbuckets_manager.getNeighbours(casted_message.guid);
-    FindNodeResponseMessage response_message(node.self_info, neighbours);
+    FindNodeResponseMessage response_message(node.self_info, casted_message.request_id, neighbours);
     node.network_connector.sendMessage(
         casted_message.node_info.ip,
         casted_message.node_info.port,

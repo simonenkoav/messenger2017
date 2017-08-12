@@ -5,7 +5,7 @@
 namespace m2 {
 namespace routing {
 
-class FindNodeHandler : protected CommandHandler
+class FindNodeHandler : public CommandHandler
 {
 
 public:

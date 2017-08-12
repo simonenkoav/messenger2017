@@ -3,7 +3,7 @@
 
 namespace m2 {
 namespace routing {
-class FindNodeProcessor: protected FindProcessor
+class FindNodeProcessor: public FindProcessor
 {
 public:
     FindNodeProcessor(Node& node, uuid request_id);

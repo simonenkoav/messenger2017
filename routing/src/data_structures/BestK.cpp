@@ -83,6 +83,24 @@ bool m2::routing::processors::BestK::doesSearchFinished()
     return false;
 }
 
+bool m2::routing::processors::BestK::allPresentAreProcessed()
+{
+    bool not_all_processed = false;
+    for (auto item : sorted_list) {
+        if (NodeSearchStruct::responded != item->state) {
+            not_all_processed = true;
+            break;
+        }
+    }
+    return !not_all_processed;
+}
+
+int m2::routing::processors::BestK::emptyPositions()
+{
+    int result = k_limit - size();
+    return (0 <= result) ? result : 0;
+}
+
 list<NodeSearchStruct*> m2::routing::processors::BestK::getBest()
 {
     return sorted_list;
@@ -98,7 +116,7 @@ bool BestK::insert(NodeSearchStruct * item)
         }
         else {
             NodeSearchStruct* worst_item = sorted_list.back();
-            if (KBucketsTools::distance(worst_item->node_info.uuid, target) > 
+            if (KBucketsTools::distance(worst_item->node_info.uuid, target) >
                 KBucketsTools::distance(item->node_info.uuid, target)) {
                 deleteItem(worst_item->node_info.uuid);
                 addItem(item);

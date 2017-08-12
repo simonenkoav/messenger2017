@@ -9,20 +9,20 @@ std::function<boost::uuids::uuid(const NodeSearchStruct& node)> uuidGetter =
     return node.node_info.uuid;
 };
 
-FindProcessor::FindProcessor(Node& node, uuid request_id ) : Processor(node, request_id), k_best(Config::getK())
+FindProcessor::FindProcessor(Node& node, uuid request_id) : Processor(node, request_id), k_best(Config::getK())
 {
 }
 
-void FindProcessor::process(Message& message)
+void FindProcessor::process(Message& message, OnRequestProcessed on_processed)
 {
     clearSearchState();
+    callback = on_processed;
     searched_guid = getGuid(message);
     k_best.setTarget(searched_guid);
     list<NodeInfo> original_neighbours = node.kbuckets_manager.getNeighbours(searched_guid);
     for (auto item : original_neighbours) {
         addNode(item);
     }
-    // TODO: make sorting of referenced list (list&) 
     KBucketsTools::sortByDist(sorted_nodes, searched_guid, uuidGetter);
     selectNewForKBest();
     askNext();
@@ -36,10 +36,10 @@ void FindProcessor::sendRequest(NodeSearchStruct* addressee)
         addressee->node_info.port,
         getMessage());
     auto timer = new boost::asio::deadline_timer(node.io_service, Config::getResponseTimeout());
-    timer->async_wait(boost::bind(&FindProcessor::timeoutExpires, this, addressee->node_info.uuid, timer));
+    timer->async_wait(boost::bind(&FindProcessor::onTimeoutExpired, this, addressee->node_info.uuid, timer));
 }
 
-void FindProcessor::timeoutExpires(uuid guid, boost::asio::deadline_timer* expired_timer)
+void FindProcessor::onTimeoutExpired(uuid guid, boost::asio::deadline_timer* expired_timer)
 {
     delete expired_timer;
     auto it = search_map.find(guid);
@@ -48,8 +48,13 @@ void FindProcessor::timeoutExpires(uuid guid, boost::asio::deadline_timer* expir
         if (NodeSearchStruct::state_type::wait_for_response == not_responding_node->state) {
             not_responding_node->state = NodeSearchStruct::state_type::not_responding;
             k_best.deleteItem(not_responding_node->node_info.uuid);
-            selectNewForKBest();
-            askNext(1);
+            if (doesSearchFinished()) {
+                onSearchFinsihed();
+            }
+            else
+            {
+                askNext(1);
+            }
         }
     }
 }
@@ -61,16 +66,16 @@ void FindProcessor::clearSearchState()
     sorted_nodes.clear();
 }
 
-void FindProcessor::selectNewForKBest()
+size_t FindProcessor::selectNewForKBest()
 {
     int need_to_select = Config::getK() - k_best.size();
     need_to_select = (0 > need_to_select) ? 0 : need_to_select;
+    size_t selected = 0;
 
     if (0 < need_to_select) {
         int already_added = 0;
         for (auto item : sorted_nodes) {
-            if (NodeSearchStruct::not_asked == item.state ||
-                NodeSearchStruct::responded == item.state) {
+            if (NodeSearchStruct::not_responding != item.state) {
                 if (false == k_best.contains(item.node_info.uuid)) {
                     // item is NOT already in k_best
                     already_added += (k_best.insert(&item)) ? 1 : 0;
@@ -80,7 +85,9 @@ void FindProcessor::selectNewForKBest()
                 }
             }
         }
+        selected = already_added;
     }
+    return selected;
 }
 
 void FindProcessor::addNode(NodeInfo node_info)
@@ -91,7 +98,7 @@ void FindProcessor::addNode(NodeInfo node_info)
     k_best.insert(&new_node_search); // here we try to insert (perhaps failed to insert)
 }
 
-void FindProcessor::askNext(int number)
+size_t FindProcessor::askNext(int number)
 {
     number = (0 >= number) ? Config::getAlpha() : number;
 
@@ -100,9 +107,10 @@ void FindProcessor::askNext(int number)
     for (auto item : to_ask) {
         sendRequest(item);
     }
+    return to_ask.size();
 }
 
-void FindProcessor::receiveNodesVector(vector<NodeInfo>& nodes)
+void FindProcessor::receiveNodesList(list<NodeInfo>& nodes)
 {
     for (auto item : nodes) {
         auto found = search_map.find(item.uuid);
@@ -111,7 +119,7 @@ void FindProcessor::receiveNodesVector(vector<NodeInfo>& nodes)
             addNode(item);
         }
     }
-    
+
     KBucketsTools::sortByDist(sorted_nodes, searched_guid, uuidGetter);
     //askNext(); // here just adding, ask in other place
 }
@@ -130,9 +138,10 @@ void FindProcessor::onNodeResponse(uuid node_guid)
 
 bool FindProcessor::doesSearchFinished()
 {
-    if (true == k_best.doesSearchFinished()) {
-        onSearchFinsihed();
-        return true;
+    if (true == k_best.allPresentAreProcessed()) {
+        if ((0 == k_best.emptyPositions()) || (0 == selectNewForKBest())) {
+            return true;
+        }
     }
     return false;
 }
