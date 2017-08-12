@@ -10,6 +10,7 @@
 #include <list>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/string_generator.hpp>
+#include <boost/lexical_cast.hpp>
 #include <string>
 
 namespace m2 {
