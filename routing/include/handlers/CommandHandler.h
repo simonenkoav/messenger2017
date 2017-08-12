@@ -13,7 +13,7 @@ public:
     virtual ~CommandHandler();
 
 public:
-    virtual void handleMessage(Message& message) = 0;
+    virtual void handleMessage(const Message& message) = 0;
 
 protected:
 };

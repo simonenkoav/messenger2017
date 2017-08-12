@@ -9,8 +9,8 @@ public:
     FindNodeProcessor(Node& node, uuid request_id);
     virtual ~FindNodeProcessor();
 
-    //Message* handleMessage(Message message);
-    virtual void handleMessage(Message& message);
+    //Message* handleMessage(const Message message);
+    virtual void handleMessage(const Message& message);
 
 protected:
     // Fields

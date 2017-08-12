@@ -11,10 +11,10 @@ FindDataHandler::~FindDataHandler()
 {
 }
 
-void FindDataHandler::handleMessage(Message & message)
+void FindDataHandler::handleMessage(const Message & message)
 {
     assert(MessageType::FindDataRequest == message.message_type);
-    FindDataRequestMessage casted_message = dynamic_cast<FindDataRequestMessage&>(message);
+    FindDataRequestMessage casted_message = dynamic_cast<const FindDataRequestMessage&>(message);
     UserInfo user_info = node.dht.get(casted_message.guid);
     FindDataResponseMessage response_message(
         node.self_info,

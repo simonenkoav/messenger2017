@@ -16,7 +16,7 @@ void StoreProcessor::process(Message & message, OnRequestProcessed on_processed)
 {
     assert(MessageType::StoreRequest == message.message_type);
     callback = on_processed;
-    StoreRequestMessage casted_message = dynamic_cast<StoreRequestMessage&>(message);
+    StoreRequestMessage casted_message = dynamic_cast<const StoreRequestMessage&>(message);
     // We can not use casted_message because its node_info contains addressee's info
     StoreRequestMessage request_message(node.self_info, request_id, casted_message.user_info);
     node.network_connector.sendMessage(
@@ -27,11 +27,11 @@ void StoreProcessor::process(Message & message, OnRequestProcessed on_processed)
     setTimeout(node.io_service);
 }
 
-void StoreProcessor::handleMessage(Message& message)
+void StoreProcessor::handleMessage(const Message& message)
 {
     if (false == completed) {
         assert(MessageType::StoreResponse == message.message_type);
-        StoreResponseMessage casted_message = dynamic_cast<StoreResponseMessage&>(message);
+        StoreResponseMessage casted_message = dynamic_cast<const StoreResponseMessage&>(message);
 
         completed = true;
         callback(StoreResponseMessage(casted_message));

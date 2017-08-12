@@ -11,10 +11,10 @@ FindNodeHandler::~FindNodeHandler()
 {
 }
 
-void FindNodeHandler::handleMessage(Message& message)
+void FindNodeHandler::handleMessage(const Message& message)
 {
     assert(MessageType::FindNodeRequest == message.message_type);
-    FindNodeRequestMessage casted_message = dynamic_cast<FindNodeRequestMessage&>(message);
+    FindNodeRequestMessage casted_message = dynamic_cast<const FindNodeRequestMessage&>(message);
     std::list<NodeInfo> neighbours = node.kbuckets_manager.getNeighbours(casted_message.guid);
     FindNodeResponseMessage response_message(node.self_info, casted_message.request_id, neighbours);
     node.network_connector.sendMessage(

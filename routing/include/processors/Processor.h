@@ -20,7 +20,7 @@ public:
     virtual bool isCompleted() = 0;
     Message* getResult();
     virtual void process(const Message& msg, OnRequestProcessed on_processed) = 0;
-    virtual void  handleMessage(Message& message) = 0;
+    virtual void  handleMessage(const Message& message) = 0;
 
 protected:
     Message* result;

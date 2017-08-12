@@ -8,7 +8,7 @@ public:
     PingHandler(Node& node);
     virtual ~PingHandler();
 
-    virtual void handleMessage(Message& message);
+    virtual void handleMessage(const Message& message);
 };
 }
 }

@@ -13,7 +13,7 @@ public:
     FindDataHandler(Node& node);
     ~FindDataHandler();
 
-    virtual void handleMessage(Message& message);
+    virtual void handleMessage(const Message& message);
 };
 
 } // namespace routing

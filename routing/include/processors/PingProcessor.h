@@ -14,7 +14,7 @@ public:
     // It is a way to transmit node you want to ping.
     virtual void process(Message& message, OnRequestProcessed on_processed);
 
-    virtual void handleMessage(Message& message);
+    virtual void handleMessage(const Message& message);
 
 protected:
     virtual void onTimeoutExpired();
