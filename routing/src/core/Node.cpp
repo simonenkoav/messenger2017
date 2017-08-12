@@ -51,7 +51,7 @@ void Node::start(uuid bootstrap_guid, string ip_address, string port)
 void Node::startAsyncUpdateKBuckets()
 {
 //    делаем async_wait и кладем что-то типо
-//    processors[MessageType::FindNodeResponse].process(self_info.uuid);
+//    processors[MessageType::FindNodeResponse].process(self_info.guid);
 }
 
 

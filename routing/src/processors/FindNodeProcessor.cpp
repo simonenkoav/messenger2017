@@ -12,7 +12,7 @@ void FindNodeProcessor::handleMessage(const Message& message)
     if (false == completed) {
         assert(MessageType::FindNodeResponse == message.message_type);
         FindNodeResponseMessage casted_message = dynamic_cast<const FindNodeResponseMessage&>(message);
-        onNodeResponse(casted_message.node_info.uuid);
+        onNodeResponse(casted_message.node_info.guid);
         receiveNodesList(casted_message.nodes_info);
         size_t asked = askNext();
         if (0 == asked) {

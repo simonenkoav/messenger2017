@@ -8,8 +8,8 @@
 #include "boost/uuid/uuid_generators.hpp"
 
 #include "data_structures/Message.h"
-#include "kbuckets/KBucketsManager.h"
 #include "NetworkConnector/NetworkConnector.h"
+##include "kbuckets/KBucketsManager.h"
 #include "DHT/DHT.h"
 
 using std::string;
@@ -18,7 +18,6 @@ using boost::uuids::uuid;
 
 namespace m2 {
 namespace routing {
-
 
 class Node
 {

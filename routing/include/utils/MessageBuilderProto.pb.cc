@@ -122,7 +122,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] = {
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_FindDataRequestMessage, giud_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_FindDataRequestMessage, guid_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message_PingResponseMessage, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -315,7 +315,7 @@ void AddDescriptorsImpl() {
       "G\n\023StoreRequestMessage\0220\n\tuser_info\030\001 \001("
       "\0132\035.MessageBuilderProto.UserInfo\032&\n\026Find"
       "NodeRequestMessage\022\014\n\004guid\030\001 \001(\014\032&\n\026Find"
-      "DataRequestMessage\022\014\n\004giud\030\001 \001(\014\032\025\n\023Ping"
+      "DataRequestMessage\022\014\n\004guid\030\001 \001(\014\032\025\n\023Ping"
       "ResponseMessage\032\027\n\025StoreResponsetMessage"
       "\032L\n\027FindNodeResponseMessage\0221\n\nnodes_inf"
       "o\030\001 \003(\0132\035.MessageBuilderProto.NodeInfo\032~"
@@ -1934,7 +1934,7 @@ void Message_FindNodeRequestMessage::set_allocated_guid(::std::string* guid) {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int Message_FindDataRequestMessage::kGiudFieldNumber;
+const int Message_FindDataRequestMessage::kGuidFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Message_FindDataRequestMessage::Message_FindDataRequestMessage()
@@ -1950,15 +1950,15 @@ Message_FindDataRequestMessage::Message_FindDataRequestMessage(const Message_Fin
       _internal_metadata_(NULL),
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  giud_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.giud().size() > 0) {
-    giud_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.giud_);
+  guid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.guid().size() > 0) {
+    guid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.guid_);
   }
   // @@protoc_insertion_point(copy_constructor:MessageBuilderProto.Message.FindDataRequestMessage)
 }
 
 void Message_FindDataRequestMessage::SharedCtor() {
-  giud_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  guid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   _cached_size_ = 0;
 }
 
@@ -1968,7 +1968,7 @@ Message_FindDataRequestMessage::~Message_FindDataRequestMessage() {
 }
 
 void Message_FindDataRequestMessage::SharedDtor() {
-  giud_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  guid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void Message_FindDataRequestMessage::SetCachedSize(int size) const {
@@ -1996,7 +1996,7 @@ Message_FindDataRequestMessage* Message_FindDataRequestMessage::New(::google::pr
 
 void Message_FindDataRequestMessage::Clear() {
 // @@protoc_insertion_point(message_clear_start:MessageBuilderProto.Message.FindDataRequestMessage)
-  giud_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  guid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 bool Message_FindDataRequestMessage::MergePartialFromCodedStream(
@@ -2009,12 +2009,12 @@ bool Message_FindDataRequestMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // bytes giud = 1;
+      // bytes guid = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_giud()));
+                input, this->mutable_guid()));
         } else {
           goto handle_unusual;
         }
@@ -2048,10 +2048,10 @@ void Message_FindDataRequestMessage::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes giud = 1;
-  if (this->giud().size() > 0) {
+  // bytes guid = 1;
+  if (this->guid().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      1, this->giud(), output);
+      1, this->guid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:MessageBuilderProto.Message.FindDataRequestMessage)
@@ -2064,11 +2064,11 @@ void Message_FindDataRequestMessage::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // bytes giud = 1;
-  if (this->giud().size() > 0) {
+  // bytes guid = 1;
+  if (this->guid().size() > 0) {
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        1, this->giud(), target);
+        1, this->guid(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:MessageBuilderProto.Message.FindDataRequestMessage)
@@ -2079,11 +2079,11 @@ size_t Message_FindDataRequestMessage::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:MessageBuilderProto.Message.FindDataRequestMessage)
   size_t total_size = 0;
 
-  // bytes giud = 1;
-  if (this->giud().size() > 0) {
+  // bytes guid = 1;
+  if (this->guid().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->giud());
+        this->guid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -2115,9 +2115,9 @@ void Message_FindDataRequestMessage::MergeFrom(const Message_FindDataRequestMess
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.giud().size() > 0) {
+  if (from.guid().size() > 0) {
 
-    giud_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.giud_);
+    guid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.guid_);
   }
 }
 
@@ -2144,7 +2144,7 @@ void Message_FindDataRequestMessage::Swap(Message_FindDataRequestMessage* other)
   InternalSwap(other);
 }
 void Message_FindDataRequestMessage::InternalSwap(Message_FindDataRequestMessage* other) {
-  giud_.Swap(&other->giud_);
+  guid_.Swap(&other->guid_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
@@ -2156,57 +2156,57 @@ void Message_FindDataRequestMessage::InternalSwap(Message_FindDataRequestMessage
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // Message_FindDataRequestMessage
 
-// bytes giud = 1;
-void Message_FindDataRequestMessage::clear_giud() {
-  giud_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes guid = 1;
+void Message_FindDataRequestMessage::clear_guid() {
+  guid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-const ::std::string& Message_FindDataRequestMessage::giud() const {
-  // @@protoc_insertion_point(field_get:MessageBuilderProto.Message.FindDataRequestMessage.giud)
-  return giud_.GetNoArena();
+const ::std::string& Message_FindDataRequestMessage::guid() const {
+  // @@protoc_insertion_point(field_get:MessageBuilderProto.Message.FindDataRequestMessage.guid)
+  return guid_.GetNoArena();
 }
-void Message_FindDataRequestMessage::set_giud(const ::std::string& value) {
+void Message_FindDataRequestMessage::set_guid(const ::std::string& value) {
   
-  giud_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  guid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
 #if LANG_CXX11
-void Message_FindDataRequestMessage::set_giud(::std::string&& value) {
+void Message_FindDataRequestMessage::set_guid(::std::string&& value) {
   
-  giud_.SetNoArena(
+  guid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  // @@protoc_insertion_point(field_set_rvalue:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
 #endif
-void Message_FindDataRequestMessage::set_giud(const char* value) {
+void Message_FindDataRequestMessage::set_guid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  giud_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  guid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
-void Message_FindDataRequestMessage::set_giud(const void* value, size_t size) {
+void Message_FindDataRequestMessage::set_guid(const void* value, size_t size) {
   
-  giud_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  guid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  // @@protoc_insertion_point(field_set_pointer:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
-::std::string* Message_FindDataRequestMessage::mutable_giud() {
+::std::string* Message_FindDataRequestMessage::mutable_guid() {
   
-  // @@protoc_insertion_point(field_mutable:MessageBuilderProto.Message.FindDataRequestMessage.giud)
-  return giud_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:MessageBuilderProto.Message.FindDataRequestMessage.guid)
+  return guid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-::std::string* Message_FindDataRequestMessage::release_giud() {
-  // @@protoc_insertion_point(field_release:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+::std::string* Message_FindDataRequestMessage::release_guid() {
+  // @@protoc_insertion_point(field_release:MessageBuilderProto.Message.FindDataRequestMessage.guid)
   
-  return giud_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return guid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-void Message_FindDataRequestMessage::set_allocated_giud(::std::string* giud) {
-  if (giud != NULL) {
+void Message_FindDataRequestMessage::set_allocated_guid(::std::string* guid) {
+  if (guid != NULL) {
     
   } else {
     
   }
-  giud_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), giud);
-  // @@protoc_insertion_point(field_set_allocated:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  guid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), guid);
+  // @@protoc_insertion_point(field_set_allocated:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
