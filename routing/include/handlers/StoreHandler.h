@@ -2,7 +2,7 @@
 #include "handlers/CommandHandler.h"
 namespace m2 {
 namespace routing {
-class StoreHandler : protected CommandHandler
+class StoreHandler : public CommandHandler
 {
 public:
     StoreHandler(Node& node);

@@ -19,7 +19,9 @@ enum MessageType {
   PingResponse,
   StoreResponse,
   FindNodeResponse,
-  FindDataResponse
+  FindDataResponse,
+  NotResponding,
+  NotFound
 };
 
 struct Message
@@ -30,6 +32,18 @@ struct Message
 
   Message(const NodeInfo &node_info, boost::uuids::uuid request_id, MessageType message_type);
   virtual ~Message();
+};
+
+// Message of this type would be sent to callback (internally, not by network) in case if the addresse
+// not responding (on ping or store data request)
+struct NotRespondingMessage :public Message {
+  NotRespondingMessage(const NodeInfo &node_info, boost::uuids::uuid request_id);
+};
+
+// Message of this type would be sent to callback (internally, not by network) in case of no data found
+// (in response of FindDataRequestMessage)
+struct NotFoundMessage :public Message {
+    NotFoundMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, boost::uuids::uuid guid);
 };
 
 struct PingRequestMessage : public Message

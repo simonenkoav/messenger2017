@@ -98,6 +98,8 @@ set(HEADERS
         include/Connection/Connection.h
         include/data_structures/Message.h
         include/data_structures/UserInfo.h
+        include/dispatchers/RequestDispatcher.h
+        include/dispatchers/MessageDispatcher.h
         )
 
 set(SOURCES
@@ -123,6 +125,8 @@ set(SOURCES
         src/Connection/Connection.cpp
         src/ConnectionManager/ConnectionManager.cpp
         src/data_structures/UserInfo.cpp
+        src/dispatchers/RequestDispatcher.cpp
+        src/dispatchers/MessageDispatcher.cpp
         )
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})

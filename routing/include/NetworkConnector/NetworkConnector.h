@@ -22,7 +22,6 @@ using std::vector;
 using namespace boost::asio::ip;
 using boost::asio::io_service;
 
-//typedef std::function<void(vector<char>)> TcpCallback;
 
 class NetworkConnector final
 {

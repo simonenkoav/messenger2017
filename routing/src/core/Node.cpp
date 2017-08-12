@@ -2,6 +2,7 @@
 
 using namespace m2::routing;
 
+
 Node::Node(string port)
     : io_service()
     , network_connector(std::stoi(port),
@@ -65,14 +66,14 @@ void Node::onMessageReceive(vector<char> buffer)
 }
 
 
-void Node::onRequestReceive(vector<char> buffer)
-{
-}
-
-
 void Node::stop()
 {
     network_connector.stop();
+}
+
+
+void Node::onRequestReceive(vector<char> buffer)
+{
 }
 
 
