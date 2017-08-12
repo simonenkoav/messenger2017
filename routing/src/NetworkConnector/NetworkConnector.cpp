@@ -25,6 +25,7 @@ void NetworkConnector::startAccept()
 
 std::string NetworkConnector::getMyIpAddress()
 {
+    return "";
 /*    boost::asio::ip::tcp::resolver resolver(socket.get_io_service());
     boost::asio::ip::tcp::resolver::query query(boost::asio::ip::host_name(), "");
     boost::asio::ip::tcp::resolver::iterator it = resolver.resolve(query);
