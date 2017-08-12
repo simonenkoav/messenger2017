@@ -8,15 +8,15 @@ namespace routing {
 
 struct UserInfo
 {
-  boost::uuids::uuid uuid;
+  boost::uuids::uuid guid;
   std::string domain;
 
   UserInfo();
   ~UserInfo();
-  UserInfo(boost::uuids::uuid uuid, std::string domain);
+  UserInfo(boost::uuids::uuid guid, std::string domain);
 
   inline bool isNil() {
-      return uuid.is_nil();
+      return guid.is_nil();
   }
 };
 

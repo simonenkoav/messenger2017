@@ -9,6 +9,8 @@
 #include <stdexcept>
 #include <list>
 #include <boost/uuid/uuid.hpp>
+#include <boost/uuid/string_generator.hpp>
+#include <string>
 
 namespace m2 {
 namespace routing {
