@@ -100,6 +100,7 @@ set(HEADERS
         include/data_structures/UserInfo.h
         include/dispatchers/RequestDispatcher.h
         include/dispatchers/MessageDispatcher.h
+        include/data_structures/Message.h
         )
 
 set(SOURCES
@@ -127,6 +128,7 @@ set(SOURCES
         src/data_structures/UserInfo.cpp
         src/dispatchers/RequestDispatcher.cpp
         src/dispatchers/MessageDispatcher.cpp
+        src/data_structures/Message.cpp
         )
 
 set_source_group("sources" ${SUBPROJECT_ROOT} ${HEADERS} ${SOURCES})
