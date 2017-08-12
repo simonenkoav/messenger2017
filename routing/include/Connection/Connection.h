@@ -7,13 +7,16 @@
 #include "boost/asio.hpp"
 #include "boost/asio/ip/tcp.hpp"
 #include <memory>
+#include <vector>
 
 using namespace boost::asio::ip;
 
 namespace m2 {
 namespace routing {
 
-typedef std::function<void()> TcpCallback;
+
+typedef std::function<void(vector<char>)> TcpCallback;
+
 
 class Connection : public std::enable_shared_from_this<Connection> {
  public:

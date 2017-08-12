@@ -67,6 +67,12 @@ macro(set_source_group group_name root_dir ${ARGN})
 endmacro()
 
 
+#--------------------------  add libs   -------------------------
+include_directories(libs)
+add_subdirectory (libs)
+set(LIBS ${LIBS} logging_lib)
+
+
 # -------------------------   sources   -------------------------
 include_directories(include/ )
 set(HEADERS
@@ -133,4 +139,4 @@ set_target_properties(${PROJECT_NAME} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT s
 cotire(${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME}
-        ${Boost_LIBRARIES})
+        ${Boost_LIBRARIES} ${LIBS})
