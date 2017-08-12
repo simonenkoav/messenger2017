@@ -3,5 +3,9 @@
 
 # CMake
 cmake-build-debug/
+/CMakeFiles/
+/cotire/
+*.cmake
+CMakeCache.txt
 
 .idea/

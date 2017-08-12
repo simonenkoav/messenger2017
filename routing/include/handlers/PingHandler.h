@@ -2,7 +2,7 @@
 #include "handlers/CommandHandler.h"
 namespace m2 {
 namespace routing {
-class PingHandler : protected CommandHandler
+class PingHandler : public CommandHandler
 {
 public:
     PingHandler(Node& node);
