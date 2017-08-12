@@ -633,25 +633,25 @@ class Message_FindDataRequestMessage : public ::google::protobuf::Message /* @@p
 
   // accessors -------------------------------------------------------
 
-  // bytes giud = 1;
-  void clear_giud();
-  static const int kGiudFieldNumber = 1;
-  const ::std::string& giud() const;
-  void set_giud(const ::std::string& value);
+  // bytes guid = 1;
+  void clear_guid();
+  static const int kGuidFieldNumber = 1;
+  const ::std::string& guid() const;
+  void set_guid(const ::std::string& value);
   #if LANG_CXX11
-  void set_giud(::std::string&& value);
+  void set_guid(::std::string&& value);
   #endif
-  void set_giud(const char* value);
-  void set_giud(const void* value, size_t size);
-  ::std::string* mutable_giud();
-  ::std::string* release_giud();
-  void set_allocated_giud(::std::string* giud);
+  void set_guid(const char* value);
+  void set_guid(const void* value, size_t size);
+  ::std::string* mutable_guid();
+  ::std::string* release_guid();
+  void set_allocated_guid(::std::string* guid);
 
   // @@protoc_insertion_point(class_scope:MessageBuilderProto.Message.FindDataRequestMessage)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr giud_;
+  ::google::protobuf::internal::ArenaStringPtr guid_;
   mutable int _cached_size_;
   friend struct protobuf_MessageBuilderProto_2eproto::TableStruct;
 };
@@ -1553,57 +1553,57 @@ inline void Message_FindNodeRequestMessage::set_allocated_guid(::std::string* gu
 
 // Message_FindDataRequestMessage
 
-// bytes giud = 1;
-inline void Message_FindDataRequestMessage::clear_giud() {
-  giud_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// bytes guid = 1;
+inline void Message_FindDataRequestMessage::clear_guid() {
+  guid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& Message_FindDataRequestMessage::giud() const {
-  // @@protoc_insertion_point(field_get:MessageBuilderProto.Message.FindDataRequestMessage.giud)
-  return giud_.GetNoArena();
+inline const ::std::string& Message_FindDataRequestMessage::guid() const {
+  // @@protoc_insertion_point(field_get:MessageBuilderProto.Message.FindDataRequestMessage.guid)
+  return guid_.GetNoArena();
 }
-inline void Message_FindDataRequestMessage::set_giud(const ::std::string& value) {
+inline void Message_FindDataRequestMessage::set_guid(const ::std::string& value) {
   
-  giud_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  guid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
 #if LANG_CXX11
-inline void Message_FindDataRequestMessage::set_giud(::std::string&& value) {
+inline void Message_FindDataRequestMessage::set_guid(::std::string&& value) {
   
-  giud_.SetNoArena(
+  guid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  // @@protoc_insertion_point(field_set_rvalue:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
 #endif
-inline void Message_FindDataRequestMessage::set_giud(const char* value) {
+inline void Message_FindDataRequestMessage::set_guid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  giud_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  guid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
-inline void Message_FindDataRequestMessage::set_giud(const void* value, size_t size) {
+inline void Message_FindDataRequestMessage::set_guid(const void* value, size_t size) {
   
-  giud_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  guid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  // @@protoc_insertion_point(field_set_pointer:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
-inline ::std::string* Message_FindDataRequestMessage::mutable_giud() {
+inline ::std::string* Message_FindDataRequestMessage::mutable_guid() {
   
-  // @@protoc_insertion_point(field_mutable:MessageBuilderProto.Message.FindDataRequestMessage.giud)
-  return giud_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:MessageBuilderProto.Message.FindDataRequestMessage.guid)
+  return guid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* Message_FindDataRequestMessage::release_giud() {
-  // @@protoc_insertion_point(field_release:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+inline ::std::string* Message_FindDataRequestMessage::release_guid() {
+  // @@protoc_insertion_point(field_release:MessageBuilderProto.Message.FindDataRequestMessage.guid)
   
-  return giud_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return guid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void Message_FindDataRequestMessage::set_allocated_giud(::std::string* giud) {
-  if (giud != NULL) {
+inline void Message_FindDataRequestMessage::set_allocated_guid(::std::string* guid) {
+  if (guid != NULL) {
     
   } else {
     
   }
-  giud_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), giud);
-  // @@protoc_insertion_point(field_set_allocated:MessageBuilderProto.Message.FindDataRequestMessage.giud)
+  guid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), guid);
+  // @@protoc_insertion_point(field_set_allocated:MessageBuilderProto.Message.FindDataRequestMessage.guid)
 }
 
 // -------------------------------------------------------------------
