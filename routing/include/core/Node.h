@@ -13,7 +13,7 @@
 #include "dispatchers/MessageDispatcher.h"
 #include "data_structures/Message.h"
 #include "NetworkConnector/NetworkConnector.h"
-##include "kbuckets/KBucketsManager.h"
+#include "kbuckets/KBucketsManager.h"
 #include "DHT/DHT.h"
 
 using std::string;
