@@ -2,14 +2,15 @@
 #include "data_structures/NodeInfo.h"
 #include "data_structures/Message.h"
 #include "handlers/CommandHandler.h"
-#include "dispatchers/RequestDispatcher.h"
 
+#include <functional>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace m2 {
 namespace routing {
+typedef std::function<void(const Message&)> OnRequestProcessed;
 class Processor : public virtual CommandHandler
 {
 public:
