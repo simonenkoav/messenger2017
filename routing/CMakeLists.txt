@@ -50,7 +50,7 @@ include(cotire)
 
 # -------------------------    boost   --------------------------
 find_package(Boost COMPONENTS
-        REQUIRED system thread)
+        REQUIRED system thread date_time)
 include_directories(${Boost_INCLUDE_DIR})
 
 
