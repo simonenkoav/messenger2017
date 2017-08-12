@@ -3,6 +3,7 @@
 //
 
 #include "servers/UdpServer.h"
+#include <iostream>
 
 using namespace m2::routing;
 
@@ -22,6 +23,7 @@ void UdpServer::sendMessage(string ip, int port, vector<char> buff)
         target,
         [](const boost::system::error_code& e, size_t bytes_transered) {
             if (e) {
+                std::cout << e.message();
                 //заллогировать
             } else {
             }
@@ -42,6 +44,7 @@ void UdpServer::startAccept()
                 this->startAccept();
                 return;
             } else {
+                std::cout << e.message();
                 //залогировать ошибку
             }
         });

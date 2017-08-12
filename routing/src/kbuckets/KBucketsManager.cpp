@@ -5,8 +5,8 @@ namespace m2 {
 namespace routing {
 
 
-    KBucketsManager::KBucketsManager(const NodeInfo &nodeInfo)
-    : ourNodeInfo(nodeInfo)
+    KBucketsManager::KBucketsManager(Node& node, const NodeInfo &nodeInfo)
+    : NodeContainingObject(node), ourNodeInfo(nodeInfo)
     {
         KBucket initialKBucket;
         initialKBucket.insert(nodeInfo);
@@ -44,7 +44,7 @@ namespace routing {
                         insert(newNodeInfo); //I hope I'm not mistaken
                     } else {
                         auto lastConnectedNodeInfo = bucket.tail();
-                        //TODO ping lastConnectedNodeInfo, do appropriate actions when it would answer on ping or not
+                        pingNode(lastConnectedNodeInfo, bucketIndex, newNodeInfo);
                     }
 
                 }
@@ -153,6 +153,31 @@ namespace routing {
         return resultList;
     }
 
+    void pingNode(const NodeInfo &targetNode, int bucketIndex, const NodeInfo &newNodeInfo) {
+        PingMessage ping_message(targetNode);
+        //TODO node.ping(ping_message, myCallback);
+        request_id_to_bucket_index_and_new_node.insert(
+          std::pair<int, std::pair<int, NodeInfo>>(
+            ping_message.request_id, std::pair<int, NodeInfo>(bucketIndex, newNodeInfo)));
+    }
+
+    void onPingResponse(std::unique_ptr<Message> response) {
+        auto responded_node_info = response.node_info;
+        int bucket_index = request_id_to_bucket_index_and_new_node.at(bucket_index).first;
+        auto bucket = interval_to_bucket[bucket_index];
+        if (response.message_type == PingResponse) {
+            bucket.moveToHead(responded_node_info);
+            request_id_to_bucket_index_and_new_node.remove(request_id);
+        } else { //TODO if message_type == NotResponding
+            auto last_node_info_in_bucket = bucket.tail();
+            if (responded_node_info.uuid == last_node_info_in_bucket.uuid) {
+                bucket.removeTail();
+                auto new_node_info =
+                    request_id_to_bucket_index_and_new_node.at(bucket_index).second;
+                insert(new_node_info);      
+            }
+        }
+    }
+
 } // namespace routing
 } // namespace m2
-

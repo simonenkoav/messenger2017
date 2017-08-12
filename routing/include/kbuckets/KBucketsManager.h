@@ -9,15 +9,17 @@
 #include "kbuckets/KBucket.h"
 #include "kbuckets/KBucketsTools.h"
 #include "utils/Config.h"
+##include "data_structures/NodeContainingObject.h"
+##include "data_structures/Message.h"
 
 namespace m2 {
 namespace routing {
 
-class KBucketsManager
+class KBucketsManager : public NodeContainingObject
 {
 public:
     KBucketsManager(); //TODO remove it, it's temporary for build
-    KBucketsManager(const NodeInfo &nodeInfo);
+    KBucketsManager(Node& node, const NodeInfo &nodeInfo);
 
     void insert(const NodeInfo &nodeInfo);
 
@@ -27,6 +29,8 @@ public:
 
 private:
     std::map<int, KBucket> interval_to_bucket;
+
+    std::map<int, std::pair<int, NodeInfo>> request_id_to_bucket_index_and_new_node;
 
     NodeInfo ourNodeInfo;
 
@@ -40,7 +44,9 @@ private:
     std::list<NodeInfo> sortByDistance(const std::list<NodeInfo> &originalList, const int count,
                                        const boost::uuids::uuid &guid) const;
 
+    void pingNode(const NodeInfo &targetNode, int bucketIndex, const NodeInfo &newNodeInfo);
 
+    void onPingResponse(std::unique_ptr<Message> response);
 
 };
 

@@ -3,6 +3,7 @@
 //
 
 #include "servers/TcpServer.h"
+#include <iostream>
 
 using namespace m2::routing;
 
@@ -27,6 +28,8 @@ void TcpServer::startAccept()
         if(!ec) {
             connection_manager.startNewConnection(
                 std::make_shared<Connection>(std::move(socket), callback));
+        } else {
+            std::cout << ec.message();
         }
         startAccept();
     });

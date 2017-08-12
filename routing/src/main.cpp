@@ -2,8 +2,14 @@
 #include "core/Node.h"
 #include "kbuckets/KBucketsTools.h"
 
-int main(int argc, char* argv[])
+#include "easyloggingpp_v9.95.0/easylogging++.h"
+
+INITIALIZE_EASYLOGGINGPP
+
+int main()
 {
-    m2::routing::Node node("8000");
+    el::Configurations conf("../../configs/log_conf.conf");
+    el::Loggers::reconfigureLogger("default", conf);
+    LOG(DEBUG) << "My first info log using default logger";
     return 0;
 }

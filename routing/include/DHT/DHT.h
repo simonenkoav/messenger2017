@@ -23,7 +23,7 @@ class DHT
 
     void put(UserInfo new_info);
     void erase(uuid key);
-    bool get(uuid key, UserInfo& result);
+    UserInfo get(uuid key);
 
  private:
     std::unordered_map<uuid, UserInfo, boost::hash<boost::uuids::uuid>> map;

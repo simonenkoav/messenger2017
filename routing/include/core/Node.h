@@ -32,7 +32,8 @@ public:
     void start(uuid bootstrap_guid, string ip_address, string port);
     void stop();
 private:
-    void onMessageReceive(vector<char>);
+    void onMessageReceive(vector<char> buff);
+    void onRequestReceive(vector<char> buff);
     void startAsyncUpdateKBuckets();
 
     DHT dht;
