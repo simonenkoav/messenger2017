@@ -14,7 +14,7 @@ namespace routing {
     }
 
     void KBucketsManager::insert(const NodeInfo &newNodeInfo) {
-        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.uuid, newNodeInfo.uuid) - 1;
+        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.guid, newNodeInfo.guid) - 1;
 
         if (bucketIndex != -1) //think about situation when bucketIndex == -1
         {
@@ -62,7 +62,7 @@ namespace routing {
             return interval_to_bucket.at(0).known();
         }
 
-        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.uuid, guid);
+        int bucketIndex = KBucketsTools::distanceIndex(ourNodeInfo.guid, guid);
 
         std::list<NodeInfo> resultList;
 
@@ -80,7 +80,7 @@ namespace routing {
 
         std::function<boost::uuids::uuid(const NodeInfo &node_info)> uuidGetter =
                 [](const NodeInfo &node_info) -> boost::uuids::uuid{
-                    return node_info.uuid;
+                    return node_info.guid;
                 };
         KBucketsTools::sortByDist(resultList, guid, uuidGetter);
 
@@ -138,7 +138,7 @@ namespace routing {
                                     const int count, const boost::uuids::uuid &guid) const {
         std::function<boost::uuids::uuid(const NodeInfo &node_info)> uuidGetter =
                 [](const NodeInfo &node_info) -> boost::uuids::uuid{
-                    return node_info.uuid;
+                    return node_info.guid;
                 };
         std::list<NodeInfo> resultList;
         std::copy(originalList.begin(), originalList.end(), resultList.begin());
@@ -167,7 +167,7 @@ namespace routing {
             request_id_to_bucket_index_and_new_node.erase(request_id);
         } else if (response->message_type == NotResponding) {
             auto last_node_info_in_bucket = bucket.tail();
-            if (responded_node_info.uuid == last_node_info_in_bucket.uuid) {
+            if (responded_node_info.guid == last_node_info_in_bucket.guid) {
                 bucket.removeTail();
                 auto new_node_info =
                     request_id_to_bucket_index_and_new_node.at(request_id).second;

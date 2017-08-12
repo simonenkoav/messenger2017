@@ -18,8 +18,8 @@ KBucket::KBucket(const std::list<NodeInfo>& known_nodes):
 bool KBucket::insert(const NodeInfo& node)
 {
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-        if (it->uuid == node.uuid) {
-            throw std::runtime_error("KBucket::insert: duplicate uuid");
+        if (it->guid == node.guid) {
+            throw std::runtime_error("KBucket::insert: duplicate guid");
         }
     }
 
@@ -37,7 +37,7 @@ void KBucket::removeTail()
     if (!filled) {
         throw std::runtime_error("KBucket::removeTail: empty bucket");
     }
-    
+
     nodes.pop_back();
 }
 
@@ -45,20 +45,20 @@ void KBucket::moveToHead(const NodeInfo& node)
 {
     auto found = std::find(nodes.begin(), nodes.end(), node);
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-        if (it->uuid == node.uuid) {
+        if (it->guid == node.guid) {
             nodes.erase(found);
             nodes.push_front(node);
             return;
         }
     }
-    
+
     throw std::runtime_error("KBucket::moveToHead: node not found");
 }
 
 bool KBucket::contains(const NodeInfo& node) const
 {
     for (auto it = nodes.begin(); it != nodes.end(); ++it) {
-        if (it->uuid == node.uuid) {
+        if (it->guid == node.guid) {
             return true;
         }
     }
