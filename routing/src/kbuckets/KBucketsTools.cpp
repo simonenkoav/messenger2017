@@ -72,7 +72,7 @@ std::pair<std::list<NodeInfo>, std::list<NodeInfo>> KBucketsTools::split(const s
 
     std::list<NodeInfo> results[2];
     for (auto it = src.begin(); it != src.end(); ++it) {
-        results[getBit(it->uuid, by_bit)].push_back(*it);
+        results[getBit(it->guid, by_bit)].push_back(*it);
     }
 
     return std::pair<std::list<NodeInfo>,std::list<NodeInfo>>(results[0], results[1]);
@@ -80,7 +80,7 @@ std::pair<std::list<NodeInfo>, std::list<NodeInfo>> KBucketsTools::split(const s
 
 NodeInfo KBucketsTools::closest(const NodeInfo& first, const NodeInfo& second, const uuid& origin)
 {
-    return distance(first.uuid, origin) > distance(second.uuid, origin)? second: first;
+    return distance(first.guid, origin) > distance(second.guid, origin)? second: first;
 }
 
 } // namespace routing
