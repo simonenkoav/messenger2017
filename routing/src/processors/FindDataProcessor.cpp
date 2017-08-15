@@ -1,8 +1,7 @@
 #include "processors/FindDataProcessor.h"
 
-using namespace m2::routing;
-
-
+namespace m2 {
+namespace routing {
 FindDataProcessor::FindDataProcessor(Node & node, uuid request_id) : FindProcessor(node, request_id)
 {
 }
@@ -40,4 +39,6 @@ uuid FindDataProcessor::getGuid(Message & message)
     assert(MessageType::FindDataRequest == message.message_type);
     FindDataRequestMessage casted_message = dynamic_cast<const FindDataRequestMessage&>(message);
     return casted_message.guid;
+}
+}
 }

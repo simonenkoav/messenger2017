@@ -11,8 +11,6 @@
 
 namespace m2 {
 namespace routing {
-typedef std::function<void (const Message&)> OnRequestProcessed;
-
 enum MessageType {
     PingRequest,
     StoreRequest,
@@ -109,6 +107,8 @@ public:
         return static_cast<std::size_t>(t);
     }
 };
+
+typedef std::function<void(const Message&)> OnRequestProcessed;
 
 } // namespace routing
 } // namespace m2
