@@ -67,10 +67,10 @@ static std::vector<char> MessageBuilder::serialize(const PingRequestMessage &mes
   MessageBuilderProto::Message proto_message;
 
   proto_message.set_message_type(MessageBuilderProto::PingRequest);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -84,15 +84,15 @@ static std::vector<char> MessageBuilder::serialize(const StoreRequestMessage &me
 {
   MessageBuilderProto::Message proto_message;
   proto_message.set_message_type(MessageBuilderProto::StoreRequest);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
   auto store_request_message = proto_message.mutable_store_request_message();
-  store_request_message->mutable_user_info()->set_guid(to_string(message.user_info.guid));
+  store_request_message->mutable_user_info()->set_guid(boost::lexical_cast<std::string>(message.user_info.guid));
   store_request_message->mutable_user_info()->set_domain(message.user_info.domain);
 
   std::string result;
@@ -105,15 +105,15 @@ static std::vector<char> MessageBuilder::serialize(const FindNodeRequestMessage 
 {
   MessageBuilderProto::Message proto_message;
   proto_message.set_message_type(MessageBuilderProto::FindNodeRequest);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
   auto find_node_request_message = proto_message.mutable_find_node_request_message();
-  find_node_request_message->set_guid(to_string(message.guid));
+  find_node_request_message->set_guid(boost::lexical_cast<std::string>(message.guid));
 
   std::string result;
   proto_message.SerializeToString(&result);
@@ -125,15 +125,15 @@ static std::vector<char> MessageBuilder::serialize(const FindDataRequestMessage 
 {
   MessageBuilderProto::Message proto_message;
   proto_message.set_message_type(MessageBuilderProto::FindDataRequest);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
   auto find_data_request_message = proto_message.mutable_find_data_request_message();
-  find_data_request_message->set_guid(to_string(message.guid));
+  find_data_request_message->set_guid(boost::lexical_cast<std::string>(message.guid));
 
   std::string result;
   proto_message.SerializeToString(&result);
@@ -145,10 +145,10 @@ static std::vector<char> MessageBuilder::serialize(const PingResponseMessage &me
 {
   MessageBuilderProto::Message proto_message;
   proto_message.set_message_type(MessageBuilderProto::PingResponse);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -163,10 +163,10 @@ static std::vector<char> MessageBuilder::serialize(const StoreResponseMessage &m
 {
   MessageBuilderProto::Message proto_message;
   proto_message.set_message_type(MessageBuilderProto::StoreResponse);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -180,19 +180,19 @@ static std::vector<char> MessageBuilder::serialize(const FindNodeResponseMessage
 {
   MessageBuilderProto::Message proto_message;
   proto_message.set_message_type(MessageBuilderProto::FindNodeResponse);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
   auto find_node_response_message = proto_message.mutable_find_node_response_message();
   for (auto const& n : message.nodes_info) {
-    auto node_info = find_node_response_message->add_nodes_info();
-    node_info->set_guid(to_string(n.guid));
-    node_info->set_ip(n.ip);
-    node_info->set_port(n.port);
+    auto new_node_info = find_node_response_message->add_nodes_info();
+    new_node_info->set_guid(boost::lexical_cast<std::string>(n.guid));
+    new_node_info->set_ip(n.ip);
+    new_node_info->set_port(n.port);
   }
 
   std::string result;
@@ -205,10 +205,10 @@ static std::vector<char> MessageBuilder::serialize(const FindDataResponseMessage
 {
   MessageBuilderProto::Message proto_message;
   proto_message.set_message_type(MessageBuilderProto::FindDataResponse);
-  proto_message.set_request_id(to_string(message.request_id));
+  proto_message.set_request_id(boost::lexical_cast<std::string>(message.request_id));
 
   auto node_info = proto_message.mutable_node_info();
-  node_info->set_guid(to_string(message.node_info.guid));
+  node_info->set_guid(boost::lexical_cast<std::string>(message.node_info.guid));
   node_info->set_ip(message.node_info.ip);
   node_info->set_port(message.node_info.port);
 
@@ -216,12 +216,12 @@ static std::vector<char> MessageBuilder::serialize(const FindDataResponseMessage
 
   for (auto const& n : message.nodes_info) {
     auto new_node_info = find_data_response_message->add_nodes_info();
-    new_node_info->set_guid(to_string(n.guid));
+    new_node_info->set_guid(boost::lexical_cast<std::string>(n.guid));
     new_node_info->set_ip(n.ip);
     new_node_info->set_port(n.port);
   }
 
-  find_data_response_message->mutable_user_info()->set_guid(to_string(message.user_info.guid));
+  find_data_response_message->mutable_user_info()->set_guid(boost::lexical_cast<std::string>(message.user_info.guid));
   find_data_response_message->mutable_user_info()->set_domain(message.user_info.domain);
 
   std::string result;
