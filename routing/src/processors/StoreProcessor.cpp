@@ -12,7 +12,7 @@ StoreProcessor::~StoreProcessor()
 {
 }
 
-void StoreProcessor::process(Message & message, OnRequestProcessed on_processed)
+void StoreProcessor::process(Message & message, OnRequestProcessed& on_processed)
 {
     assert(MessageType::StoreRequest == message.message_type);
     callback = on_processed;

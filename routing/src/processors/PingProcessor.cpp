@@ -13,7 +13,7 @@ PingProcessor::~PingProcessor()
 {
 }
 
-void PingProcessor::process(Message & message, OnRequestProcessed on_processed)
+void PingProcessor::process(Message & message, OnRequestProcessed& on_processed)
 {
     assert(MessageType::PingRequest == message.message_type);
     callback = on_processed;

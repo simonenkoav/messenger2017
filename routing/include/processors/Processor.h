@@ -3,14 +3,13 @@
 #include "data_structures/Message.h"
 #include "handlers/CommandHandler.h"
 
-#include <functional>
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace m2 {
 namespace routing {
-typedef std::function<void(const Message&)> OnRequestProcessed;
+using boost::uuids::uuid;
 class Processor : public virtual CommandHandler
 {
 public:
@@ -19,7 +18,7 @@ public:
 
     virtual bool isCompleted() = 0;
     Message* getResult();
-    virtual void process(const Message& msg, OnRequestProcessed on_processed) = 0;
+    virtual void process(const Message& msg, OnRequestProcessed& on_processed) = 0;
     virtual void  handleMessage(const Message& message) = 0;
 
 protected:

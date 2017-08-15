@@ -4,12 +4,14 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 #include <list>
 #include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid.hpp>
 
 namespace m2 {
 namespace routing {
+typedef std::function<void (const Message&)> OnRequestProcessed;
 
 enum MessageType {
     PingRequest,
