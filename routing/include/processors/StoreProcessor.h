@@ -12,13 +12,13 @@ public:
 
     // You have to put StoreRequestMessage with node_info of the addressee.
     // It is a way to transmit node you want to store data at.
-    virtual void process(Message& message, OnRequestProcessed& on_processed);
+    virtual void process(const Message& message, const OnRequestProcessed& on_processed) override;
 
-    virtual void handleMessage(const Message& message);
+    virtual void handleMessage(const Message& message) override;
 
 protected:
 
-    virtual void onTimeoutExpired();
+    virtual void onTimeoutExpired() override;
 
 };
 

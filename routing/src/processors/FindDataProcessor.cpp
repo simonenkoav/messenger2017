@@ -2,7 +2,10 @@
 
 namespace m2 {
 namespace routing {
-FindDataProcessor::FindDataProcessor(Node & node, uuid request_id) : FindProcessor(node, request_id)
+FindDataProcessor::FindDataProcessor(Node & node, uuid request_id)
+    : FindProcessor(node, request_id)
+    , CommandHandler(node)
+    , NodeContainingObject(node)
 {
 }
 
@@ -34,7 +37,7 @@ void FindDataProcessor::onSearchFinsihed()
     callback(NotFoundMessage(NodeInfo(), request_id, searched_guid));
 }
 
-uuid FindDataProcessor::getGuid(Message & message)
+uuid FindDataProcessor::getGuid(const Message & message)
 {
     assert(MessageType::FindDataRequest == message.message_type);
     FindDataRequestMessage casted_message = dynamic_cast<const FindDataRequestMessage&>(message);

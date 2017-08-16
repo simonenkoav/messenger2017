@@ -13,7 +13,7 @@ FindProcessor::FindProcessor(Node& node, uuid request_id) : Processor(node, requ
 {
 }
 
-void FindProcessor::process(Message& message, OnRequestProcessed& on_processed)
+void FindProcessor::process(const Message& message, const OnRequestProcessed& on_processed)
 {
     clearSearchState();
     callback = on_processed;

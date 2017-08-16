@@ -17,7 +17,7 @@ public:
     Processor(Node& node, uuid request_id);
     virtual ~Processor();
 
-    virtual void process(const Message& msg, OnRequestProcessed& on_processed) = 0;
+    virtual void process(const Message& msg, const OnRequestProcessed& on_processed) = 0;
 
 protected:
     uuid request_id;

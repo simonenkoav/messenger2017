@@ -3,7 +3,10 @@
 
 namespace m2 {
 namespace routing {
-FindNodeProcessor::FindNodeProcessor(Node & node, uuid request_id) : FindProcessor(node, request_id)
+FindNodeProcessor::FindNodeProcessor(Node & node, uuid request_id) 
+    : FindProcessor(node, request_id)
+    , CommandHandler(node)
+    , NodeContainingObject(node)
 {
 }
 
@@ -39,7 +42,7 @@ void FindNodeProcessor::onSearchFinsihed()
     callback(FindNodeResponseMessage(node.self_info, request_id, answer));
 }
 
-uuid getGuid(Message& message) {
+uuid FindNodeProcessor::getGuid(const Message& message) {
     assert(MessageType::FindNodeRequest == message.message_type);
     FindNodeRequestMessage casted_message = dynamic_cast<const FindNodeRequestMessage&>(message);
     return casted_message.guid;

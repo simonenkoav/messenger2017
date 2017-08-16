@@ -13,7 +13,7 @@ public:
 
     // You have to put PingRequestMessage with node_info of the addressee.
     // It is a way to transmit node you want to ping.
-    void process(const Message& message, OnRequestProcessed& on_processed) override;
+    void process(const Message& message, const OnRequestProcessed& on_processed) override;
 
     void handleMessage(const Message& message) override;
 

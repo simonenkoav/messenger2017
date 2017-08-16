@@ -4,7 +4,10 @@
 namespace m2 {
 namespace routing {
 
-StoreProcessor::StoreProcessor(Node & node, uuid request_id) : Processor(node, request_id)
+StoreProcessor::StoreProcessor(Node & node, uuid request_id)
+    : Processor(node, request_id)
+    , CommandHandler(node)
+    , NodeContainingObject(node)
 {
 }
 
@@ -12,7 +15,7 @@ StoreProcessor::~StoreProcessor()
 {
 }
 
-void StoreProcessor::process(Message & message, OnRequestProcessed& on_processed)
+void StoreProcessor::process(const Message & message, const OnRequestProcessed& on_processed)
 {
     assert(MessageType::StoreRequest == message.message_type);
     callback = on_processed;
