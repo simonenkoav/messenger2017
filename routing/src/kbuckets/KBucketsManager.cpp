@@ -6,12 +6,9 @@ namespace m2 {
 namespace routing {
 
 
-    KBucketsManager::KBucketsManager(Node& node, const NodeInfo &nodeInfo)
-    : NodeContainingObject(node), ourNodeInfo(nodeInfo)
+    KBucketsManager::KBucketsManager(Node& node)
+    : NodeContainingObject(node)
     {
-        KBucket initialKBucket;
-        initialKBucket.insert(nodeInfo);
-        interval_to_bucket.insert(std::pair<int, KBucket>(0, initialKBucket));
     }
 
     void KBucketsManager::insert(const NodeInfo &newNodeInfo) {
@@ -90,7 +87,10 @@ namespace routing {
 
 
     void KBucketsManager::setNodeInfo(const NodeInfo &nodeInfo) {
+        KBucket initialKBucket;
         ourNodeInfo = nodeInfo;
+        initialKBucket.insert(nodeInfo);
+        interval_to_bucket.insert(std::pair<int, KBucket>(0, initialKBucket));
     }
 
     std::list<NodeInfo> KBucketsManager::collectNodesFromNeighbouringBuckets(

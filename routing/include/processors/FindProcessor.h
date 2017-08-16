@@ -34,7 +34,6 @@ public:
 
 public:
     virtual void process(Message& message, OnRequestProcessed& on_processed);
-    virtual bool isCompleted() = 0;
 
 protected:
     // Fields

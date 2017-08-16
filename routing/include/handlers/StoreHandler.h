@@ -1,5 +1,7 @@
 #pragma once
 #include "handlers/CommandHandler.h"
+#include "core/Node.h"
+
 namespace m2 {
 namespace routing {
 class StoreHandler : public CommandHandler

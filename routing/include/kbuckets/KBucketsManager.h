@@ -18,7 +18,7 @@ namespace routing {
 class KBucketsManager : public NodeContainingObject
 {
 public:
-    KBucketsManager(Node& node, const NodeInfo &nodeInfo);
+    KBucketsManager(Node& node);
 
     void insert(const NodeInfo &nodeInfo);
 

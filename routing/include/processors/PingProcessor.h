@@ -1,5 +1,6 @@
 #pragma once
 #include "processors/Processor.h"
+#include "core/Node.h"
 
 namespace m2 {
 namespace routing {

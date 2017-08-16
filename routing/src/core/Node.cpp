@@ -1,5 +1,4 @@
 #include "core/Node.h"
-#include "kbuckets/KBucketsManager.h"
 
 using namespace m2::routing;
 
@@ -12,6 +11,7 @@ Node::Node(string port)
                         [this](vector<char> data) {this->onMessageReceive(data);},
                         [this](vector<char> data) {this->onRequestReceive(data);})
     , dht()
+    , kbuckets_manager(*this)
 {
     // create own uuid
     uuid my_guid = boost::uuids::basic_random_generator<boost::mt19937>()();
