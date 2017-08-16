@@ -17,10 +17,10 @@ NotRespondingMessage::NotRespondingMessage(const NodeInfo &node_info, boost::uui
 NotFoundMessage::NotFoundMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, boost::uuids::uuid guid)
     : Message(node_info, request_id, MessageType::NotFound), guid(guid) {}
 
-PingRequestMessage::PingRequestMessage(const NodeInfo &node_info)
+PingRequestMessage::PingRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id)
     : Message(node_info, MessageType::PingRequest) {}
 
-PingRequestMessage::PingRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id)
+PingRequestMessage::PingRequestMessage(const NodeInfo &node_info)
     : Message(node_info, request_id, MessageType::PingRequest) {}
 
 StoreRequestMessage::StoreRequestMessage(const NodeInfo &node_info, const UserInfo &user_info)

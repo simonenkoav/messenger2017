@@ -31,6 +31,7 @@ struct Message
     boost::uuids::uuid request_id;
     MessageType message_type;
 
+    Message(const NodeInfo &node_info, MessageType message_type);
     Message(const NodeInfo &node_info, boost::uuids::uuid request_id, MessageType message_type);
     virtual ~Message();
 };
@@ -50,24 +51,28 @@ struct NotFoundMessage :public Message {
 
 struct PingRequestMessage : public Message
 {
+    PingRequestMessage(const NodeInfo &node_info);
     PingRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id);
 };
 
 struct StoreRequestMessage : public Message
 {
     UserInfo user_info;
+    StoreRequestMessage(const NodeInfo &node_info, const UserInfo &user_info);
     StoreRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, const UserInfo &user_info);
 };
 
 struct FindNodeRequestMessage : public Message
 {
     boost::uuids::uuid guid;
+    FindNodeRequestMessage(const NodeInfo &node_info, boost::uuids::uuid guid);
     FindNodeRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, boost::uuids::uuid guid);
 };
 
 struct FindDataRequestMessage : public Message
 {
     boost::uuids::uuid guid;
+    FindDataRequestMessage(const NodeInfo &node_info, boost::uuids::uuid guid);
     FindDataRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, boost::uuids::uuid guid);
 };
 
