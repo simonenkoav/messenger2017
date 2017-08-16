@@ -1,5 +1,6 @@
 #include <algorithm>
 #include "kbuckets/KBucketsManager.h"
+#include "core/Node.h"
 
 namespace m2 {
 namespace routing {

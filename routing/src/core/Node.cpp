@@ -1,4 +1,5 @@
 #include "core/Node.h"
+#include "kbuckets/KBucketsManager.h"
 
 using namespace m2::routing;
 

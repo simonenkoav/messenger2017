@@ -1,9 +1,8 @@
 #pragma once
-#include "core/Node.h"
 
 namespace m2 {
 namespace routing {
-
+class Node;
 class NodeContainingObject
 {
 public:
