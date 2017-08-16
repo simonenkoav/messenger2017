@@ -18,7 +18,6 @@ public:
     virtual ~Processor();
 
     virtual void process(const Message& msg, OnRequestProcessed& on_processed) = 0;
-    virtual void  handleMessage(const Message& message) = 0;
 
 protected:
     uuid request_id;
