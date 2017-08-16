@@ -8,7 +8,7 @@ public:
     StoreHandler(Node& node);
     virtual ~StoreHandler();
 
-    virtual void handleMessage(Message& message);
+    virtual void handleMessage(const Message& message);
 
 };
 }

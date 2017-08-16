@@ -6,14 +6,14 @@ using namespace processors;
 
 std::function<boost::uuids::uuid(const NodeSearchStruct& node)> uuidGetter =
 [](const NodeSearchStruct& node) -> boost::uuids::uuid {
-    return node.node_info.uuid;
+    return node.node_info.guid;
 };
 
 FindProcessor::FindProcessor(Node& node, uuid request_id) : Processor(node, request_id), k_best(Config::getK())
 {
 }
 
-void FindProcessor::process(Message& message, OnRequestProcessed on_processed)
+void FindProcessor::process(Message& message, OnRequestProcessed& on_processed)
 {
     clearSearchState();
     callback = on_processed;
@@ -36,7 +36,7 @@ void FindProcessor::sendRequest(NodeSearchStruct* addressee)
         addressee->node_info.port,
         getMessage());
     auto timer = new boost::asio::deadline_timer(node.io_service, Config::getResponseTimeout());
-    timer->async_wait(boost::bind(&FindProcessor::onTimeoutExpired, this, addressee->node_info.uuid, timer));
+    timer->async_wait(boost::bind(&FindProcessor::onTimeoutExpired, this, addressee->node_info.guid, timer));
 }
 
 void FindProcessor::onTimeoutExpired(uuid guid, boost::asio::deadline_timer* expired_timer)
@@ -47,7 +47,7 @@ void FindProcessor::onTimeoutExpired(uuid guid, boost::asio::deadline_timer* exp
         NodeSearchStruct* not_responding_node = it->second;
         if (NodeSearchStruct::state_type::wait_for_response == not_responding_node->state) {
             not_responding_node->state = NodeSearchStruct::state_type::not_responding;
-            k_best.deleteItem(not_responding_node->node_info.uuid);
+            k_best.deleteItem(not_responding_node->node_info.guid);
             if (doesSearchFinished()) {
                 onSearchFinsihed();
             }
@@ -76,7 +76,7 @@ size_t FindProcessor::selectNewForKBest()
         int already_added = 0;
         for (auto item : sorted_nodes) {
             if (NodeSearchStruct::not_responding != item.state) {
-                if (false == k_best.contains(item.node_info.uuid)) {
+                if (false == k_best.contains(item.node_info.guid)) {
                     // item is NOT already in k_best
                     already_added += (k_best.insert(&item)) ? 1 : 0;
                     if (already_added >= need_to_select) {
@@ -94,7 +94,7 @@ void FindProcessor::addNode(NodeInfo node_info)
 {
     NodeSearchStruct new_node_search(node_info);
     sorted_nodes.push_back(new_node_search);
-    search_map[new_node_search.node_info.uuid] = &new_node_search;
+    search_map[new_node_search.node_info.guid] = &new_node_search;
     k_best.insert(&new_node_search); // here we try to insert (perhaps failed to insert)
 }
 
@@ -113,7 +113,7 @@ size_t FindProcessor::askNext(int number)
 void FindProcessor::receiveNodesList(list<NodeInfo>& nodes)
 {
     for (auto item : nodes) {
-        auto found = search_map.find(item.uuid);
+        auto found = search_map.find(item.guid);
         if (search_map.end() == found) {
             /* we have not encountered this node before */
             addNode(item);

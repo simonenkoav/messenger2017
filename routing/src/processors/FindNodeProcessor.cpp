@@ -7,12 +7,12 @@ FindNodeProcessor::FindNodeProcessor(Node & node, uuid request_id) : FindProcess
 {
 }
 
-void FindNodeProcessor::handleMessage(Message& message)
+void FindNodeProcessor::handleMessage(const Message& message)
 {
     if (false == completed) {
         assert(MessageType::FindNodeResponse == message.message_type);
-        FindNodeResponseMessage casted_message = dynamic_cast<FindNodeResponseMessage&>(message);
-        onNodeResponse(casted_message.node_info.uuid);
+        FindNodeResponseMessage casted_message = dynamic_cast<const FindNodeResponseMessage&>(message);
+        onNodeResponse(casted_message.node_info.guid);
         receiveNodesList(casted_message.nodes_info);
         size_t asked = askNext();
         if (0 == asked) {
@@ -41,7 +41,7 @@ void FindNodeProcessor::onSearchFinsihed()
 
 uuid getGuid(Message& message) {
     assert(MessageType::FindNodeRequest == message.message_type);
-    FindNodeRequestMessage casted_message = dynamic_cast<FindNodeRequestMessage&>(message);
+    FindNodeRequestMessage casted_message = dynamic_cast<const FindNodeRequestMessage&>(message);
     return casted_message.guid;
 }
 

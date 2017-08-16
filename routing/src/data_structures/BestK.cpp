@@ -4,7 +4,7 @@ using namespace m2::routing::processors;
 
 std::function<boost::uuids::uuid(const NodeSearchStruct* node)> uuidGetter =
 [](const NodeSearchStruct* node) -> boost::uuids::uuid {
-    return node->node_info.uuid;
+    return node->node_info.guid;
 };
 
 BestK::BestK(int k) :k_limit(k)
@@ -109,16 +109,16 @@ list<NodeSearchStruct*> m2::routing::processors::BestK::getBest()
 bool BestK::insert(NodeSearchStruct * item)
 {
     bool was_item_inserted = false;
-    if (false == contains(item->node_info.uuid)) {
+    if (false == contains(item->node_info.guid)) {
         if (size() < k_limit) {
             addItem(item);
             was_item_inserted = true;
         }
         else {
             NodeSearchStruct* worst_item = sorted_list.back();
-            if (KBucketsTools::distance(worst_item->node_info.uuid, target) >
-                KBucketsTools::distance(item->node_info.uuid, target)) {
-                deleteItem(worst_item->node_info.uuid);
+            if (KBucketsTools::distance(worst_item->node_info.guid, target) >
+                KBucketsTools::distance(item->node_info.guid, target)) {
+                deleteItem(worst_item->node_info.guid);
                 addItem(item);
                 was_item_inserted = true;
             }
@@ -129,7 +129,7 @@ bool BestK::insert(NodeSearchStruct * item)
 
 void m2::routing::processors::BestK::addItem(NodeSearchStruct * item)
 {
-    k_map[item->node_info.uuid] = item;
+    k_map[item->node_info.guid] = item;
     sorted_list.push_back(item);
     KBucketsTools::sortByDist(sorted_list, target, uuidGetter);
 }

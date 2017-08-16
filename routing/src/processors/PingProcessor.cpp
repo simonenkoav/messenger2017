@@ -13,7 +13,7 @@ PingProcessor::~PingProcessor()
 {
 }
 
-void PingProcessor::process(Message & message, OnRequestProcessed on_processed)
+void PingProcessor::process(Message & message, OnRequestProcessed& on_processed)
 {
     assert(MessageType::PingRequest == message.message_type);
     callback = on_processed;
@@ -27,11 +27,11 @@ void PingProcessor::process(Message & message, OnRequestProcessed on_processed)
     setTimeout(node.io_service);
 }
 
-void PingProcessor::handleMessage(Message& message)
+void PingProcessor::handleMessage(const Message& message)
 {
     if (false == completed) {
         assert(MessageType::PingResponse == message.message_type);
-        PingResponseMessage casted_message = dynamic_cast<PingResponseMessage&>(message);
+        PingResponseMessage casted_message = dynamic_cast<const PingResponseMessage&>(message);
 
         completed = true;
         callback(PingResponseMessage(casted_message));

@@ -59,7 +59,7 @@ void Node::startAsyncUpdateKBuckets()
     });
    // t.async_wait();
 //    делаем async_wait и кладем что-то типо
-//    processors[MessageType::FindNodeResponse].process(self_info.uuid);
+//    processors[MessageType::FindNodeResponse].process(self_info.guid);
 }
 
 
