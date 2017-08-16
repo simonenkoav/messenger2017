@@ -26,7 +26,7 @@ protected:
 
     void setTimeout(boost::asio::io_service &io_service);
     //void setTimeout(boost::asio::io_service &io_service, std::function<void(Processor* proc_ptr)> function);
-    virtual void onTimoutExpired() = 0;
+    virtual void onTimeoutExpired() = 0;
 };
 
 } //namespace routing

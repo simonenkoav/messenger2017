@@ -4,7 +4,10 @@
 namespace m2 {
 namespace routing {
 
-PingProcessor::PingProcessor(Node & node, uuid request_id) : Processor(node, request_id)
+PingProcessor::PingProcessor(Node & node, uuid request_id)
+    : Processor(node, request_id)
+    , CommandHandler(node)
+    , NodeContainingObject(node)
 {
 }
 
@@ -13,7 +16,7 @@ PingProcessor::~PingProcessor()
 {
 }
 
-void PingProcessor::process(Message & message, OnRequestProcessed& on_processed)
+void PingProcessor::process(const Message & message, OnRequestProcessed& on_processed)
 {
     assert(MessageType::PingRequest == message.message_type);
     callback = on_processed;
