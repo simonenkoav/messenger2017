@@ -21,10 +21,10 @@ using std::vector;
 class MessageBuilder
 {
 public:
-  MessageBuilder();
-  ~MessageBuilder();
+    MessageBuilder();
+    ~MessageBuilder();
 
-    std::unique_ptr<Message> deserialize(std::vector<char> &buffer);
+    static std::unique_ptr<Message> deserialize(std::vector<char> &buffer);
     static std::vector<char> serialize(const PingRequestMessage &message);
     static std::vector<char> serialize(const StoreRequestMessage &message);
     static std::vector<char> serialize(const FindNodeRequestMessage &message);

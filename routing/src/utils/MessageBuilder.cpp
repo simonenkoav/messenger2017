@@ -24,28 +24,28 @@ std::unique_ptr<Message> MessageBuilder::deserialize(std::vector<char> &buffer)
   NodeInfo node_info{boost::uuids::string_generator()(message.node_info().guid()), message.node_info().ip(), message.node_info().port()};
   boost::uuids::uuid request_id = boost::uuids::string_generator()(message.request_id());
   if (message.message_type() == MessageBuilderProto::PingRequest) {
-    return std::move(new PingRequestMessage(node_info, request_id));
+    return std::unique_ptr<Message>(new PingRequestMessage(node_info, request_id));
   } else if (message.message_type() == MessageBuilderProto::StoreRequest){
     UserInfo user_info{
         boost::uuids::string_generator()(message.store_request_message().user_info().guid()),
         message.store_request_message().user_info().domain(),
     };
-    return std::move(new StoreRequestMessage(node_info, request_id, user_info));
+    return std::unique_ptr<Message>(new StoreRequestMessage(node_info, request_id, user_info));
   } else if (message.message_type() == MessageBuilderProto::FindNodeRequest){
-    return std::move(new FindNodeRequestMessage(node_info, request_id, boost::uuids::string_generator()(message.find_node_request_message().guid())));
+    return std::unique_ptr<Message>(new FindNodeRequestMessage(node_info, request_id, boost::uuids::string_generator()(message.find_node_request_message().guid())));
   } else if (message.message_type() == MessageBuilderProto::FindDataRequest) {
-    return std::move(new FindDataRequestMessage(node_info, request_id, boost::uuids::string_generator()(message.find_data_request_message().guid())));
+    return std::unique_ptr<Message>(new FindDataRequestMessage(node_info, request_id, boost::uuids::string_generator()(message.find_data_request_message().guid())));
   } else if (message.message_type() == MessageBuilderProto::PingResponse) {
-    return std::move(new PingResponseMessage(node_info, request_id));
+    return std::unique_ptr<Message>(new PingResponseMessage(node_info, request_id));
   } else if (message.message_type() == MessageBuilderProto::StoreResponse) {
-    return std::move(new StoreResponseMessage(node_info, request_id));
+    return std::unique_ptr<Message>(new StoreResponseMessage(node_info, request_id));
   } else if (message.message_type() == MessageBuilderProto::FindNodeResponse) {
     std::list<NodeInfo> nodes_info;
     for (int i = 0; i < message.find_node_response_message().nodes_info_size(); ++i) {
       auto node_info_proto = message.find_node_response_message().nodes_info(i);
       nodes_info.push_back(NodeInfo{boost::uuids::string_generator()(node_info_proto.guid()), node_info_proto.ip(), node_info_proto.port()});
     }
-    return std::move(new FindNodeResponseMessage(node_info, request_id, nodes_info));
+    return std::unique_ptr<Message>(new FindNodeResponseMessage(node_info, request_id, nodes_info));
   } else if (message.message_type() == MessageBuilderProto::FindDataResponse) {
     std::list<NodeInfo> nodes_info;
     for (int i = 0; i < message.find_data_response_message().nodes_info_size(); ++i) {
@@ -56,7 +56,7 @@ std::unique_ptr<Message> MessageBuilder::deserialize(std::vector<char> &buffer)
         boost::uuids::string_generator()(message.find_data_response_message().user_info().guid()),
         message.find_data_response_message().user_info().domain(),
     };
-    return std::move(new FindDataResponseMessage(node_info, request_id, user_info, nodes_info));
+    return std::unique_ptr<Message>(new FindDataResponseMessage(node_info, request_id, user_info, nodes_info));
   } else {
     throw std::runtime_error("Unexpected message type");
   }
