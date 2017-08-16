@@ -36,7 +36,7 @@ void FindNodeProcessor::onSearchFinsihed()
     for (auto item : best) {
         answer.push_back(item->node_info);
     }
-    result = new FindNodeResponseMessage(node.self_info, request_id, answer);
+    callback(FindNodeResponseMessage(node.self_info, request_id, answer));
 }
 
 uuid getGuid(Message& message) {
