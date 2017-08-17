@@ -1,4 +1,5 @@
 #include "dispatchers/MessageDispatcher.h"
+#include "dispatchers/RequestDispatcher.h"
 
 #include "processors/Processor.h"
 #include "handlers/CommandHandler.h"

@@ -4,12 +4,13 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 #include <list>
+#include <boost/uuid/random_generator.hpp>
 #include <boost/uuid/uuid.hpp>
 
 namespace m2 {
 namespace routing {
-
 enum MessageType {
     PingRequest,
     StoreRequest,
@@ -30,6 +31,7 @@ struct Message
     boost::uuids::uuid request_id;
     MessageType message_type;
 
+    Message(const NodeInfo &node_info, MessageType message_type);
     Message(const NodeInfo &node_info, boost::uuids::uuid request_id, MessageType message_type);
     virtual ~Message();
 };
@@ -43,29 +45,34 @@ struct NotRespondingMessage :public Message {
 // Message of this type would be sent to callback (internally, not by network) in case of no data found
 // (in response of FindDataRequestMessage)
 struct NotFoundMessage :public Message {
+    boost::uuids::uuid guid;
     NotFoundMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, boost::uuids::uuid guid);
 };
 
 struct PingRequestMessage : public Message
 {
+    PingRequestMessage(const NodeInfo &node_info);
     PingRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id);
 };
 
 struct StoreRequestMessage : public Message
 {
     UserInfo user_info;
+    StoreRequestMessage(const NodeInfo &node_info, const UserInfo &user_info);
     StoreRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, const UserInfo &user_info);
 };
 
 struct FindNodeRequestMessage : public Message
 {
     boost::uuids::uuid guid;
+    FindNodeRequestMessage(const NodeInfo &node_info, boost::uuids::uuid guid);
     FindNodeRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, boost::uuids::uuid guid);
 };
 
 struct FindDataRequestMessage : public Message
 {
     boost::uuids::uuid guid;
+    FindDataRequestMessage(const NodeInfo &node_info, boost::uuids::uuid guid);
     FindDataRequestMessage(const NodeInfo &node_info, boost::uuids::uuid request_id, boost::uuids::uuid guid);
 };
 
@@ -100,6 +107,8 @@ public:
         return static_cast<std::size_t>(t);
     }
 };
+
+typedef std::function<void(const Message&)> OnRequestProcessed;
 
 } // namespace routing
 } // namespace m2

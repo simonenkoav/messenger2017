@@ -12,7 +12,7 @@ public:
     FindNodeHandler(Node& node);
     virtual ~FindNodeHandler();
 
-    virtual void handleMessage(Message& message);
+    virtual void handleMessage(const Message& message);
 
 };
 

@@ -33,8 +33,7 @@ public:
 
 
 public:
-    virtual void process(Message& message, OnRequestProcessed on_processed);
-    virtual bool isCompleted() = 0;
+    virtual void process(const Message& message, const OnRequestProcessed& on_processed) override;
 
 protected:
     // Fields
@@ -54,9 +53,10 @@ protected:
     void onNodeResponse(uuid node_guid);
     bool doesSearchFinished();
 
+    virtual void onTimeoutExpired() override {}
     virtual vector<char> getMessage() = 0;
     virtual void onSearchFinsihed() = 0;
-    virtual uuid getGuid(Message& message) = 0;
+    virtual uuid getGuid(const Message& message) = 0;
 };
 }
 }

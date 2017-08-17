@@ -14,6 +14,7 @@ using boost::uuids::to_string;
 
 RequestDispatcher::RequestDispatcher(Node& node, ProcessorBuilder pbuilder):
     CommandHandler(node),
+    NodeContainingObject(node),
     pbuilder(pbuilder)
 {}
 

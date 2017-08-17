@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <list>
 #include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/lexical_cast.hpp>
 #include <string>
@@ -21,11 +22,11 @@ using std::vector;
 class MessageBuilder
 {
 public:
-  MessageBuilder();
-  ~MessageBuilder();
+    MessageBuilder();
+    ~MessageBuilder();
 
-  std::unique_ptr<Message> deserialize(std::vector<char> &buffer);
-  static std::vector<char> serialize(const PingRequestMessage &message);
+    static std::unique_ptr<Message> deserialize(std::vector<char> &buffer);
+    static std::vector<char> serialize(const PingRequestMessage &message);
     static std::vector<char> serialize(const StoreRequestMessage &message);
     static std::vector<char> serialize(const FindNodeRequestMessage &message);
     static std::vector<char> serialize(const FindDataRequestMessage &message);

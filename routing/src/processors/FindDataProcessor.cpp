@@ -1,16 +1,18 @@
 #include "processors/FindDataProcessor.h"
 
-using namespace m2::routing;
-
-
-FindDataProcessor::FindDataProcessor(Node & node, uuid request_id) : FindProcessor(node, request_id)
+namespace m2 {
+namespace routing {
+FindDataProcessor::FindDataProcessor(Node & node, uuid request_id)
+    : FindProcessor(node, request_id)
+    , CommandHandler(node)
+    , NodeContainingObject(node)
 {
 }
 
-void FindDataProcessor::handleMessage(Message & message)
+void FindDataProcessor::handleMessage(const Message & message)
 {
     assert(MessageType::FindDataResponse == message.message_type);
-    FindDataResponseMessage casted_message = dynamic_cast<FindDataResponseMessage&>(message);
+    FindDataResponseMessage casted_message = dynamic_cast<const FindDataResponseMessage&>(message);
     //TODO: choose what to do based on info in message userinfo or list of nodes
     if (casted_message.user_info.isNil()) {
         onNodeResponse(casted_message.node_info.guid);
@@ -35,9 +37,11 @@ void FindDataProcessor::onSearchFinsihed()
     callback(NotFoundMessage(NodeInfo(), request_id, searched_guid));
 }
 
-uuid FindDataProcessor::getGuid(Message & message)
+uuid FindDataProcessor::getGuid(const Message & message)
 {
     assert(MessageType::FindDataRequest == message.message_type);
-    FindDataRequestMessage casted_message = dynamic_cast<FindDataRequestMessage&>(message);
+    FindDataRequestMessage casted_message = dynamic_cast<const FindDataRequestMessage&>(message);
     return casted_message.guid;
+}
+}
 }

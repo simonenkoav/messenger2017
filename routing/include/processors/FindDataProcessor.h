@@ -9,8 +9,8 @@ public:
     FindDataProcessor(Node& node, uuid request_id);
     virtual ~FindDataProcessor();
 
-    //Message* handleMessage(Message message);
-    virtual void handleMessage(Message& message);
+    //Message* handleMessage(const Message message);
+    virtual void handleMessage(const Message& message) override;
 
 protected:
     // Fields
@@ -18,7 +18,7 @@ protected:
     // Methdods
     virtual vector<char> getMessage();
     virtual void onSearchFinsihed();
-    virtual uuid getGuid(Message& message);
+    virtual uuid getGuid(const Message& message) override;
 
 };
 }

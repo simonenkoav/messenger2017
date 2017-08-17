@@ -12,10 +12,10 @@ StoreHandler::StoreHandler(Node& node): CommandHandler(node), NodeContainingObje
 StoreHandler::~StoreHandler()
 {
 }
-void StoreHandler::handleMessage(Message & message)
+void StoreHandler::handleMessage(const Message & message)
 {
     assert(MessageType::StoreRequest == message.message_type);
-    StoreRequestMessage casted_message = dynamic_cast<StoreRequestMessage&>(message);
+    StoreRequestMessage casted_message = dynamic_cast<const StoreRequestMessage&>(message);
     node.dht.put(casted_message.user_info);
     StoreResponseMessage response_message(node.self_info, casted_message.request_id);
     node.network_connector.sendMessage(

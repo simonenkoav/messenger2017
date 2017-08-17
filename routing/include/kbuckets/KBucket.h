@@ -13,7 +13,7 @@ public:
  
     bool insert(const NodeInfo& node); // new uuids only
     void removeTail();
-    void moveToHead(const NodeInfo& node); // erase NodeInfo with node.uuid & put new NodeInfo to head  
+    void moveToHead(const NodeInfo& node); // erase NodeInfo with node.guid & put new NodeInfo to head  
 
     std::list<NodeInfo> known() const { return nodes; }
     

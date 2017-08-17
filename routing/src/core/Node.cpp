@@ -11,6 +11,7 @@ Node::Node(string port)
                         [this](vector<char> data) {this->onMessageReceive(data);},
                         [this](vector<char> data) {this->onRequestReceive(data);})
     , dht()
+    , kbuckets_manager(*this)
 {
     // create own uuid
     uuid my_guid = boost::uuids::basic_random_generator<boost::mt19937>()();
@@ -59,7 +60,7 @@ void Node::startAsyncUpdateKBuckets()
     });
    // t.async_wait();
 //    делаем async_wait и кладем что-то типо
-//    processors[MessageType::FindNodeResponse].process(self_info.uuid);
+//    processors[MessageType::FindNodeResponse].process(self_info.guid);
 }
 
 

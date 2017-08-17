@@ -1,12 +1,12 @@
 #pragma once
-
-#include "dispatchers/RequestDispatcher.h"
-
-#include <functional>
+#include <map>
+#include "data_structures/Message.h"
 
 namespace m2 {
 namespace routing {
-
+class RequestDispatcher;
+class CommandHandler;
+class Node;
 class MessageDispatcher
 {
 public:

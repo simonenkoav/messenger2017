@@ -6,14 +6,14 @@
 namespace m2 {
 namespace routing {
 /// Command handler is an abstract class for all handlers of incoming messages
-class CommandHandler : protected virtual NodeContainingObject
+class CommandHandler : public virtual NodeContainingObject
 {
 public:
     CommandHandler(Node& node);
     virtual ~CommandHandler();
 
 public:
-    virtual void handleMessage(Message& message) = 0;
+    virtual void handleMessage(const Message& message) = 0;
 
 protected:
 };
